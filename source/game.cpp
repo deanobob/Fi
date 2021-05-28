@@ -5,13 +5,31 @@
 
 namespace core
 {
-    void game::initialise()
-    {
-
-    }
-
     void game::run()
     {
-        utilities::time::sleep_sec(5);
+        if (initialise())
+        {
+            while (!exit_game)
+            {
+                utilities::time::sleep_sec(1);
+            }
+
+            shutdown();
+        }
+    }
+
+    void game::exit()
+    {
+        exit_game = true;
+    }
+
+    bool game::initialise()
+    {
+        return true;
+    }
+
+    void game::shutdown()
+    {
+
     }
 }
