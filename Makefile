@@ -4,8 +4,15 @@
 IS_LINUX := $(shell uname -a | grep -c Linux)
 
 # Define paths and library files
-INC_PATH := -Isource/ -Isource/messaging/ -Isource/messaging/messages/ -Isource/core/ -Isource/input/ -Isource/logger/ \
-            -Isource/utilities/ -I/usr/local/include/
+INC_PATH := -Isource/ \
+            -Isource/messaging/ \
+		    -Isource/messaging/messages/ \
+			-Isource/core/ \
+			-Isource/services \
+            -Isource/input/ \
+			-Isource/logger/ \
+            -Isource/utilities/ \
+			-I/usr/local/include/
 LIB_PATH := -L/usr/local/lib
 LIBS     := -lpthread #-lSDL2 -lallegro -lallegro_main -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 

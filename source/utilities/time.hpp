@@ -13,10 +13,16 @@ namespace utilities
     class time
     {
         public:
+        /// @brief The number of milliseconds in one second
+        static constexpr auto MILLISECONDS_IN_ONE_SECOND{1000.0};
         /// @brief The number of microseconds in one second
-        static const uint32_t MICROSECONDS_IN_ONE_SECOND{1000000};
+        static constexpr auto MICROSECONDS_IN_ONE_SECOND{1000000.0};
         /// @brief The number of microseconds in one millisecond
-        static const uint32_t MICROSECONDS_IN_ONE_MILLISECOND{1000};
+        static constexpr auto MICROSECONDS_IN_ONE_MILLISECOND{1000.0};
+
+        /// @brief Get current time in seconds
+        /// @return The current time in seconds
+        static double get_current_time_in_seconds();
 
         /// @brief Sleeps for n seconds
         /// @param seconds The number of seconds to sleep for

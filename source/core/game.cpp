@@ -1,5 +1,6 @@
 /// @file game.cpp
 
+#include "console.hpp"
 #include "game.hpp"
 #include "message_exit.hpp"
 #include "time.hpp"
@@ -9,11 +10,18 @@ namespace core
     game::game()
     {
         m_game_status_messager.subscribe(this, {messaging::message_exit::TYPE});
+
+        m_services.push_back(new services::console(this));
     }
 
     game::~game()
     {
         m_game_status_messager.unsubscribe(this, {messaging::message_exit::TYPE});
+
+        for (auto& service : m_services)
+        {
+            delete service;
+        }
     }
 
     void game::run()
@@ -22,6 +30,7 @@ namespace core
         {
             while (!m_exit_game)
             {
+                update();
                 utilities::time::sleep_sec(1);
             }
 
@@ -48,6 +57,16 @@ namespace core
     bool game::initialise()
     {
         return true;
+    }
+
+    void game::update()
+    {
+        m_gametime.update();
+
+        for (auto& service : m_services)
+        {
+            service->update(m_gametime);
+        }
     }
 
     void game::shutdown()

@@ -5,7 +5,10 @@
 #define GAME_HPP
 
 #include <atomic>
+#include <vector>
+#include "gametime.hpp"
 #include "publisher.hpp"
+#include "service.hpp"
 #include "subscriber.hpp"
 
 /// @namespace core namespace
@@ -37,11 +40,16 @@ namespace core
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
         /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_game_status_messager;
+        messaging::publisher m_game_status_messager{};
+        /// @brief Records the elapsed and total time the game has been running
+        utilities::gametime m_gametime{};
+        /// @brief Container for services
+        std::vector<service*> m_services;
 
         /// @brief Initialise the game
         bool initialise();
-
+        /// @brief Called on every tick to update services
+        void update();
         /// @brief Shutdown the game
         void shutdown();
     };

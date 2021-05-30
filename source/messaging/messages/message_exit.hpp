@@ -16,11 +16,6 @@ namespace messaging
         // The message type
         static constexpr auto TYPE { "MESSAGE_EXIT" };
 
-        /// @brief Default constructor
-        message_exit() = default;
-        /// @brief Default destructor
-        virtual ~message_exit() = default;
-
         const std::string get_type() const override { return TYPE; };
     };
 } /// namespace messaging
