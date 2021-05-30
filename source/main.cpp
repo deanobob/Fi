@@ -2,12 +2,8 @@
 
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "game.hpp"
-
-/// @brief The value to return when the application exits successfully
-static constexpr auto EXIT_SUCCESS = 0;
-/// @brief The value to return when the application fails
-static constexpr auto EXIT_FAILURE = 1;
 
 /// @brief The game instance
 core::game g{};
