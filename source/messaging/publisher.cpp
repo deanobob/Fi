@@ -5,28 +5,34 @@
 
 namespace messaging
 {
-    publisher::publisher(const std::string& event_id) :
-        m_event_id{event_id}
-    {
-
-    }
-
-    void publisher::subscribe(subscriber* p_subscriber)
+    void publisher::subscribe(subscriber* p_subscriber, const std::list<std::string>& message_types)
     {
         assert(p_subscriber != nullptr);
-        m_subscribers.push_back(p_subscriber);
-    }
 
-    void publisher::unsubscribe(subscriber* p_subscriber)
-    {
-        m_subscribers.remove(p_subscriber);
-    }
-
-    void publisher::publish(const event_args* p_event_args)
-    {
-        for (const auto& subscriber : m_subscribers)
+        for (const auto& message_type : message_types)
         {
-            subscriber->on_publish(m_event_id, p_event_args);
+            m_subscribers[message_type].push_back(p_subscriber);
+        }
+    }
+
+    void publisher::unsubscribe(subscriber* p_subscriber, const std::string& message_type)
+    {
+        auto it = m_subscribers.find(message_type);
+        if (it != m_subscribers.end())
+        {
+            it->second.remove(p_subscriber);
+        }
+    }
+
+    void publisher::publish(const message* p_message)
+    {
+        const auto& subscriber_it = m_subscribers.find(p_message->get_type());
+        if (subscriber_it != m_subscribers.end())
+        {
+            for (const auto& subscriber : subscriber_it->second)
+            {
+                subscriber->on_publish(p_message);
+            }
         }
     }
 }

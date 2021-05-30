@@ -30,15 +30,14 @@ namespace core
         void exit();
 
         /// @brief Handles events from publishers the game has subscribed to
-        /// @param event_id The event ID
-        /// @param event_args The event arguments
-        void on_publish(const std::string& event_id, const messaging::event_args* p_event_args) override;
+        /// @param p_message The message
+        void on_publish(const messaging::message* p_message) override;
 
         private:
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
         /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_event_exit{EVENT_EXIT_GAME};
+        messaging::publisher m_game_status_messager;
 
         /// @brief Initialise the game
         bool initialise();

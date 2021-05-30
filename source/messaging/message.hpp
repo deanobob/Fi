@@ -1,24 +1,27 @@
 /// @file event_args.hpp
 /// @brief Base class for event arguments
 
-#ifndef EVENT_ARGS_HPP
-#define EVENT_ARGS_HPP
+#ifndef MESSAGE_HPP
+#define MESSAGE_HPP
+
+#include <string>
 
 /// @namespace messaging namespace
 namespace messaging
 {
     /// @brief Base class for event arguments
-    class event_args
+    class message
     {
         public:
-        /// @brief Default empty event args
-        static const event_args NONE;
-
         /// @brief Default constructor
-        event_args() = default;
+        message() = default;
         /// @brief Default destructor
-        virtual ~event_args() = default;
+        virtual ~message() = default;
+
+        /// @brief Gets the message type
+        /// @return The message type
+        virtual const std::string get_type() const = 0;
     };
 } /// namespace messaging
 
-#endif /// EVENT_ARGS_HPP
+#endif /// MESSAGE_HPP
