@@ -15,6 +15,9 @@ namespace core
     class game : public messaging::subscriber
     {
         public:
+        /// @brief The exit game event type name
+        static constexpr auto EVENT_EXIT_GAME = "EXIT_GAME";
+
         /// @brief Constructor
         game();
         /// @brief Default destructor
@@ -35,7 +38,7 @@ namespace core
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
         /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_event_exit{"EXIT_GAME"};
+        messaging::publisher m_event_exit{EVENT_EXIT_GAME};
 
         /// @brief Initialise the game
         bool initialise();

@@ -36,7 +36,7 @@ namespace core
 
     void game::on_publish(const std::string& event_id, const messaging::event_args* p_event_args)
     {
-        if (event_id == "EXIT_GAME")
+        if (event_id == EVENT_EXIT_GAME)
         {
             // Exit the game loop
             m_exit_game = true;
