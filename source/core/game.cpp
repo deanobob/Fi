@@ -56,7 +56,14 @@ namespace core
 
     bool game::initialise()
     {
-        return true;
+        bool success = true;
+
+        for (auto& service : m_services)
+        {
+            success &= service->initialise();
+        }
+
+        return success;
     }
 
     void game::update()
@@ -71,6 +78,9 @@ namespace core
 
     void game::shutdown()
     {
-
+        for (auto& service : m_services)
+        {
+            service->shutdown();
+        }
     }
 }
