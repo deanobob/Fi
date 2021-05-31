@@ -17,7 +17,7 @@ namespace services
         return {"exit", "e"};
     }
 
-    void command_exit::execute() const
+    void command_exit::execute(const std::vector<std::string>& args) const
     {
         const auto message = messaging::message_exit();
         mp_game->m_game_status_messager.publish(&message);

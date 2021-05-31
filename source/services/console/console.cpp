@@ -7,6 +7,7 @@
 #include "command_exit.hpp"
 #include "console.hpp"
 #include "game.hpp"
+#include "strings.hpp"
 
 namespace services
 {
@@ -35,9 +36,11 @@ namespace services
         if (m_command_buffer.size() > 0)
         {
             // Execute commands and clear buffer
-            for (const auto& p_command : m_command_buffer)
+            for (const auto& command : m_command_buffer)
             {
-                p_command->execute();
+                const auto& p_command = std::get<0>(command);
+                const auto& args = std::get<1>(command);
+                p_command->execute(args);
             }
             m_command_buffer.clear();
         }
@@ -65,17 +68,29 @@ namespace services
         std::string line;
         while (m_running && std::getline(std::cin, line))
         {
-            // convert line to lower
-            std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+            // Convert command to tokens
+            const auto& args = utilities::strings::tokenise(line);
+            if (args.size() == 0)
+            {
+                // Ignore empty command
+                continue;
+            }
 
-            // match command name and generate instance
-            std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
-            const auto& command_it = m_commands.find(line);
+            // Extract first word in command - this is the command identifier
+            auto command_name = args.at(0);
+
+            // Convert command_name to lower
+            std::transform(command_name.begin(), command_name.end(), command_name.begin(), ::tolower);
+
+            // Match command name and generate instance
+            const auto& command_it = m_commands.find(command_name);
             if (command_it != m_commands.end())
             {
-                m_command_buffer.push_back(command_it->second.get());
+                std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
+                // Store command and arguments in command buffer
+                m_command_buffer.push_back({command_it->second.get(), args});
             }
-            else if (line.length() > 0)
+            else
             {
                 std::cout << "Unknown command: " << line << std::endl;
             }

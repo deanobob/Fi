@@ -23,7 +23,8 @@ namespace services
         /// @return A vector containing all the command strings that can trigger this command
         const std::vector<std::string> get_command_names() const override;
         /// @brief Execute the command
-        void execute() const override;
+        /// @param args Vector containing the command arguments
+        void execute(const std::vector<std::string>& args) const override;
 
         private:
         /// @brief Reference to game instance

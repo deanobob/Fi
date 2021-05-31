@@ -21,7 +21,7 @@ namespace services
         /// @return A vector containing all the command strings that can trigger this command
         virtual const std::vector<std::string> get_command_names() const = 0;
         /// @brief Execute the command
-        virtual void execute() const = 0;
+        virtual void execute(const std::vector<std::string>& args) const = 0;
     };
 } /// namespace services
 
