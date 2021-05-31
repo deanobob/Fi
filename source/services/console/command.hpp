@@ -5,6 +5,7 @@
 #define COMMAND_HPP
 
 #include <string>
+#include <vector>
 
 /// @namespace services namespace
 namespace services
@@ -16,10 +17,9 @@ namespace services
         /// @brief Constructor
         command() = default;
 
-        /// @brief The console command that will invoke this command
-        /// @return The command string
-        virtual const std::string get_command_str() const = 0;
-
+        /// @brief The console command names that will invoke this command
+        /// @return A vector containing all the command strings that can trigger this command
+        virtual const std::vector<std::string> get_command_names() const = 0;
         /// @brief Execute the command
         virtual void execute() const = 0;
     };

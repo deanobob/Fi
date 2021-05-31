@@ -12,9 +12,9 @@ namespace services
 
     }
 
-    const std::string command_exit::get_command_str() const
+    const std::vector<std::string> command_exit::get_command_names() const
     {
-        return "exit";
+        return {"exit", "e"};
     }
 
     void command_exit::execute() const

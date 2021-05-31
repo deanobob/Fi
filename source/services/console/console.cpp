@@ -4,16 +4,16 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include "command_exit.hpp"
 #include "console.hpp"
 #include "game.hpp"
-#include "command_exit.hpp"
 
 namespace services
 {
     console::console(core::game* p_game):
         service(p_game)
     {
-        add_command(std::make_unique<services::command_exit>(mp_game));
+        add_command(std::make_shared<services::command_exit>(mp_game));
     }
 
     bool console::initialise()
@@ -52,9 +52,12 @@ namespace services
         }
     }
 
-    void console::add_command(std::unique_ptr<services::command> command)
+    void console::add_command(std::shared_ptr<services::command> command)
     {
-        m_commands[command->get_command_str()] = std::move(command);
+        for (const auto& command_name : command->get_command_names())
+        {
+            m_commands[command_name] = command;
+        }
     }
 
     void console::read_input()

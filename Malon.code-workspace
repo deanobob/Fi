@@ -65,7 +65,8 @@
 			"complex": "cpp",
 			"concepts": "cpp",
 			"ranges": "cpp",
-			"stop_token": "cpp"
+			"stop_token": "cpp",
+			"iostream": "cpp"
 		},
 		"C_Cpp.default.browse.path": ["/usr/local/include", "/Users/deanharris/Documents/Development/Malon/**"]
 	}

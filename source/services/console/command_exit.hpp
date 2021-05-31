@@ -19,10 +19,9 @@ namespace services
         /// @param p_game Pointer to instance of the game
         command_exit(core::game* p_game);
 
-        /// @brief The console command that will invoke this command
-        /// @return The command string
-        const std::string get_command_str() const override;
-
+        /// @brief The console command names that will invoke this command
+        /// @return A vector containing all the command strings that can trigger this command
+        const std::vector<std::string> get_command_names() const override;
         /// @brief Execute the command
         void execute() const override;
 

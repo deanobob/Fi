@@ -39,7 +39,7 @@ namespace services
         /// @brief The thread that reads input from stdin
         std::thread m_read_thread{};
         /// @brief Buffer that contains the available commands
-        std::map<const std::string, std::unique_ptr<services::command> > m_commands;
+        std::map<const std::string, std::shared_ptr<services::command> > m_commands;
         /// @brief Message buffer mutex
         /// @details Synchronises the command buffer access across the read thread and the game thread
         std::mutex m_command_buffer_mutex{};
@@ -48,7 +48,7 @@ namespace services
 
         /// @brief Adds a command to the available command map
         /// @param command The command to add to the map
-        void add_command(std::unique_ptr<services::command> command);
+        void add_command(std::shared_ptr<services::command> command);
         /// @brief Continually reads input from stdin until the application shuts down
         void read_input();
     };
