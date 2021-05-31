@@ -8,7 +8,8 @@ INC_PATH := -Isource/ \
             -Isource/messaging/ \
 		    -Isource/messaging/messages/ \
 			-Isource/core/ \
-			-Isource/services \
+			-Isource/services/ \
+			-Isource/services/console/ \
             -Isource/input/ \
 			-Isource/logger/ \
             -Isource/utilities/ \

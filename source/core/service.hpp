@@ -32,7 +32,7 @@ namespace core
 
         protected:
         /// @brief Pointer to the instance of the game
-        const game* mp_game;
+        game* mp_game;
     };
 } /// namespace core
 

@@ -18,8 +18,8 @@ namespace core
     class game : public messaging::subscriber
     {
         public:
-        /// @brief The exit game event type name
-        static constexpr auto EVENT_EXIT_GAME = "EXIT_GAME";
+        /// @brief Publisher that notifies subscribers the game is exiting
+        messaging::publisher m_game_status_messager{};
 
         /// @brief Constructor
         game();
@@ -39,8 +39,6 @@ namespace core
         private:
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
-        /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_game_status_messager{};
         /// @brief Records the elapsed and total time the game has been running
         utilities::gametime m_gametime{};
         /// @brief Container for services

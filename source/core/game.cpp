@@ -31,7 +31,7 @@ namespace core
             while (!m_exit_game)
             {
                 update();
-                utilities::time::sleep_sec(1);
+                utilities::time::sleep_msec(10);
             }
 
             shutdown();
