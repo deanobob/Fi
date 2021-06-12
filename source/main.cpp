@@ -26,7 +26,7 @@ void sig_handler(int signo)
 int main(int argc, char** argv)
 {
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender{};
-    plog::init(plog::debug, "Log.txt").addAppender(&consoleAppender);
+    plog::init(plog::debug, "log/malon.log").addAppender(&consoleAppender);
 
     if (signal(SIGINT, sig_handler) == SIG_ERR ||
         signal(SIGTERM, sig_handler) == SIG_ERR)
