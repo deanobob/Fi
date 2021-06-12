@@ -1,8 +1,11 @@
 /// @file main.cpp
 
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include "plog/Log.h"
+#include "plog/Initializers/RollingFileInitializer.h"
+#include "plog/Formatters/TxtFormatter.h"
+#include "plog/Appenders/ColorConsoleAppender.h"
 #include "game.hpp"
 
 /// @brief The game instance
@@ -22,10 +25,13 @@ void sig_handler(int signo)
 /// @return The exit code - 0 is success, 1 is failure
 int main(int argc, char** argv)
 {
+    static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender{};
+    plog::init(plog::debug, "Log.txt").addAppender(&consoleAppender);
+
     if (signal(SIGINT, sig_handler) == SIG_ERR ||
         signal(SIGTERM, sig_handler) == SIG_ERR)
     {
-        printf("Failed to handle signal\n");
+        PLOGD << "Failed to handle signal";
         return EXIT_FAILURE;
     }
 

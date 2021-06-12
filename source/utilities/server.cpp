@@ -4,13 +4,12 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <errno.h>
-#include <iostream>
 #include <memory>
 #include <poll.h>
-#include <stdio.h>
 #include <string>
 #include <string.h>
 #include <unistd.h>
+#include "plog/Log.h"
 #include "server.hpp"
 #include "strings.hpp"
 
@@ -77,7 +76,7 @@ namespace utilities
 
         if (listen(m_listen_fd, port) != 0)
         {
-            std::cout << "Failed to start listener" << std::endl;
+            PLOGD << "Failed to start listener";
             return;
         }
 
