@@ -9,7 +9,7 @@
 /// @namespace messages namespace
 namespace messaging
 {
-    /// @brief Base class for event arguments
+    /// @brief Message that causes the application to exit
     class message_exit : public message
     {
         public:
