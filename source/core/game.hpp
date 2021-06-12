@@ -39,6 +39,8 @@ namespace core
         private:
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
+        /// @brief Flag recording the game paused state
+        std::atomic<bool> m_paused{false};
         /// @brief Records the elapsed and total time the game has been running
         utilities::gametime m_gametime{};
         /// @brief Container for services

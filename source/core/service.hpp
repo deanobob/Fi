@@ -29,6 +29,9 @@ namespace core
         virtual void update(utilities::gametime& gametime) = 0;
         /// @brief Called when the application is shutting down. Tidy up and clear down.
         virtual void shutdown() = 0;
+        /// @brief Getter that indicates if this service is pauseable. Defaults to true.
+        /// @return True if pauseable, else false
+        virtual bool pauseable() const { return true; }
 
         protected:
         /// @brief Pointer to the instance of the game

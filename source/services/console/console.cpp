@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include "command_exit.hpp"
+#include "command_pause.hpp"
 #include "console.hpp"
 #include "game.hpp"
 #include "strings.hpp"
@@ -13,9 +14,10 @@ namespace services
 {
     console::console(core::game* p_game)
         : service(p_game)
-        , server(5050)
+        , server(5050) // Defaults to port 5050
     {
         add_command(std::make_shared<services::command_exit>(mp_game));
+        add_command(std::make_shared<services::command_pause>(mp_game));
     }
 
     bool console::initialise()
@@ -45,6 +47,11 @@ namespace services
         stop_listen_thread();
     }
 
+    bool console::pauseable() const
+    {
+        return false;
+    }
+
     void console::on_receive(const std::string& message)
     {
         // Convert command to tokens
@@ -71,7 +78,7 @@ namespace services
         }
         else
         {
-            std::cout << "Unknown command: '" << command_name.length() << command_name << "'" << std::endl;
+            std::cout << "Unknown command: '" << command_name << "'" << std::endl;
         }
     }
 

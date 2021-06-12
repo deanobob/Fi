@@ -33,6 +33,8 @@ namespace services
         void update(utilities::gametime& gametime) override;
         /// @brief Shutsdown the service
         void shutdown() override;
+        /// @brief Returns false for pausable check, ensuring service runs when game is paused
+        bool pauseable() const override;
 
         protected:
         /// @brief Converts TCP messages into commands and pushes them to the command buffer
