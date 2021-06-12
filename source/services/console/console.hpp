@@ -12,13 +12,14 @@
 #include <vector>
 #include "gametime.hpp"
 #include "command.hpp"
+#include "server.hpp"
 #include "service.hpp"
 
 /// @namespace services namespace
 namespace services
 {
     /// @brief Base class for services
-    class console : public core::service
+    class console : public core::service, public utilities::server
     {
         public:
         /// @brief Constructor
@@ -33,11 +34,12 @@ namespace services
         /// @brief Shutsdown the service
         void shutdown() override;
 
+        protected:
+        /// @brief Converts TCP messages into commands and pushes them to the command buffer
+        /// @param message The received message
+        void on_receive(const std::string& message);
+
         private:
-        /// @brief Flag indicating if the thread is running
-        std::atomic<bool> m_running{true};
-        /// @brief The thread that reads input from stdin
-        std::thread m_read_thread{};
         /// @brief Buffer that contains the available commands
         std::map<const std::string, std::shared_ptr<services::command> > m_commands;
         /// @brief Message buffer mutex
@@ -49,8 +51,6 @@ namespace services
         /// @brief Adds a command to the available command map
         /// @param command The command to add to the map
         void add_command(std::shared_ptr<services::command> command);
-        /// @brief Continually reads input from stdin until the application shuts down
-        void read_input();
     };
 } /// namespace services
 

@@ -11,22 +11,16 @@
 
 namespace services
 {
-    console::console(core::game* p_game):
-        service(p_game)
+    console::console(core::game* p_game)
+        : service(p_game)
+        , server(5050)
     {
         add_command(std::make_shared<services::command_exit>(mp_game));
     }
 
     bool console::initialise()
     {
-        if (m_read_thread.joinable())
-        {
-            // Wait for thread if running before starting new
-            m_read_thread.join();
-        }
-        m_read_thread = std::thread(&console::read_input, this);
-
-        return true;
+        return start_listen_thread();
     }
 
     void console::update(utilities::gametime& p_gametime)
@@ -48,10 +42,36 @@ namespace services
 
     void console::shutdown()
     {
-        m_running = false;
-        if (m_read_thread.joinable())
+        stop_listen_thread();
+    }
+
+    void console::on_receive(const std::string& message)
+    {
+        // Convert command to tokens
+        const auto& args = utilities::strings::tokenise(message);
+        if (args.size() == 0)
         {
-            m_read_thread.join();
+            // Ignore empty command
+            return;
+        }
+
+        // Extract first word in command - this is the command identifier
+        auto command_name = args.at(0);
+
+        // Convert command_name to lower
+        std::transform(command_name.begin(), command_name.end(), command_name.begin(), ::tolower);
+
+        // Match command name and save command reference in buffer
+        const auto& command_it = m_commands.find(command_name);
+        if (command_it != m_commands.end())
+        {
+            std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
+            // Store command and arguments in command buffer
+            m_command_buffer.push_back({command_it->second.get(), args});
+        }
+        else
+        {
+            std::cout << "Unknown command: '" << command_name.length() << command_name << "'" << std::endl;
         }
     }
 
@@ -60,40 +80,6 @@ namespace services
         for (const auto& command_name : command->get_command_names())
         {
             m_commands[command_name] = command;
-        }
-    }
-
-    void console::read_input()
-    {
-        std::string line;
-        while (m_running && std::getline(std::cin, line))
-        {
-            // Convert command to tokens
-            const auto& args = utilities::strings::tokenise(line);
-            if (args.size() == 0)
-            {
-                // Ignore empty command
-                continue;
-            }
-
-            // Extract first word in command - this is the command identifier
-            auto command_name = args.at(0);
-
-            // Convert command_name to lower
-            std::transform(command_name.begin(), command_name.end(), command_name.begin(), ::tolower);
-
-            // Match command name and generate instance
-            const auto& command_it = m_commands.find(command_name);
-            if (command_it != m_commands.end())
-            {
-                std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
-                // Store command and arguments in command buffer
-                m_command_buffer.push_back({command_it->second.get(), args});
-            }
-            else
-            {
-                std::cout << "Unknown command: " << line << std::endl;
-            }
         }
     }
 }

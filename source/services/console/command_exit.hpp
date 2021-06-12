@@ -28,7 +28,7 @@ namespace services
 
         private:
         /// @brief Reference to game instance
-        core::game* const mp_game;
+        core::game* mp_game;
     };
 } /// namespace services
 

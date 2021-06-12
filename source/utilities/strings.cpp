@@ -1,5 +1,6 @@
 /// @file strings.cpp
 
+#include <algorithm>
 #include <sstream>
 #include "strings.hpp"
 
