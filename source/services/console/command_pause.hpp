@@ -1,8 +1,8 @@
-/// @file command_exit.hpp
-/// @brief The command_exit base class
+/// @file command_pause.hpp
+/// @brief The command_pause base class
 
-#ifndef COMMAND_EXIT_HPP
-#define COMMAND_EXIT_HPP
+#ifndef COMMAND_PAUSE_HPP
+#define COMMAND_PAUSE_HPP
 
 #include <string>
 #include "command.hpp"
@@ -11,13 +11,13 @@
 /// @namespace services namespace
 namespace services
 {
-    /// @brief Command class that instructs the game to exit
-    class command_exit : public command
+    /// @brief Command class that pauses the game
+    class command_pause : public command
     {
         public:
         /// @brief Constructor
         /// @param p_game Pointer to instance of the game
-        command_exit(core::game* p_game);
+        command_pause(core::game* p_game);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -32,4 +32,4 @@ namespace services
     };
 } /// namespace services
 
-#endif /// COMMAND_EXIT_HPP
+#endif /// COMMAND_PAUSE_HPP
