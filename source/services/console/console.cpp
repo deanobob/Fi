@@ -1,9 +1,8 @@
 /// @file console.cpp
 
 #include <algorithm>
-#include <iostream>
-#include <stdio.h>
 #include <string>
+#include "plog/Log.h"
 #include "command_exit.hpp"
 #include "command_pause.hpp"
 #include "console.hpp"
@@ -78,7 +77,7 @@ namespace services
         }
         else
         {
-            std::cout << "Unknown command: '" << command_name << "'" << std::endl;
+            PLOGD << "Unknown command: '" << command_name << "'";
         }
     }
 

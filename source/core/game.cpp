@@ -1,7 +1,6 @@
 /// @file game.cpp
 
-#include <iostream>
-#include <stdio.h>
+#include "plog/Log.h"
 #include "console.hpp"
 #include "game.hpp"
 #include "message_exit.hpp"
@@ -56,7 +55,7 @@ namespace core
         {
             // Pause the game
             m_paused = true;
-            std::cout << "Game paused" << std::endl;
+            PLOGD << "Game paused";
         }
         else if (p_message->get_type() == messaging::message_exit::TYPE)
         {
