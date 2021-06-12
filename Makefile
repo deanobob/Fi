@@ -72,10 +72,13 @@ $(TEST_OBJECT_FILES): $(TEST_OBJ)/%.o: %.cpp
 	@mkdir -p $(@D)
 	@$(CXX) -c $(CXX_FLAGS) -o $@ $<
 
-environment:
+env:
 	mkdir -p ./${ASSETS}
 	mkdir -p ./${OBJ}
 	mkdir -p ./${BIN}
+
+test_env: env
+	mkdir -p ./${TEST_OBJ}
 
 build: $(EXECUTABLE_FILES)
 
@@ -98,7 +101,7 @@ debug: build prepare
 	@echo Running $(EXECUTABLE_NAME) with GDB server on port $(GDB_PORT)
 	gdbserver :$(GDB_PORT) $(BIN)/$(EXECUTABLE_NAME)
 
-test: build_tests
+test: test_env build_tests
 	@echo Running tests
 	./$(BIN)/$(TEST_EXECUTABLE_NAME)
 
