@@ -52,7 +52,7 @@ TEST_OBJECT_FILES     = $(TEST_SOURCE_FILES:%.cpp=$(TEST_OBJ)/%.o)
 
 .PHONY: all build clean prepare run debug test review
 
-all: build
+all: environment build
 
 $(EXECUTABLE_FILES): $(OBJECT_FILES)
 	@$(CXX) -o $@ $^ $(LD_FLAGS)
@@ -71,6 +71,11 @@ $(TEST_OBJECT_FILES): $(TEST_OBJ)/%.o: %.cpp
 	@echo Compiling $<
 	@mkdir -p $(@D)
 	@$(CXX) -c $(CXX_FLAGS) -o $@ $<
+
+environment:
+	mkdir -p ./${ASSETS}
+	mkdir -p ./${OBJ}
+	mkdir -p ./${BIN}
 
 build: $(EXECUTABLE_FILES)
 
