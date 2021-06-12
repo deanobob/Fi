@@ -52,7 +52,7 @@ TEST_OBJECT_FILES     = $(TEST_SOURCE_FILES:%.cpp=$(TEST_OBJ)/%.o)
 
 .PHONY: all build clean prepare run debug test review
 
-all: environment build
+all: env build
 
 $(EXECUTABLE_FILES): $(OBJECT_FILES)
 	@$(CXX) -o $@ $^ $(LD_FLAGS)
