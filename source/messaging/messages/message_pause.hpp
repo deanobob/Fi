@@ -9,7 +9,7 @@
 /// @namespace messages namespace
 namespace messaging
 {
-    /// @brief Base class for event arguments
+    /// @brief Message that causes the application to pause
     class message_pause : public message
     {
         public:

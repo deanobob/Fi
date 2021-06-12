@@ -10,6 +10,7 @@ INC_PATH := -Isource/ \
 			-Isource/core/ \
 			-Isource/services/ \
 			-Isource/services/console/ \
+			-Isource/services/console/commands/ \
             -Isource/input/ \
             -Isource/utilities/ \
 			-Ithird_party/ \
@@ -73,12 +74,12 @@ $(TEST_OBJECT_FILES): $(TEST_OBJ)/%.o: %.cpp
 	@$(CXX) -c $(CXX_FLAGS) -o $@ $<
 
 env:
-	mkdir -p ./${ASSETS}
-	mkdir -p ./${OBJ}
-	mkdir -p ./${BIN}
+	@mkdir -p ./${ASSETS}
+	@mkdir -p ./${OBJ}
+	@mkdir -p ./${BIN}
 
 test_env: env
-	mkdir -p ./${TEST_OBJ}
+	@mkdir -p ./${TEST_OBJ}
 
 build: $(EXECUTABLE_FILES)
 

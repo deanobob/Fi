@@ -14,8 +14,8 @@ namespace services
     class command
     {
         public:
-        /// @brief Constructor
-        command() = default;
+        /// @brief Default destructor
+        virtual ~command() = default;
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command

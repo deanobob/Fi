@@ -5,6 +5,7 @@
 #include "game.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
+#include "message_resume.hpp"
 #include "time.hpp"
 
 namespace core
@@ -13,6 +14,7 @@ namespace core
     {
         m_game_status_messager.subscribe(this, {messaging::message_exit::TYPE});
         m_game_status_messager.subscribe(this, {messaging::message_pause::TYPE});
+        m_game_status_messager.subscribe(this, {messaging::message_resume::TYPE});
 
         m_services.push_back(new services::console(this));
     }
@@ -21,6 +23,7 @@ namespace core
     {
         m_game_status_messager.unsubscribe(this, {messaging::message_exit::TYPE});
         m_game_status_messager.unsubscribe(this, {messaging::message_pause::TYPE});
+        m_game_status_messager.unsubscribe(this, {messaging::message_resume::TYPE});
 
         for (auto& service : m_services)
         {
@@ -57,10 +60,17 @@ namespace core
             m_paused = true;
             PLOGD << "Game paused";
         }
+        else if (p_message->get_type() == messaging::message_resume::TYPE)
+        {
+            // Resume the game
+            m_paused = false;
+            PLOGD << "Game resumed";
+        }
         else if (p_message->get_type() == messaging::message_exit::TYPE)
         {
             // Exit the game loop
             m_exit_game = true;
+            PLOGD << "Game exiting";
         }
     }
 

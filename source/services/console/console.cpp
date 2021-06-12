@@ -5,6 +5,7 @@
 #include "plog/Log.h"
 #include "command_exit.hpp"
 #include "command_pause.hpp"
+#include "command_resume.hpp"
 #include "console.hpp"
 #include "game.hpp"
 #include "strings.hpp"
@@ -17,6 +18,7 @@ namespace services
     {
         add_command(std::make_shared<services::command_exit>(mp_game));
         add_command(std::make_shared<services::command_pause>(mp_game));
+        add_command(std::make_shared<services::command_resume>(mp_game));
     }
 
     bool console::initialise()
