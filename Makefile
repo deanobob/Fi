@@ -38,17 +38,16 @@ GDB_PORT := 6000
 BIN      := bin
 ASSETS   := assets
 OBJ      := obj
-TEST_BIN := $(OBJ)/test
 TEST_OBJ := $(OBJ)/test
 
 # Recursively find files
-SOURCE_FILES := $(shell find source/* -name "*.cpp")
+SOURCE_FILES := $(shell find source/* -name "*.cpp" ! -name "*_test.cpp")
 EXECUTABLE_FILES = $(EXECUTABLE_NAME:%=$(BIN)/%)
 OBJECT_FILES     = $(SOURCE_FILES:%.cpp=$(OBJ)/%.o)
 
 # Recursively find test files (excluding main.cpp to avoid duplicate entry)
 TEST_SOURCE_FILES := $(shell find * -name "*.cpp" ! -name "main.cpp")
-TEST_EXECUTABLE_FILES = $(TEST_EXECUTABLE_NAME:%=$(TEST_BIN)/%)
+TEST_EXECUTABLE_FILES = $(TEST_EXECUTABLE_NAME:%=$(BIN)/%)
 TEST_OBJECT_FILES     = $(TEST_SOURCE_FILES:%.cpp=$(TEST_OBJ)/%.o)
 
 .PHONY: all build clean prepare run debug test review
@@ -84,7 +83,7 @@ clean:
 prepare:
 	@echo Preparing assets
 	rm -rf ./$(BIN)/$(ASSETS)
-	cp -r $(ASSETS) $(BIN)/
+	cp -r ./$(ASSETS) ./$(BIN)/
 
 run: build prepare
 	@echo Running $(EXECUTABLE_NAME)
@@ -96,7 +95,7 @@ debug: build prepare
 
 test: build_tests
 	@echo Running tests
-	$(TEST_BIN)/$(TEST_EXECUTABLE_NAME)
+	./$(BIN)/$(TEST_EXECUTABLE_NAME)
 
 review:
 	cppcheck .
