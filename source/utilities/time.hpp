@@ -29,7 +29,7 @@ namespace utilities
         static void sleep_sec(uint32_t seconds);
 
         /// @brief Sleeps for n microseconds
-        /// @param milliseconds The number of microseconds to sleep for
+        /// @param microseconds The number of microseconds to sleep for
         static void sleep_msec(uint32_t microseconds);
 
         private:

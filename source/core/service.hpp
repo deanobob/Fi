@@ -26,6 +26,7 @@ namespace core
         /// @return True if successfully initialised, else false
         virtual bool initialise() = 0;
         /// @brief Called on every tick allowing the service to update
+        /// @param gametime The gametime maintaining instance
         virtual void update(utilities::gametime& gametime) = 0;
         /// @brief Called when the application is shutting down. Tidy up and clear down.
         virtual void shutdown() = 0;

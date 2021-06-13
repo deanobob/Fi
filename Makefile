@@ -107,4 +107,12 @@ test: test_env build_tests
 	./$(BIN)/$(TEST_EXECUTABLE_NAME)
 
 review:
-	cppcheck .
+	@echo
+	@echo Running cppcheck
+	@cppcheck . > /dev/null
+	@echo Cppcheck complete
+	@echo
+	@echo Running doxygen
+	@doxygen Doxyfile > /dev/null
+	@echo Doxygen complete
+	@echo

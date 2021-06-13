@@ -13,7 +13,7 @@ namespace messaging
     class message_pause : public message
     {
         public:
-        // The message type
+        /// @brief The message type
         static constexpr auto TYPE { "MESSAGE_PAUSE" };
 
         const std::string get_type() const override { return TYPE; };

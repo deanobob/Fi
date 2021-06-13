@@ -20,7 +20,7 @@ namespace messaging
         virtual ~subscriber() = default;
 
         /// @brief Overwrite to handle publisher messages
-        /// @param message The message
+        /// @param p_message The message
         virtual void on_publish(const message* p_message) = 0;
     };
 } /// namespace messaging
