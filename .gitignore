@@ -2,6 +2,5 @@
 *.log
 
 bin/
-html/
-latex/
+docs/
 obj/

@@ -1,5 +1,5 @@
-/// @file event_args.hpp
-/// @brief Base class for event arguments
+/// @file message.hpp
+/// @brief Base class for messages
 
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP

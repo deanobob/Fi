@@ -30,10 +30,12 @@ namespace services
         /// @return True if initialised successfully
         bool initialise();
         /// @brief Called on every tick allowing console input to be processed
+        /// @param gametime The gametime maintaining instance
         void update(utilities::gametime& gametime) override;
         /// @brief Shutsdown the service
         void shutdown() override;
         /// @brief Returns false for pausable check, ensuring service runs when game is paused
+        /// @return True if pauseable, else false
         bool pauseable() const override;
 
         protected:
