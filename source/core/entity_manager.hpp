@@ -51,10 +51,29 @@ namespace core
         bool remove_component(component_type type, entity_id id);
 
         /// @brief Get component from entity
+        /// @note Defined in header due to non-specialized template
         /// @param type The component type
         /// @param id The ID of the entity
         /// @return The component reference cast to template type T or nullptr
-        template <typename T> T* get_component(component_type type, entity_id id);
+        template <typename T>
+        T* get_component(component_type type, entity_id id)
+        {
+            const auto& entity_iter = entity_components.find(id);
+            if (entity_iter == entity_components.end())
+            {
+                // Entity not found, return false
+                return nullptr;
+            }
+
+            const auto& component_iter = entity_iter->second.find(type);
+            if (component_iter == entity_iter->second.end())
+            {
+                // Component of given type doesn't exist
+                return nullptr;
+            }
+
+            return dynamic_cast<T*>(component_iter->second.get());
+        };
 
         /// @brief Handles events from publishers the entity_manager has subscribed to
         /// @param p_message The message

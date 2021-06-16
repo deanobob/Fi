@@ -12,6 +12,7 @@ namespace core
     enum class component_type : uint32_t
     {
         body = 0,
+        render = 1,
         // TODO: define more
     };
 } /// namespace core

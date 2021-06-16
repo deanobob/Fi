@@ -66,26 +66,6 @@ namespace core
         return true;
     }
 
-    template <typename T>
-    T* entity_manager::get_component(component_type type, entity_id id)
-    {
-        const auto& entity_iter = entity_components.find(id);
-        if (entity_iter == entity_components.end())
-        {
-            // Entity not found, return false
-            return nullptr;
-        }
-
-        auto& component_iter = entity_iter->second.find(type);
-        if (component_iter == entity_iter->second.end())
-        {
-            // Component of given type doesn't exist
-            return nullptr;
-        }
-
-        return dynamic_cast<T*>(component_iter->second.get());
-    }
-
     void entity_manager::on_publish(const messaging::message* p_message)
     {
 
