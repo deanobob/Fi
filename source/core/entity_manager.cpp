@@ -1,5 +1,6 @@
 /// @file entity_manager.cpp
 
+#include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
 
@@ -7,62 +8,58 @@ namespace core
 {
     entity_manager::~entity_manager()
     {
-        entity_components.clear();
+        m_entities.clear();
     }
 
-    entity_id entity_manager::create_entity()
+    void entity_manager::put(std::unique_ptr<entity> entity)
     {
-        const entity_id id = next_entity_id;
-        next_entity_id++;
-        entity_components[id] = std::map<component_type, std::unique_ptr<component> >();
-        return id;
+        const auto& tag = entity->get_tag();
+        if (!tag.empty())
+        {
+            m_tagged_entities.emplace(entity->get_tag(), entity->get_id());
+        }
+
+        m_entities.emplace(entity->get_id(), std::move(entity));
     }
 
-    bool entity_manager::delete_entity(entity_id id)
+    entity* entity_manager::get(entity_id id)
     {
-        const auto& entity_iter = entity_components.find(id);
-        if (entity_iter == entity_components.end())
+        const auto entity_iter = m_entities.find(id);
+        if (entity_iter != m_entities.end())
+        {
+            return entity_iter->second.get();
+        }
+        return nullptr;
+    }
+
+    entity* entity_manager::get(const std::string& tag)
+    {
+        const auto entity_id_iter = m_tagged_entities.find(tag);
+        if (entity_id_iter == m_tagged_entities.end())
+        {
+            return nullptr;
+        }
+
+        const auto entity_iter = m_entities.find(entity_id_iter->second);
+        if (entity_iter == m_entities.end())
+        {
+            return nullptr;
+        }
+
+        return entity_iter->second.get();
+    }
+
+    bool entity_manager::remove(entity_id id)
+    {
+        const auto& entity_iter = m_entities.find(id);
+        if (entity_iter == m_entities.end())
         {
             // Entity not found, return false
             return false;
         }
 
         // Delete entity
-        entity_components.erase(entity_iter);
-        return true;
-    }
-
-    bool entity_manager::add_component(std::unique_ptr<component> component, entity_id id)
-    {
-        const auto& entity_iter = entity_components.find(id);
-        if (entity_iter == entity_components.end())
-        {
-            // Entity not found, return false
-            return false;
-        }
-
-        // Add component to entity
-        entity_iter->second.emplace(component->get_type(), std::move(component));
-        return true;
-    }
-
-    bool entity_manager::remove_component(component_type type, entity_id id)
-    {
-        const auto& entity_iter = entity_components.find(id);
-        if (entity_iter == entity_components.end())
-        {
-            // Entity not found, return false
-            return false;
-        }
-
-        auto component_iter = entity_iter->second.find(type);
-        if (component_iter == entity_iter->second.end())
-        {
-            // Component of given type doesn't exist
-            return false;
-        }
-
-        entity_iter->second.erase(component_iter);
+        m_entities.erase(entity_iter);
         return true;
     }
 

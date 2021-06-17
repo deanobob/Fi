@@ -7,17 +7,17 @@
 #include "message.hpp"
 
 /// @namespace messages namespace
-namespace messaging
+namespace messages
 {
     /// @brief Message that causes the application to exit
-    class message_exit : public message
+    class message_exit : public messaging::message
     {
         public:
         /// @brief The message type
-        static constexpr auto TYPE { "MESSAGE_EXIT" };
+        static constexpr auto TYPE { "EXIT" };
 
         const std::string get_type() const override { return TYPE; };
     };
-} /// namespace messaging
+} /// namespace messages
 
 #endif /// MESSAGE_EXIT_HPP

@@ -7,17 +7,17 @@
 #include "message.hpp"
 
 /// @namespace messages namespace
-namespace messaging
+namespace messages
 {
     /// @brief Message that causes the application to pause
-    class message_pause : public message
+    class message_pause : public messaging::message
     {
         public:
         /// @brief The message type
-        static constexpr auto TYPE { "MESSAGE_PAUSE" };
+        static constexpr auto TYPE { "PAUSE" };
 
         const std::string get_type() const override { return TYPE; };
     };
-} /// namespace messaging
+} /// namespace messages
 
 #endif /// MESSAGE_PAUSE_HPP

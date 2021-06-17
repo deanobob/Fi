@@ -19,7 +19,7 @@ namespace services
 
     void command_exit::execute(const std::vector<std::string>& args) const
     {
-        const auto message = messaging::message_exit();
+        const auto message = messages::message_exit();
         mp_game->m_game_status_messager.publish(&message);
     }
 }
