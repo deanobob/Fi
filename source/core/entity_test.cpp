@@ -43,15 +43,16 @@ class test_component : public core::component
     uint32_t m_test_counter{0};
 };
 
-TEST_CASE("1 core/entity.hpp Entity", "[entity]")
+TEST_CASE("core/entity.hpp Entity", "[entity]")
 {
     SECTION("1 Create entity")
     {
+        // Create entity with empty tag
         auto entity1{core::entity()};
-        REQUIRE(entity1.get_id() == 1);
         REQUIRE(entity1.get_tag().empty());
+        // Create entity with tag, ensure the ID incremented
         auto entity2{core::entity("dave")};
-        REQUIRE(entity2.get_id() == 2);
+        REQUIRE(entity2.get_id() == entity1.get_id() + 1);
         REQUIRE(entity2.get_tag() == "dave");
     }
 
