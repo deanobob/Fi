@@ -14,7 +14,7 @@ class test_subscriber : public messaging::subscriber
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
     /// @param p_entity_manager The entity manager
-    test_subscriber(core::entity_manager* p_entity_manager) :
+    test_subscriber(services::entity_manager* p_entity_manager) :
         mp_entity_manager{p_entity_manager}
     {
         mp_entity_manager->m_entity_status_publisher.subscribe(
@@ -58,7 +58,7 @@ class test_subscriber : public messaging::subscriber
 
     private:
     /// @brief Reference to the entity manager
-    core::entity_manager* mp_entity_manager{nullptr};
+    services::entity_manager* mp_entity_manager{nullptr};
     /// @brief Number of added messages
     uint32_t m_num_added{0};
     /// @brief Number of removed messages
@@ -67,7 +67,7 @@ class test_subscriber : public messaging::subscriber
 
 TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 {
-    core::entity_manager entity_manager{};
+    services::entity_manager entity_manager{nullptr};
 
     SECTION("1 Put entity")
     {

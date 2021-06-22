@@ -2,6 +2,7 @@
 
 #include "plog/Log.h"
 #include "console.hpp"
+#include "entity_manager.hpp"
 #include "game.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
@@ -16,19 +17,13 @@ namespace core
         m_game_status_messager.subscribe(this, {messages::message_pause::TYPE});
         m_game_status_messager.subscribe(this, {messages::message_resume::TYPE});
 
-        m_services.push_back(new services::console(this));
+        m_services.push_back(std::make_unique<services::console>(this));
+        m_services.push_back(std::make_unique<services::entity_manager>(this));
     }
 
     game::~game()
     {
-        m_game_status_messager.unsubscribe(this, {messages::message_exit::TYPE});
-        m_game_status_messager.unsubscribe(this, {messages::message_pause::TYPE});
-        m_game_status_messager.unsubscribe(this, {messages::message_resume::TYPE});
 
-        for (auto& service : m_services)
-        {
-            delete service;
-        }
     }
 
     void game::run()

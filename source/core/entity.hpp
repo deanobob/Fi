@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "component.hpp"
 #include "component_type.hpp"
+#include "gametime.hpp"
 #include "publisher.hpp"
 
 /// @namespace core namespace
@@ -27,6 +28,11 @@ namespace core
         entity(std::string tag = "");
         /// @brief Default destructor
         virtual ~entity() = default;
+
+        /// @brief Method that is called on every tick, providing the entity with the elapsed and total gametime
+        /// @details Calls on_update function if m_update_on_tick is set to true
+        /// @param gametime The game time object
+        void update(utilities::gametime& gametime);
 
         /// @brief Add component to entity
         /// @param component The component to add to the entity
@@ -70,7 +76,13 @@ namespace core
         /// @brief Configure the entity to update on tick
         void update_on_tick();
 
+        protected:
+        /// @brief Pure virtual method allowing derived classes to handle update method calls
+        /// @param gametime The game time object
+        virtual void on_update(utilities::gametime& gametime) {};
+
         private:
+        /// @brief Contains the next available entity ID
         static entity_id next_entity_id;
         /// @brief The entity ID
         const entity_id m_id;

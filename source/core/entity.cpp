@@ -14,6 +14,14 @@ namespace core
 
     }
 
+    void entity::update(utilities::gametime& gametime)
+    {
+        if (m_update_on_tick)
+        {
+            on_update(gametime);
+        }
+    }
+
     bool entity::add_component(std::unique_ptr<component> component)
     {
         auto type = component->get_type();
