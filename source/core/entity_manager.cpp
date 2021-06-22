@@ -3,11 +3,19 @@
 #include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
+#include "message_entity_added.hpp"
+#include "message_entity_removed.hpp"
 
 namespace core
 {
     entity_manager::~entity_manager()
     {
+        for (const auto& entity_iter : m_entities)
+        {
+            const auto message = messages::message_entity_removed(entity_iter.second.get());
+            m_entity_status_publisher.publish(&message);
+        }
+
         m_entities.clear();
     }
 
@@ -20,6 +28,10 @@ namespace core
         }
 
         m_entities.emplace(entity->get_id(), std::move(entity));
+
+        // Publish addition of entity
+        const auto message = messages::message_entity_added(entity.get());
+        m_entity_status_publisher.publish(&message);
     }
 
     entity* entity_manager::get(entity_id id)
@@ -57,6 +69,10 @@ namespace core
             // Entity not found, return false
             return false;
         }
+
+        // Publish removal of entity
+        const auto message = messages::message_entity_removed(entity_iter->second.get());
+        m_entity_status_publisher.publish(&message);
 
         // Delete entity
         m_entities.erase(entity_iter);

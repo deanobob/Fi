@@ -14,8 +14,6 @@ namespace messaging
     class subscriber
     {
         public:
-        /// @brief Default constructor
-        subscriber() = default;
         /// @brief Default destructor
         virtual ~subscriber() = default;
 

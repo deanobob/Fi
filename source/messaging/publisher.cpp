@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include "publisher.hpp"
+#include "plog/Log.h"
 
 namespace messaging
 {
@@ -15,21 +16,29 @@ namespace messaging
         }
     }
 
+    void publisher::unsubscribe(subscriber* p_subscriber)
+    {
+        for (auto& subscriber_iter : m_subscribers)
+        {
+            subscriber_iter.second.remove(p_subscriber);
+        }
+    }
+
     void publisher::unsubscribe(subscriber* p_subscriber, const std::string& message_type)
     {
-        auto it = m_subscribers.find(message_type);
-        if (it != m_subscribers.end())
+        auto subscriber_iter = m_subscribers.find(message_type);
+        if (subscriber_iter != m_subscribers.end())
         {
-            it->second.remove(p_subscriber);
+            subscriber_iter->second.remove(p_subscriber);
         }
     }
 
     void publisher::publish(const message* p_message)
     {
-        const auto& subscriber_it = m_subscribers.find(p_message->get_type());
-        if (subscriber_it != m_subscribers.end())
+        const auto& subscriber_iter = m_subscribers.find(p_message->get_type());
+        if (subscriber_iter != m_subscribers.end())
         {
-            for (const auto& subscriber : subscriber_it->second)
+            for (const auto& subscriber : subscriber_iter->second)
             {
                 subscriber->on_publish(p_message);
             }

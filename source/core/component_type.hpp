@@ -83,9 +83,8 @@ namespace core
 
     /// @brief Defines an NOT operator for component type enum
     /// @param lhs The left hand side
-    /// @param rhs The right hand side
     /// @return The result of the operation
-    inline component_type operator ~(component_type& lhs)// operator ~ (component_type lhs, component_type rhs)
+    inline component_type operator ~(component_type& lhs)
     {
         using T = std::underlying_type_t <component_type>;
         return static_cast<component_type>(~static_cast<T>(lhs));

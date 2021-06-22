@@ -24,7 +24,7 @@ namespace core
         messaging::publisher m_entity_status_publisher{};
 
         /// @brief Destructor
-        virtual ~entity_manager();
+        ~entity_manager();
 
         /// @brief Add an entity
         /// @param entity The entity
