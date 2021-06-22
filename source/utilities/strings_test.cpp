@@ -1,4 +1,4 @@
-/// @file strings.cpp
+/// @file strings_test.cpp
 
 #include "catch2/catch.hpp"
 #include "strings.hpp"
