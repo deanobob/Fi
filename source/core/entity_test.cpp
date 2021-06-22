@@ -43,9 +43,9 @@ class test_component : public core::component
     uint32_t m_test_counter{0};
 };
 
-TEST_CASE("core/entity.hpp Entity", "[entity]")
+TEST_CASE("1 core/entity.hpp Entity", "[entity]")
 {
-    SECTION("Create entity")
+    SECTION("1 Create entity")
     {
         auto entity1{core::entity()};
         REQUIRE(entity1.get_id() == 1);
@@ -55,7 +55,7 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE(entity2.get_tag() == "dave");
     }
 
-    SECTION("Add component")
+    SECTION("2 Add component")
     {
         // Create entity
         auto entity{core::entity()};
@@ -67,7 +67,7 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE_FALSE(entity.get_component<test_component>(core::component_type::render) != nullptr);
     }
 
-    SECTION("Add components")
+    SECTION("3 Add components")
     {
         // Create entity
         auto entity{core::entity()};
@@ -87,7 +87,7 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE(entity.get_component_mask() == (core::component_type::body | core::component_type::render));
     }
 
-    SECTION("Get component allows modification of component")
+    SECTION("4 Get component allows modification of component")
     {
         // Create entity
         auto entity{core::entity()};
@@ -110,7 +110,7 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE(component->get_count() == 2);
     }
 
-    SECTION("Remove component")
+    SECTION("5 Remove component")
     {
         // Create entity
         auto entity{core::entity()};
@@ -124,7 +124,7 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE_FALSE(entity.get_component<test_component>(core::component_type::body) != nullptr);
     }
 
-    SECTION("Remove components")
+    SECTION("6 Remove components")
     {
         // Create entity
         auto entity{core::entity()};

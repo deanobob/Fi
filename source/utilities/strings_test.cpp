@@ -5,7 +5,7 @@
 
 TEST_CASE("utilities/strings.hpp - Tokenise", "[utilities]")
 {
-    SECTION("Tokenise string by default space delimiter")
+    SECTION("1 Tokenise string by default space delimiter")
     {
         const std::string text_to_tokenize{"abcde efghij klmno"};
         const auto tokens = utilities::strings::tokenise(text_to_tokenize);
@@ -15,7 +15,7 @@ TEST_CASE("utilities/strings.hpp - Tokenise", "[utilities]")
         REQUIRE(tokens[2] == "klmno");
     }
 
-    SECTION("Tokenise string by comma delimiter")
+    SECTION("2 Tokenise string by comma delimiter")
     {
         const std::string text_to_tokenize{"abcde,efghij,klmno"};
         const auto tokens = utilities::strings::tokenise(text_to_tokenize, ',');
@@ -25,7 +25,7 @@ TEST_CASE("utilities/strings.hpp - Tokenise", "[utilities]")
         REQUIRE(tokens[2] == "klmno");
     }
 
-    SECTION("Tokenise string with no delimiter match")
+    SECTION("3 Tokenise string with no delimiter match")
     {
         const std::string text_to_tokenize{"abcde,efghij,klmno"};
         const auto tokens = utilities::strings::tokenise(text_to_tokenize, ' ');

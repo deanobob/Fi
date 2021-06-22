@@ -9,7 +9,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 {
     core::entity_manager entity_manager{};
 
-    SECTION("Put entity")
+    SECTION("1 Put entity")
     {
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
@@ -18,7 +18,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
         REQUIRE(entity_manager.get(id + 1) == nullptr);
     }
 
-    SECTION("Get entity by ID")
+    SECTION("2 Get entity by ID")
     {
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
@@ -27,7 +27,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
         REQUIRE(entity_manager.get(id + 1) == nullptr);
     }
 
-    SECTION("Get entity by tag")
+    SECTION("3 Get entity by tag")
     {
         auto entity = std::make_unique<core::entity>("abcde");
         auto tag = entity->get_tag();
@@ -36,7 +36,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
         REQUIRE(entity_manager.get("not the tag") == nullptr);
     }
 
-    SECTION("Remove entity")
+    SECTION("4 Remove entity")
     {
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
