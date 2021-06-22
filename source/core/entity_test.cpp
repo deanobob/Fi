@@ -43,6 +43,21 @@ class test_component : public core::component
     uint32_t m_test_counter{0};
 };
 
+/// @brief A test entity
+class test_entity : public core::entity
+{
+    public:
+    /// @brief The total number of times update is called
+    uint32_t m_total_updates{0};
+
+    /// @brief Test override function that counts the number of times it is called
+    /// @param gametime The gametime
+    void on_update(utilities::gametime& gametime) override
+    {
+        m_total_updates++;
+    }
+};
+
 TEST_CASE("core/entity.hpp Entity", "[entity]")
 {
     SECTION("1 Create entity")
@@ -157,5 +172,20 @@ TEST_CASE("core/entity.hpp Entity", "[entity]")
         REQUIRE_FALSE(entity.get_component<test_component>(core::component_type::render) != nullptr);
         // Check component mask is correct
         REQUIRE(entity.get_component_mask() == core::component_type::none);
+    }
+
+    SECTION("7 Update entity")
+    {
+        // Create entity with empty tag
+        auto entity1{test_entity()};
+        auto gametime{utilities::gametime()};
+        REQUIRE(entity1.m_total_updates == 0);
+        entity1.update(gametime);
+        REQUIRE(entity1.m_total_updates == 0);
+        entity1.update_on_tick();
+        entity1.update(gametime);
+        REQUIRE(entity1.m_total_updates == 1);
+        entity1.update(gametime);
+        REQUIRE(entity1.m_total_updates == 2);
     }
 }

@@ -5,6 +5,7 @@
 #define GAME_HPP
 
 #include <atomic>
+#include <memory>
 #include <vector>
 #include "gametime.hpp"
 #include "publisher.hpp"
@@ -44,7 +45,7 @@ namespace core
         /// @brief Records the elapsed and total time the game has been running
         utilities::gametime m_gametime{};
         /// @brief Container for services
-        std::vector<service*> m_services;
+        std::vector<std::unique_ptr<service> > m_services;
 
         /// @brief Initialise the game
         bool initialise();
