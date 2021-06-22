@@ -12,18 +12,18 @@ namespace core
 {
     game::game()
     {
-        m_game_status_messager.subscribe(this, {messaging::message_exit::TYPE});
-        m_game_status_messager.subscribe(this, {messaging::message_pause::TYPE});
-        m_game_status_messager.subscribe(this, {messaging::message_resume::TYPE});
+        m_game_status_messager.subscribe(this, {messages::message_exit::TYPE});
+        m_game_status_messager.subscribe(this, {messages::message_pause::TYPE});
+        m_game_status_messager.subscribe(this, {messages::message_resume::TYPE});
 
         m_services.push_back(new services::console(this));
     }
 
     game::~game()
     {
-        m_game_status_messager.unsubscribe(this, {messaging::message_exit::TYPE});
-        m_game_status_messager.unsubscribe(this, {messaging::message_pause::TYPE});
-        m_game_status_messager.unsubscribe(this, {messaging::message_resume::TYPE});
+        m_game_status_messager.unsubscribe(this, {messages::message_exit::TYPE});
+        m_game_status_messager.unsubscribe(this, {messages::message_pause::TYPE});
+        m_game_status_messager.unsubscribe(this, {messages::message_resume::TYPE});
 
         for (auto& service : m_services)
         {
@@ -48,25 +48,25 @@ namespace core
     void game::exit()
     {
         // Publish exit event so all subscribers can terminate cleanly
-        auto exit_message = messaging::message_exit();
+        auto exit_message = messages::message_exit();
         m_game_status_messager.publish(&exit_message);
     }
 
     void game::on_publish(const messaging::message* p_message)
     {
-        if (p_message->get_type() == messaging::message_pause::TYPE)
+        if (p_message->get_type() == messages::message_pause::TYPE)
         {
             // Pause the game
             m_paused = true;
             PLOGD << "Game paused";
         }
-        else if (p_message->get_type() == messaging::message_resume::TYPE)
+        else if (p_message->get_type() == messages::message_resume::TYPE)
         {
             // Resume the game
             m_paused = false;
             PLOGD << "Game resumed";
         }
-        else if (p_message->get_type() == messaging::message_exit::TYPE)
+        else if (p_message->get_type() == messages::message_exit::TYPE)
         {
             // Exit the game loop
             m_exit_game = true;
