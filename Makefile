@@ -13,10 +13,10 @@ INC_PATH := -Isource/ \
 			-Isource/services/console/commands/ \
             -Isource/input/ \
             -Isource/utilities/ \
-			-Ithird_party/ \
-			-I/usr/local/include/
-LIB_PATH := -L/usr/local/lib
-LIBS     := -lpthread #-lSDL2 -lallegro -lallegro_main -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+			-Ithird_party/
+LIB_PATH := -L lib/ \
+            -L/usr/local/lib
+LIBS     := -lpthread -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 
 # Define compiler
 CXX := g++-10
