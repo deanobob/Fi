@@ -14,8 +14,8 @@ class test_subscriber : public messaging::subscriber
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
     /// @param p_entity_manager The entity manager
-    test_subscriber(services::entity_manager* p_entity_manager) :
-        mp_entity_manager{p_entity_manager}
+    test_subscriber(services::entity_manager* p_entity_manager)
+        : mp_entity_manager{p_entity_manager}
     {
         mp_entity_manager->m_entity_status_publisher.subscribe(
             this,

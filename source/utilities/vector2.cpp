@@ -58,8 +58,8 @@ namespace utilities
         return vector2(fmax(lhs.x, rhs.x), fmax(lhs.y, rhs.y));
     }
 
-    vector2::vector2() :
-      vector2(0.0f, 0.0f)
+    vector2::vector2()
+        : vector2(0.0f, 0.0f)
     {
 
     }

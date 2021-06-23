@@ -50,7 +50,7 @@ namespace framework
     struct transform
     {
         /// @brief The viewport boundaries
-        utilities::Rectangle viewport{};
+        utilities::rectangle viewport{};
         /// @brief The transform scale
         utilities::vector2 scale{utilities::vector2::ONE};
         /// @brief The transform rotation in radians
@@ -74,10 +74,8 @@ namespace framework
         virtual int create_window(const window_properties& properties) = 0;
 
         /// @brief Set the clear colour
-        /// @param r The red colour value (0 to 255)
-        /// @param g The green colour value (0 to 255)
-        /// @param b The blue colour value (0 to 255)
-        virtual void set_clear_color(uint8_t r, uint8_t g, uint8_t b) = 0;
+        /// @param color The colour that is used to clear the backbuffer
+        virtual void set_clear_color(const utilities::color& color) = 0;
 
         /// @brief Clear the backbuffer
         virtual void clear() = 0;
@@ -113,15 +111,15 @@ namespace framework
         /// @param bitmap_id The bitmap ID
         /// @param position The position to render the bitmap
         /// @param flags Flags specific to the renderer
-        virtual void render_bitmap(const uint32_t bitmap_id,
+        virtual void render_bitmap(uint32_t bitmap_id,
                                    const utilities::vector2& position,
-                                   const uint32_t flags) = 0;
+                                   uint32_t flags) = 0;
 
         /// @brief Render a filled rectangle
         /// @param rect The rectangle to draw
         /// @param color The rectangle fill colour
-        virtual void render_fill_rect(const utilities::Rectangle& rect,
-                                      const Color& color) = 0;
+        virtual void render_fill_rect(const utilities::rectangle& rect,
+                                      const utilities::color& color) = 0;
 
         /// @brief Render a line
         /// @param x1 The first point X position
@@ -129,11 +127,11 @@ namespace framework
         /// @param x2 The second point X position
         /// @param y2 The second point Y position
         /// @param color The line colour
-        virtual void render_draw_line(const float x1,
-                                      const float y1,
-                                      const float x2,
-                                      const float y2,
-                                      const Color& color) = 0;
+        virtual void render_draw_line(float x1,
+                                      float y1,
+                                      float x2,
+                                      float y2,
+                                      const utilities::color& color) = 0;
 
         /// @brief Render text at given position
         /// @param font_id The ID of the font
@@ -142,12 +140,12 @@ namespace framework
         /// @param y The y position of the text
         /// @param color The colour of the text
         /// @param flags Flags specific to the renderer
-        virtual void render_text(const uint32_t font_id,
+        virtual void render_text(uint32_t font_id,
                                  const std::string& text,
-                                 const float x,
-                                 const float y,
-                                 const Color& color,
-                                 const uint32_t flags) = 0;
+                                 float x,
+                                 float y,
+                                 const utilities::color& color,
+                                 uint32_t flags) = 0;
 
         /// @brief Flip the draw buffer
         virtual void flip() = 0;
