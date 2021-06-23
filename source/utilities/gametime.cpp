@@ -42,4 +42,4 @@ namespace utilities
     {
         return m_total_time * time::MILLISECONDS_IN_ONE_SECOND;
     }
-} /* namespace utilities */
+} /// namespace utilities

@@ -7,9 +7,9 @@ namespace core
 {
     entity_id entity::next_entity_id{1};
 
-    entity::entity(std::string tag) :
-        m_id{next_entity_id++},
-        m_tag{tag}
+    entity::entity(std::string tag)
+        : m_id{next_entity_id++}
+        , m_tag{tag}
     {
 
     }

@@ -10,8 +10,8 @@ class test_component : public core::component
     public:
     /// @brief Constructor
     /// @param type Optional component type override, defaults to body
-    test_component(core::component_type type = core::component_type::body) :
-        m_type{type}
+    test_component(core::component_type type = core::component_type::body)
+        : m_type{type}
     {
     }
 
