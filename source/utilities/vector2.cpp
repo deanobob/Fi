@@ -1,9 +1,4 @@
-/*
- * vector2.cpp
- *
- *  Created on: 30 Apr 2015
- *      Author: Dean Harris
- */
+/// @file vector2.cpp
 
 #include <float.h>
 #include <math.h>

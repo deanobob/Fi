@@ -159,4 +159,4 @@ namespace framework
 
 }; /// namespace framework
 
-#endif /* RENDERER_HPP */
+#endif /// RENDERER_HPP
