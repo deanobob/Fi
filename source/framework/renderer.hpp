@@ -37,7 +37,7 @@ namespace framework
         /// @brief Flag defining whether the window should display in fullscreen mode
         bool fullscreen{false};
         /// @brief Flag defining whether the window is resizeable
-        bool resizable{true};
+        bool resizeable{true};
         /// @brief Flag defining if vsync is enabled
         bool vsync{true};
         /// @brief Flag defining if msaa is enabled

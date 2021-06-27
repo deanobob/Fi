@@ -55,7 +55,7 @@ namespace framework
             flags |= ALLEGRO_FULLSCREEN_WINDOW;
         }
 
-        if (properties.resizable)
+        if (properties.resizeable)
         {
             flags |= ALLEGRO_RESIZABLE;
         }

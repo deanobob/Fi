@@ -12,6 +12,7 @@ INC_PATH := -Isource/ \
 			-Isource/services/console/ \
 			-Isource/services/console/commands/ \
             -Isource/input/ \
+            -Isource/framework/ \
             -Isource/utilities/ \
 			-Ithird_party/
 LIB_PATH := -L lib/ \
