@@ -17,9 +17,9 @@ namespace utilities
         /// @brief A vector instance of maximum size
         static const vector2 MAX;
 
-        /// @brief The x value
+        /// @brief The x position
         float x{0};
-        /// @brief The y value
+        /// @brief The y position
         float y{0};
 
         /// @brief Calculates the distance between two vectors

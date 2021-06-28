@@ -37,7 +37,7 @@ namespace framework
         /// @brief Flag defining whether the window should display in fullscreen mode
         bool fullscreen{false};
         /// @brief Flag defining whether the window is resizeable
-        bool resizable{true};
+        bool resizeable{true};
         /// @brief Flag defining if vsync is enabled
         bool vsync{true};
         /// @brief Flag defining if msaa is enabled
@@ -65,13 +65,13 @@ namespace framework
         static constexpr auto FLAGS_WINDOW_OPENGL = 2;
 
         /// @brief Initialise the renderer
-        /// @return Status code indicating whether the renderer intialised successfully
+        /// @return True on success, false if failed to intialise
         virtual bool initialise() = 0;
 
         /// @brief Create an application window
         /// @param properties The window properties
-        /// @return Status code indicating whether the window was created. Returns RENDERER_OK on success.
-        virtual int create_window(const window_properties& properties) = 0;
+        /// @return True on success, false if failure to create window
+        virtual bool create_window(const window_properties& properties) = 0;
 
         /// @brief Set the clear colour
         /// @param color The colour that is used to clear the backbuffer
