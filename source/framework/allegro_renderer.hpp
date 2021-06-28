@@ -3,6 +3,8 @@
 #ifndef ALLEGRO_RENDERER_HPP
 #define ALLEGRO_RENDERER_HPP
 
+#ifndef CI
+
 #include <list>
 #include <map>
 #include "allegro5/allegro.h"
@@ -17,7 +19,7 @@ namespace framework
         public:
         /// @brief Constructor
         /// @param p_event_queue The allegro event queue
-        allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue);
+        allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue = nullptr);
 
         bool initialise() override;
 
@@ -98,5 +100,75 @@ namespace framework
     };
 
 } /// namespace framework
+
+#else /// CI
+
+#include "renderer.hpp"
+
+namespace framework
+{
+    /// @brief Implementation of renderer framework interface using liballegro
+    class allegro_renderer: public renderer
+    {
+        public:
+        /// @brief Constructor
+        allegro_renderer() = default;
+
+        bool initialise() override;
+
+        bool create_window(const window_properties& properties) override;
+
+        void set_clear_color(const utilities::color& color) override;
+
+        void clear() override;
+
+        void set_transform(const transform& transform) override;
+
+        bool load_bitmap(const std::string& filename,
+                         const utilities::vector2& position,
+                         const utilities::vector2& size,
+                         uint32_t& bitmapId) override;
+
+        bool load_font(const std::string& filename,
+                       uint32_t font_size,
+                       uint32_t flags,
+                       uint32_t& fontId) override;
+
+        void render_bitmap(uint32_t bitmapId,
+                           const utilities::vector2& position,
+                           uint32_t flags) override;
+
+        void render_fill_rect(const utilities::rectangle& rect,
+                              const utilities::color& color) override;
+
+        void render_draw_line(float x1,
+                              float y1,
+                              float x2,
+                              float y2,
+                              const utilities::color& color) override;
+
+        void render_text(const uint32_t font_id,
+                         const std::string& text,
+                         float x,
+                         float y,
+                         const utilities::color& color,
+                         uint32_t flags) override;
+
+        void flip() override;
+
+        void destroy_window() override;
+
+        void shutdown() override;
+
+        private:
+        /// @brief Stores the next unique ID for a font UID
+        uint32_t m_next_font_id{1};
+        /// @brief Stores the next unique ID for a sprite UID
+        uint32_t m_next_sprite_id{1};
+    };
+
+} /// namespace framework
+
+#endif /// CI
 
 #endif /// ALLEGRO_RENDERER_HPP

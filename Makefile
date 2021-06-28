@@ -14,10 +14,11 @@ INC_PATH := -Isource/ \
             -Isource/input/ \
             -Isource/framework/ \
             -Isource/utilities/ \
-			-Ithird_party/
-LIB_PATH := -L lib/ \
+			-Ithird_party/ \
+			-I/usr/local/include/
+LIB_PATH := -Llib/ \
             -L/usr/local/lib
-LIBS     := -lpthread -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+LIBS     := -lpthread #-lallegro -lallegro_main -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 
 # Define compiler
 CXX := g++-10
@@ -26,7 +27,7 @@ ifeq ($(IS_LINUX), 1)
 endif
 
 # Compiler options
-CXX_FLAGS := -std=c++17 -ggdb -Wall -Wextra -Wno-unused-parameter $(INC_PATH)
+CXX_FLAGS := -std=c++17 -ggdb -Wall -Wextra -Wno-unused-parameter -DCI $(INC_PATH)
 LD_FLAGS := $(LIB_PATH) $(LIBS)
 
 # Name the executable here
@@ -38,6 +39,7 @@ GDB_PORT := 6000
 
 # Important folders
 BIN      := bin
+LIB      := lib
 ASSETS   := assets
 OBJ      := obj
 TEST_OBJ := $(OBJ)/test
@@ -93,11 +95,12 @@ clean:
 prepare:
 	@echo Preparing assets
 	rm -rf ./$(BIN)/$(ASSETS)
+	cp -r ./$(LIB) ./$(BIN)/
 	cp -r ./$(ASSETS) ./$(BIN)/
 
 run: build prepare
 	@echo Running $(EXECUTABLE_NAME)
-	./$(BIN)/$(EXECUTABLE_NAME)
+	DYLD_LIBRARY_PATH=${LIB} ./$(BIN)/$(EXECUTABLE_NAME)
 
 debug: build prepare
 	@echo Running $(EXECUTABLE_NAME) with GDB server on port $(GDB_PORT)
@@ -105,7 +108,7 @@ debug: build prepare
 
 test: test_env build_tests
 	@echo Running tests
-	./$(BIN)/$(TEST_EXECUTABLE_NAME)
+	DYLD_LIBRARY_PATH=${LIB} ./$(BIN)/$(TEST_EXECUTABLE_NAME)
 
 review:
 	@echo

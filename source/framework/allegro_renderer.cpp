@@ -1,5 +1,7 @@
 /// @file allegro_renderer.cpp
 
+#ifndef CI
+
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_image.h"
@@ -164,7 +166,7 @@ namespace framework
         return true;
     }
 
-    bool allegro_renderer::load_font(const std::string& filename, uint32_t font_size, uint32_t flags, uint32_t& m_font_id)
+    bool allegro_renderer::load_font(const std::string& filename, uint32_t font_size, uint32_t flags, uint32_t& font_id)
     {
         // Generate font unique name (combination of font name and font size)
         const std::string font_unique_name = filename + std::to_string(font_size);
@@ -173,7 +175,7 @@ namespace framework
         const auto& font_iter = m_font_ids.find(font_unique_name);
         if (font_iter != m_font_ids.end())
         {
-            m_font_id = font_iter->second;
+            font_id = font_iter->second;
             return true;
         }
 
@@ -183,10 +185,10 @@ namespace framework
         if (p_font != nullptr)
         {
             // Store font in cache mapped to font Id
-            m_font_id = m_next_font_id++;
-            m_font_cache[m_font_id] = p_font;
+            font_id = m_next_font_id++;
+            m_font_cache[font_id] = p_font;
             // Store font ID against font unique name allowing for reuse
-            m_font_ids[font_unique_name] = m_font_id;
+            m_font_ids[font_unique_name] = font_id;
         }
         else
         {
@@ -316,3 +318,91 @@ namespace framework
     }
 
 } /* namespace render */
+
+#else
+
+#include "allegro_renderer.hpp"
+
+namespace framework
+{
+    bool allegro_renderer::initialise()
+    {
+        return true;
+    }
+
+    bool allegro_renderer::create_window(const window_properties& properties)
+    {
+        return true;
+    }
+
+    void allegro_renderer::set_clear_color(const utilities::color& color)
+    {
+
+    }
+
+    void allegro_renderer::clear()
+    {
+
+    }
+
+    void allegro_renderer::set_transform(const transform& transform)
+    {
+
+    }
+
+    bool allegro_renderer::load_bitmap(const std::string& filename,
+                                       const utilities::vector2& position,
+                                       const utilities::vector2& size,
+                                       uint32_t& bitmap_id)
+    {
+        bitmap_id = m_next_sprite_id++;
+
+        return true;
+    }
+
+    bool allegro_renderer::load_font(const std::string& filename, uint32_t font_size, uint32_t flags, uint32_t& font_id)
+    {
+        font_id = m_next_font_id++;
+
+        return true;
+    }
+
+    void allegro_renderer::render_bitmap(uint32_t bitmap_id, const utilities::vector2& position, uint32_t flags)
+    {
+
+    }
+
+    void allegro_renderer::render_fill_rect(const utilities::rectangle& rect, const utilities::color& color)
+    {
+
+    }
+
+    void allegro_renderer::render_draw_line(const float x1, const float y1, const float x2,
+        const float y2, const utilities::color& color)
+    {
+
+    }
+
+    void allegro_renderer::render_text(const uint32_t font_id, const std::string& text, const float x, const float y,
+        const utilities::color& color, const uint32_t flags)
+    {
+
+    }
+
+    void allegro_renderer::flip()
+    {
+
+    }
+
+    void allegro_renderer::destroy_window()
+    {
+
+    }
+
+    void allegro_renderer::shutdown()
+    {
+
+    }
+}
+
+#endif
