@@ -27,7 +27,6 @@ namespace services
         /// @brief Constructor
         /// @param p_game Reference to the game
         entity_manager(core::game* p_game);
-
         /// @brief Destructor
         virtual ~entity_manager();
 

@@ -5,6 +5,7 @@
 #define SERVICE_HPP
 
 #include "gametime.hpp"
+#include "system_interface.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -19,8 +20,12 @@ namespace core
         /// @brief Constructor
         /// @param p_game The game instance
         service(game* p_game);
-        /// @brief Default constructor
+        /// @brief Default destructor
         virtual ~service() = default;
+
+        /// @brief Get the framework system interface
+        /// @return Reference to the framework system interface
+        framework::system_interface* get_system_interface();
 
         /// @brief Initialises the service
         /// @return True if successfully initialised, else false
@@ -36,7 +41,7 @@ namespace core
 
         protected:
         /// @brief Pointer to the instance of the game
-        game* mp_game;
+        game* mp_game {nullptr};
     };
 } /// namespace core
 

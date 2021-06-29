@@ -25,7 +25,7 @@ namespace core
         /// @brief Constructor
         game();
         /// @brief Default destructor
-        virtual ~game();
+        virtual ~game() = default;
 
         /// @brief The root of the game
         /// @details Initialises the game and loops until an exit message is received
@@ -37,6 +37,10 @@ namespace core
         /// @param p_message The message
         void on_publish(const messaging::message* p_message) override;
 
+        /// @brief Get the framework system interface
+        /// @return A reference to the framework system interface
+        framework::system_interface* get_system_interface();
+
         private:
         /// @brief Flag indicating whether to exit the game
         std::atomic<bool> m_exit_game{false};
@@ -46,6 +50,8 @@ namespace core
         utilities::gametime m_gametime{};
         /// @brief Container for services
         std::vector<std::unique_ptr<service> > m_services;
+        /// @brief Framework system interface
+        framework::system_interface m_system_interface{};
 
         /// @brief Initialise the game
         bool initialise();
@@ -53,6 +59,10 @@ namespace core
         void update();
         /// @brief Shutdown the game
         void shutdown();
+
+        /// @brief Add service to game
+        /// @param service The service to add
+        void add_service(std::unique_ptr<service> service);
     };
 } /// namespace core
 
