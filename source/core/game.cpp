@@ -2,6 +2,7 @@
 
 #include "plog/Log.h"
 #include "console.hpp"
+#include "draw_manager.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
 #include "message_exit.hpp"
@@ -13,17 +14,14 @@ namespace core
 {
     game::game()
     {
-        m_game_status_messager.subscribe(this, {messages::message_exit::TYPE});
-        m_game_status_messager.subscribe(this, {messages::message_pause::TYPE});
-        m_game_status_messager.subscribe(this, {messages::message_resume::TYPE});
+        m_game_status_messager.subscribe(this, {
+            messages::message_exit::TYPE,
+            messages::message_pause::TYPE,
+            messages::message_resume::TYPE});
 
-        m_services.push_back(std::make_unique<services::console>(this));
-        m_services.push_back(std::make_unique<services::entity_manager>(this));
-    }
-
-    game::~game()
-    {
-
+        add_service(std::make_unique<services::console>(this));
+        add_service(std::make_unique<services::entity_manager>(this));
+        add_service(std::make_unique<services::draw_manager>(this));
     }
 
     void game::run()
@@ -69,6 +67,11 @@ namespace core
         }
     }
 
+    framework::system_interface* game::get_system_interface()
+    {
+        return &m_system_interface;
+    }
+
     bool game::initialise()
     {
         bool success = true;
@@ -100,5 +103,10 @@ namespace core
         {
             service->shutdown();
         }
+    }
+
+    void game::add_service(std::unique_ptr<service> service)
+    {
+        m_services.push_back(std::move(service));
     }
 }

@@ -321,6 +321,7 @@ namespace framework
 
 #else
 
+#include "plog/Log.h"
 #include "allegro_renderer.hpp"
 
 namespace framework
