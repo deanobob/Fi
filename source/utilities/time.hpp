@@ -28,9 +28,9 @@ namespace utilities
         /// @param seconds The number of seconds to sleep for
         static void sleep_sec(uint32_t seconds);
 
-        /// @brief Sleeps for n microseconds
-        /// @param microseconds The number of microseconds to sleep for
-        static void sleep_msec(uint32_t microseconds);
+        /// @brief Sleeps for n milliseconds
+        /// @param milliseconds The number of milliseconds to sleep for
+        static void sleep_msec(uint32_t milliseconds);
 
         private:
         /// @brief Default constructor

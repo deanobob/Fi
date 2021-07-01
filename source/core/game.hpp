@@ -7,6 +7,7 @@
 #include <atomic>
 #include <memory>
 #include <vector>
+#include "draw_manager.hpp"
 #include "gametime.hpp"
 #include "publisher.hpp"
 #include "service.hpp"
@@ -52,6 +53,8 @@ namespace core
         std::vector<std::unique_ptr<service> > m_services;
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
+        /// @brief The draw manager
+        core::draw_manager m_draw_manager;
 
         /// @brief Initialise the game
         bool initialise();
