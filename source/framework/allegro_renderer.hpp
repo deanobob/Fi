@@ -19,7 +19,7 @@ namespace framework
         public:
         /// @brief Constructor
         /// @param p_event_queue The allegro event queue
-        allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue = nullptr);
+        allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue = al_create_event_queue());
 
         bool initialise() override;
 

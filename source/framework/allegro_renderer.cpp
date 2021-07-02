@@ -89,7 +89,10 @@ namespace framework
 
             mp_target = al_create_bitmap(properties.width, properties.height);
 
-            al_register_event_source(mp_event_queue, al_get_display_event_source(mp_display));
+            if (mp_display)
+            {
+                al_register_event_source(mp_event_queue, al_get_display_event_source(mp_display));
+            }
         }
 
         return true;
