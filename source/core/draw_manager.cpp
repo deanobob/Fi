@@ -9,8 +9,6 @@ namespace core
 {
     draw_manager::draw_manager(game* p_game)
     {
-        al_init();
-
         mp_renderer = p_game->get_system_interface()->get_renderer();
         assert(mp_renderer != nullptr);
     }

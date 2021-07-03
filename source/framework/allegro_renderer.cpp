@@ -15,12 +15,13 @@ namespace framework
     allegro_renderer::allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue)
         : mp_event_queue(p_event_queue)
     {
+        al_init();
+
+        mp_event_queue = p_event_queue ? p_event_queue : al_create_event_queue();
     }
 
     bool allegro_renderer::initialise()
     {
-        al_init();
-
         if (!al_init_image_addon())
         {
             PLOG_ERROR << "Failed to initialise image addon";
