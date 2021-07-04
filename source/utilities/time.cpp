@@ -1,6 +1,6 @@
 /// @file time.cpp
 
-#include <sys/time.h>
+#include <chrono>
 #include <unistd.h>
 #include "time.hpp"
 
@@ -8,9 +8,8 @@ namespace utilities
 {
     double time::get_current_time_in_seconds()
     {
-        struct timeval tv;
-        gettimeofday(&tv, nullptr);
-        return tv.tv_sec + (tv.tv_usec / MICROSECONDS_IN_ONE_SECOND);
+        const auto time_now_in_nano_seconds = std::chrono::high_resolution_clock::now().time_since_epoch();
+        return static_cast<double>(time_now_in_nano_seconds.count()) / static_cast<double>(NANOSECONDS_IN_ONE_SECOND);
     }
 
     void time::sleep_sec(uint32_t seconds)

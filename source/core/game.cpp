@@ -2,7 +2,6 @@
 
 #include "plog/Log.h"
 #include "console.hpp"
-#include "draw_manager.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
 #include "message_exit.hpp"
@@ -13,6 +12,7 @@
 namespace core
 {
     game::game()
+        : m_draw_manager{this}
     {
         m_game_status_messager.subscribe(this, {
             messages::message_exit::TYPE,
@@ -21,17 +21,43 @@ namespace core
 
         add_service(std::make_unique<services::console>(this));
         add_service(std::make_unique<services::entity_manager>(this));
-        add_service(std::make_unique<services::draw_manager>(this));
     }
 
     void game::run()
     {
+        // Fixed physics step
+        const double dt = 0.01;
+
         if (initialise())
         {
+            double current_time = utilities::time::get_current_time_in_seconds();
+            double accumulator = 0.0;
+
             while (!m_exit_game)
             {
-                update();
-                utilities::time::sleep_msec(10);
+                double new_time = utilities::time::get_current_time_in_seconds();
+                double frame_time = new_time - current_time;
+                // Avoid issues with clock corrections
+                if (frame_time > 0.25)
+                {
+                    frame_time = 0.25;
+                }
+
+                current_time = new_time;
+
+                accumulator += frame_time;
+
+                while (accumulator >= dt)
+                {
+                    m_gametime.add_elapsed_time_in_seconds(dt);
+
+                    update();
+                    accumulator -= dt;
+                }
+
+                // Pass remainder of frame time to draw manager to allow interpolation of
+                // entity positions between previous and current state
+                m_draw_manager.draw(accumulator / dt);
             }
 
             shutdown();
@@ -81,13 +107,13 @@ namespace core
             success &= service->initialise();
         }
 
+        success &= m_draw_manager.initialise();
+
         return success;
     }
 
     void game::update()
     {
-        m_gametime.update();
-
         for (auto& service : m_services)
         {
             if (!m_paused || !service->pauseable())
@@ -99,6 +125,8 @@ namespace core
 
     void game::shutdown()
     {
+        m_draw_manager.shutdown();
+
         for (auto& service : m_services)
         {
             service->shutdown();

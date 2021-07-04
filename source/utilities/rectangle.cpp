@@ -68,8 +68,8 @@ namespace utilities
 
     bool rectangle::contains(const point& value) const
     {
-        return (value.x >= this->x && value.x <= (this->x + this->width)
-            && value.y >= this->y && value.y <= (this->y + this->height));
+        return (static_cast<float>(value.x) >= this->x && static_cast<float>(value.x) <= (this->x + this->width)
+            && static_cast<float>(value.y) >= this->y && static_cast<float>(value.y) <= (this->y + this->height));
     }
 
     bool rectangle::contains(const vector2& value) const

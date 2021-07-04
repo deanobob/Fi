@@ -101,13 +101,13 @@ namespace utilities
 
     vector2 vector2::operator+ (const double& rhs) const
     {
-        return vector2(this->x + rhs, this->y + rhs);
+        return vector2(this->x + static_cast<float>(rhs), this->y + static_cast<float>(rhs));
     }
 
     vector2& vector2::operator+= (const double& rhs)
     {
-        this->x += rhs;
-        this->y += rhs;
+        this->x += static_cast<float>(rhs);
+        this->y += static_cast<float>(rhs);
 
         return *this;
     }
@@ -132,7 +132,7 @@ namespace utilities
 
     vector2 vector2::operator* (const double& rhs) const
     {
-        return vector2(this->x * rhs, this->y * rhs);
+        return vector2(this->x * static_cast<float>(rhs), this->y * static_cast<float>(rhs));
     }
 
     vector2& vector2::operator*= (const vector2& rhs)
@@ -150,7 +150,7 @@ namespace utilities
 
     vector2 vector2::operator/ (const double& rhs) const
     {
-        return vector2(this->x / rhs, this->y / rhs);
+        return vector2(this->x / static_cast<float>(rhs), this->y / static_cast<float>(rhs));
     }
 
     vector2& vector2::operator/= (const vector2& rhs)

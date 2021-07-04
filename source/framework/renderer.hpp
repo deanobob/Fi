@@ -54,7 +54,7 @@ namespace framework
         /// @brief The transform scale
         utilities::vector2 scale{utilities::vector2::ONE};
         /// @brief The transform rotation in radians
-        double rotation{0.0};
+        float rotation{0.0f};
     };
 
     /// @brief The renderer class
@@ -157,6 +157,6 @@ namespace framework
         virtual void shutdown() = 0;
     };
 
-}; /// namespace framework
+} /// namespace framework
 
 #endif /// RENDERER_HPP

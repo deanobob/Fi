@@ -10,17 +10,10 @@
 
 namespace utilities
 {
-    gametime::gametime()
+    void gametime::add_elapsed_time_in_seconds(double elapsed_time)
     {
-        m_last_time = time::get_current_time_in_seconds();
-    }
-
-    void gametime::update()
-    {
-        double current_time = time::get_current_time_in_seconds();
-        m_elapsed_time = current_time - m_last_time;
+        m_elapsed_time = elapsed_time;
         m_total_time += m_elapsed_time;
-        m_last_time = current_time;
     }
 
     double gametime::get_elapsed_time_in_seconds() const
