@@ -123,8 +123,10 @@ namespace framework
         al_scale_transform(&al_transform, transform.scale.x, transform.scale.y);
         al_use_transform(&al_transform);
 
-        al_set_clipping_rectangle(transform.viewport.x, transform.viewport.y,
-            transform.viewport.width, transform.viewport.height);
+        al_set_clipping_rectangle(static_cast<int>(transform.viewport.x),
+                                  static_cast<int>(transform.viewport.y),
+                                  static_cast<int>(transform.viewport.width),
+                                  static_cast<int>(transform.viewport.height));
     }
 
     bool allegro_renderer::load_bitmap(const std::string& filename,
@@ -154,7 +156,11 @@ namespace framework
             }
         }
 
-        ALLEGRO_BITMAP* p_sub_bitmap = al_create_sub_bitmap(p_parent_bitmap, position.x, position.y, size.x, size.y);
+        ALLEGRO_BITMAP* p_sub_bitmap = al_create_sub_bitmap(p_parent_bitmap,
+                                                            static_cast<int>(position.x),
+                                                            static_cast<int>(position.y),
+                                                            static_cast<int>(size.x),
+                                                            static_cast<int>(size.y));
         if (p_sub_bitmap != nullptr)
         {
             // assign m_next_sprite_id to bitmap_id and save sub bitmap in sprite cache

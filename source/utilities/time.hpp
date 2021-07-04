@@ -17,6 +17,8 @@ namespace utilities
         static constexpr auto MILLISECONDS_IN_ONE_SECOND{1000.0};
         /// @brief The number of microseconds in one second
         static constexpr auto MICROSECONDS_IN_ONE_SECOND{1000000.0};
+        /// @brief The number of nanoseconds in one second
+        static constexpr auto NANOSECONDS_IN_ONE_SECOND{1000000000.0};
         /// @brief The number of microseconds in one millisecond
         static constexpr auto MICROSECONDS_IN_ONE_MILLISECOND{1000.0};
 

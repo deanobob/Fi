@@ -59,7 +59,7 @@ namespace core
             }
 
             return dynamic_cast<T*>(component_iter->second.get());
-        };
+        }
 
         /// @brief Get the entity ID
         /// @return Returns the entity ID

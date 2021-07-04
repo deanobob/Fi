@@ -37,12 +37,20 @@ namespace core
             {
                 double new_time = utilities::time::get_current_time_in_seconds();
                 double frame_time = new_time - current_time;
+                // Avoid issues with clock corrections
+                if (frame_time > 0.25)
+                {
+                    frame_time = 0.25;
+                }
+
                 current_time = new_time;
 
                 accumulator += frame_time;
 
                 while (accumulator >= dt)
                 {
+                    m_gametime.add_elapsed_time_in_seconds(dt);
+
                     update();
                     accumulator -= dt;
                 }
@@ -106,8 +114,6 @@ namespace core
 
     void game::update()
     {
-        m_gametime.update();
-
         for (auto& service : m_services)
         {
             if (!m_paused || !service->pauseable())

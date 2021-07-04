@@ -8,23 +8,36 @@
  *                                           /\____/
  *                                           \_/__/
  *
+ *      Header file for X specific functionality.
+ * 
+ *      By Robert MacGregor.
+ * 
  */
 
+#ifndef __al_included_allegro5_allegro_x_h
+#define __al_included_allegro5_allegro_x_h
 
-#ifndef A5_OSX_ALLEGRO_H
-#define A5_OSX_ALLEGRO_H
+#include <X11/Xlib.h>
 
-/*
- *  Public Objective-C OSX-related API
- */
+#include "allegro5/base.h"
+#include "allegro5/display.h"
+
 #ifdef __cplusplus
    extern "C" {
 #endif
 
-AL_FUNC(NSWindow *, al_osx_get_window,            (ALLEGRO_DISPLAY *d));
+/*
+ *  Public X-related API
+ */
+AL_FUNC(XID, al_get_x_window_id, (ALLEGRO_DISPLAY *display));
+#if defined(ALLEGRO_UNSTABLE) || defined(ALLEGRO_INTERNAL_UNSTABLE) || defined(ALLEGRO_SRC)
+AL_FUNC(bool, al_x_set_initial_icon, (ALLEGRO_BITMAP *bitmap));
+#endif
 
 #ifdef __cplusplus
    }
 #endif
 
-#endif /* A5_OSX_ALLEGRO_H */
+#endif
+
+/* vim: set ts=8 sts=3 sw=3 et: */
