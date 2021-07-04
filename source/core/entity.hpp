@@ -32,7 +32,7 @@ namespace core
         /// @brief Method that is called on every tick, providing the entity with the elapsed and total gametime
         /// @details Calls on_update function if m_update_on_tick is set to true
         /// @param gametime The game time object
-        void update(utilities::gametime& gametime);
+        void update(const utilities::gametime& gametime);
 
         /// @brief Add component to entity
         /// @param component The component to add to the entity
@@ -79,7 +79,7 @@ namespace core
         protected:
         /// @brief Pure virtual method allowing derived classes to handle update method calls
         /// @param gametime The game time object
-        virtual void on_update(utilities::gametime& gametime) {};
+        virtual void on_update(const utilities::gametime& gametime) {};
 
         private:
         /// @brief Contains the next available entity ID

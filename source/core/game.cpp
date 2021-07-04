@@ -121,6 +121,8 @@ namespace core
                 service->update(m_gametime);
             }
         }
+
+        m_draw_manager.update(m_gametime);
     }
 
     void game::shutdown()

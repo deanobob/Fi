@@ -23,6 +23,8 @@ namespace framework
 
         bool initialise() override;
 
+        void process_events() override;
+
         bool create_window(const window_properties& properties) override;
 
         void set_clear_color(const utilities::color& color) override;
@@ -115,6 +117,8 @@ namespace framework
         allegro_renderer() = default;
 
         bool initialise() override;
+
+        void process_events() override;
 
         bool create_window(const window_properties& properties) override;
 

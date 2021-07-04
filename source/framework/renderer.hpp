@@ -3,9 +3,11 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
+#include <list>
 #include <string>
 #include "color.hpp"
 #include "rectangle.hpp"
+#include "renderer_event_listener.hpp"
 #include "vector2.hpp"
 
 /// @namespace framework namespace
@@ -64,9 +66,26 @@ namespace framework
         /// @brief flags - converted from SDL as required
         static constexpr auto FLAGS_WINDOW_OPENGL = 2;
 
+        /// @brief Add a display event listener
+        /// @param p_event_listener The event listener
+        void add_event_listener(renderer_event_listener* p_event_listener)
+        {
+            mp_event_listeners.push_back(p_event_listener);
+        }
+
+        /// @brief Remove a display event listener
+        /// @param p_event_listener The event listener
+        void remove_event_listener(renderer_event_listener* p_event_listener)
+        {
+            mp_event_listeners.remove(p_event_listener);
+        }
+
         /// @brief Initialise the renderer
         /// @return True on success, false if failed to intialise
         virtual bool initialise() = 0;
+
+        /// @brief Process events from renderer i.e. window close, etc.
+        virtual void process_events() = 0;
 
         /// @brief Create an application window
         /// @param properties The window properties
@@ -155,6 +174,10 @@ namespace framework
 
         /// @brief Terminates all renderer functions
         virtual void shutdown() = 0;
+
+        protected:
+        /// @brief Container for event listeners subscribed to receive display events
+        std::list<renderer_event_listener*> mp_event_listeners{};
     };
 
 } /// namespace framework

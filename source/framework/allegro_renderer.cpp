@@ -49,6 +49,27 @@ namespace framework
         return true;
     }
 
+    void allegro_renderer::process_events()
+    {
+        ALLEGRO_EVENT event;
+
+        while (al_get_next_event(mp_event_queue, &event))
+        {
+            switch (event.type)
+            {
+                case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_close();
+                    }
+                    break;
+                default:
+                    PLOG_DEBUG << "Unknown event";
+                    break;
+            }
+        }
+    }
+
     bool allegro_renderer::create_window(const window_properties& properties)
     {
         // Define flags based on properties configuration
@@ -339,6 +360,11 @@ namespace framework
     bool allegro_renderer::initialise()
     {
         return true;
+    }
+
+    void allegro_renderer::process_events()
+    {
+
     }
 
     bool allegro_renderer::create_window(const window_properties& properties)

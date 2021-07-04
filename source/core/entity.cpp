@@ -14,7 +14,7 @@ namespace core
 
     }
 
-    void entity::update(utilities::gametime& gametime)
+    void entity::update(const utilities::gametime& gametime)
     {
         if (m_update_on_tick)
         {

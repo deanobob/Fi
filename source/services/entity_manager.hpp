@@ -32,7 +32,7 @@ namespace services
 
         bool initialise() override { return true; }
 
-        void update(utilities::gametime& gametime) override;
+        void update(const utilities::gametime& gametime) override;
 
         void shutdown() override {}
 

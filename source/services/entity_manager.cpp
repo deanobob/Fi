@@ -25,7 +25,7 @@ namespace services
         m_entities.clear();
     }
 
-    void entity_manager::update(utilities::gametime& gametime)
+    void entity_manager::update(const utilities::gametime& gametime)
     {
         for (const auto& entity_iter : m_entities)
         {

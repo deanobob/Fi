@@ -52,7 +52,7 @@ class test_entity : public core::entity
 
     /// @brief Test override function that counts the number of times it is called
     /// @param gametime The gametime
-    void on_update(utilities::gametime& gametime) override
+    void on_update(const utilities::gametime& gametime) override
     {
         m_total_updates++;
     }
