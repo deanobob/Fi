@@ -338,10 +338,10 @@ namespace framework
 
     void allegro_renderer::shutdown()
     {
-        al_shutdown_primitives_addon();
-        al_shutdown_ttf_addon();
-        al_shutdown_font_addon();
-        al_shutdown_image_addon();
+        if (mp_event_queue)
+        {
+            al_destroy_event_queue(mp_event_queue);
+        }
     }
 
     ALLEGRO_BITMAP* allegro_renderer::get_bitmap(uint32_t bitmap_id) const
@@ -360,7 +360,7 @@ namespace framework
         return std::string(al_path_cstr(al_get_standard_path(ALLEGRO_RESOURCES_PATH), '/')) + "assets/";
     }
 
-} /* namespace render */
+} /// namespace framework
 
 #else
 
