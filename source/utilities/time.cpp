@@ -1,10 +1,8 @@
 /// @file time.cpp
 
 #include <chrono>
-#include <sys/time.h>
 #include <unistd.h>
 #include "time.hpp"
-#include "plog/Log.h"
 
 namespace utilities
 {
