@@ -18,7 +18,7 @@ INC_PATH := -Isource/ \
 			-I/usr/local/include/
 LIB_PATH := -Llib/ \
             -L/usr/local/lib
-LIBS     := -lpthread -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+LIBS     := -lpthread # -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 
 # Define compiler
 CXX := g++-10
@@ -27,7 +27,7 @@ ifeq ($(IS_LINUX), 1)
 endif
 
 # Compiler options
-CXX_FLAGS := -std=c++17 -ggdb -Wall -Wextra -pedantic -Wconversion -Wno-unused-parameter $(INC_PATH)
+CXX_FLAGS := -std=c++17 -ggdb -Wall -Wextra -pedantic -Wconversion -Wno-unused-parameter -DCI $(INC_PATH)
 LD_FLAGS := $(LIB_PATH) $(LIBS)
 
 # Name the executable here
