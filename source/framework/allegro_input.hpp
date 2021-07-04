@@ -29,6 +29,16 @@ namespace framework
         private:
         /// @brief The allegro event queue
         ALLEGRO_EVENT_QUEUE* mp_event_queue{nullptr};
+
+        /// @brief Convert allegro key code to key code
+        /// @param key_code The allegro key code
+        /// @return The game key code
+        static services::key allegro_key_to_key(unsigned int key_code);
+
+        /// @brief Convert allegro mouse button to mouse button
+        /// @param button_id The allegro mouse button
+        /// @return The game mouse button
+        static services::mouse_button allegro_mouse_button_to_mouse_button(unsigned int button_id);
     };
 
 } /// namespace framework
