@@ -54,4 +54,14 @@ namespace core
     {
         mp_game->exit();
     }
+
+    void draw_manager::on_display_gained_focus()
+    {
+        PLOG_DEBUG << "Focus gained";
+    }
+
+    void draw_manager::on_display_lost_focus()
+    {
+        PLOG_DEBUG << "Focus lost";
+    }
 }

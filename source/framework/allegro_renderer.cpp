@@ -63,8 +63,20 @@ namespace framework
                         listener_iter->on_display_close();
                     }
                     break;
+                case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_gained_focus();
+                    }
+                    break;
+                case ALLEGRO_EVENT_DISPLAY_SWITCH_OUT:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_lost_focus();
+                    }
+                    break;
                 default:
-                    PLOG_DEBUG << "Unknown event";
+                    PLOG_DEBUG << "Unknown event" << event.type;
                     break;
             }
         }

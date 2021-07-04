@@ -15,6 +15,10 @@ namespace framework
         public:
         /// @brief Display close event handler
         virtual void on_display_close() = 0;
+        /// @brief Display gained focused
+        virtual void on_display_gained_focus() = 0;
+        /// @brief Display lost focus
+        virtual void on_display_lost_focus() = 0;
     };
 }
 

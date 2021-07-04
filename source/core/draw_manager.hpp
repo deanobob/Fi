@@ -37,6 +37,8 @@ namespace core
         void shutdown();
 
         void on_display_close() override;
+        void on_display_gained_focus() override;
+        void on_display_lost_focus() override;
 
         private:
         /// @brief Pointer to the instance of the game
