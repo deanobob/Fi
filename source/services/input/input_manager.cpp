@@ -35,6 +35,21 @@ namespace services
         mp_input->shutdown();
     }
 
+    const joypad_state* input_manager::get_joypad_state(unsigned int joypad_id) const
+    {
+
+    }
+
+    const keyboard_state* input_manager::get_keyboard_state() const
+    {
+
+    }
+
+    const mouse_state* input_manager::get_mouse_state() const
+    {
+
+    }
+
     void input_manager::on_key_state_changed(const key key_code, bool pressed)
     {
         PLOG_DEBUG << "key changed: " << static_cast<int>(key_code) << " " << pressed;

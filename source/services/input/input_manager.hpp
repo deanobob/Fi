@@ -7,6 +7,8 @@
 #include <vector>
 #include "gametime.hpp"
 #include "input_event_listener.hpp"
+#include "joypad_state.hpp"
+#include "keyboard_state.hpp"
 #include "renderer.hpp"
 #include "service.hpp"
 
@@ -35,12 +37,12 @@ namespace services
         /// @brief Destroy the window and tidy up
         void shutdown() override;
 
-        // /// @brief Get the state of a joypad by id
-        // const joypad_state* get_joypad_state(unsigned int joypad_id) const;
-        // /// @brief Get the current keyboard state
-        // const keyboard_state* get_keyboard_state() const;
-        // /// @brief Get the current mouse state
-        // const mouse_state* get_mouse_state() const;
+        /// @brief Get the state of a joypad by id
+        const joypad_state* get_joypad_state(unsigned int joypad_id) const;
+        /// @brief Get the current keyboard state
+        const keyboard_state* get_keyboard_state() const;
+        /// @brief Get the current mouse state
+        const mouse_state* get_mouse_state() const;
 
         void on_key_state_changed(const key key_code, bool pressed) override;
         void on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position) override;
