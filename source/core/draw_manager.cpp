@@ -8,9 +8,17 @@
 namespace core
 {
     draw_manager::draw_manager(game* p_game)
+        : mp_game{p_game}
     {
         mp_renderer = p_game->get_system_interface()->get_renderer();
         assert(mp_renderer != nullptr);
+
+        mp_renderer->add_event_listener(this);
+    }
+
+    draw_manager::~draw_manager()
+    {
+        mp_renderer->remove_event_listener(this);
     }
 
     bool draw_manager::initialise()
@@ -19,6 +27,11 @@ namespace core
 
         return mp_renderer->initialise()
             && mp_renderer->create_window(window_properties);
+    }
+
+    void draw_manager::update(const utilities::gametime& gametime)
+    {
+        mp_renderer->process_events();
     }
 
     void draw_manager::draw(double delta)
@@ -35,5 +48,20 @@ namespace core
     {
         mp_renderer->destroy_window();
         mp_renderer->shutdown();
+    }
+
+    void draw_manager::on_display_close()
+    {
+        mp_game->exit();
+    }
+
+    void draw_manager::on_display_gained_focus()
+    {
+        PLOG_DEBUG << "Focus gained";
+    }
+
+    void draw_manager::on_display_lost_focus()
+    {
+        PLOG_DEBUG << "Focus lost";
     }
 }

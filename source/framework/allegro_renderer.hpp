@@ -14,7 +14,8 @@
 namespace framework
 {
     /// @brief Implementation of renderer framework interface using liballegro
-    class allegro_renderer: public renderer
+    class allegro_renderer
+        : public renderer
     {
         public:
         /// @brief Constructor
@@ -22,6 +23,8 @@ namespace framework
         allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue = nullptr);
 
         bool initialise() override;
+
+        void process_events() override;
 
         bool create_window(const window_properties& properties) override;
 
@@ -115,6 +118,8 @@ namespace framework
         allegro_renderer() = default;
 
         bool initialise() override;
+
+        void process_events() override;
 
         bool create_window(const window_properties& properties) override;
 

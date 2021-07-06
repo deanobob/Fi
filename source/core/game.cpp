@@ -4,6 +4,7 @@
 #include "console.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
+#include "input_manager.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
 #include "message_resume.hpp"
@@ -19,8 +20,14 @@ namespace core
             messages::message_pause::TYPE,
             messages::message_resume::TYPE});
 
+        add_service(std::make_unique<services::input_manager>(this));
         add_service(std::make_unique<services::console>(this));
         add_service(std::make_unique<services::entity_manager>(this));
+    }
+
+    game::~game()
+    {
+        m_services.clear();
     }
 
     void game::run()
@@ -121,6 +128,8 @@ namespace core
                 service->update(m_gametime);
             }
         }
+
+        m_draw_manager.update(m_gametime);
     }
 
     void game::shutdown()

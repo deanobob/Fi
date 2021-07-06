@@ -26,7 +26,7 @@ namespace core
         /// @brief Constructor
         game();
         /// @brief Default destructor
-        virtual ~game() = default;
+        virtual ~game();
 
         /// @brief The root of the game
         /// @details Initialises the game and loops until an exit message is received

@@ -49,6 +49,39 @@ namespace framework
         return true;
     }
 
+    void allegro_renderer::process_events()
+    {
+        ALLEGRO_EVENT event;
+
+        while (al_get_next_event(mp_event_queue, &event))
+        {
+            switch (event.type)
+            {
+                case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_close();
+                    }
+                    break;
+                case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_gained_focus();
+                    }
+                    break;
+                case ALLEGRO_EVENT_DISPLAY_SWITCH_OUT:
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_lost_focus();
+                    }
+                    break;
+                default:
+                    PLOG_DEBUG << "Unknown event" << event.type;
+                    break;
+            }
+        }
+    }
+
     bool allegro_renderer::create_window(const window_properties& properties)
     {
         // Define flags based on properties configuration
@@ -305,6 +338,11 @@ namespace framework
 
     void allegro_renderer::shutdown()
     {
+        if (mp_event_queue)
+        {
+            al_destroy_event_queue(mp_event_queue);
+        }
+
         al_shutdown_primitives_addon();
         al_shutdown_ttf_addon();
         al_shutdown_font_addon();
@@ -327,7 +365,7 @@ namespace framework
         return std::string(al_path_cstr(al_get_standard_path(ALLEGRO_RESOURCES_PATH), '/')) + "assets/";
     }
 
-} /* namespace render */
+} /// namespace framework
 
 #else
 
@@ -339,6 +377,11 @@ namespace framework
     bool allegro_renderer::initialise()
     {
         return true;
+    }
+
+    void allegro_renderer::process_events()
+    {
+
     }
 
     bool allegro_renderer::create_window(const window_properties& properties)

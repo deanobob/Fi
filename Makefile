@@ -11,8 +11,8 @@ INC_PATH := -Isource/ \
 			-Isource/services/ \
 			-Isource/services/console/ \
 			-Isource/services/console/commands/ \
-            -Isource/input/ \
-            -Isource/framework/ \
+			-Isource/services/input \
+			-Isource/framework/ \
             -Isource/utilities/ \
 			-Ithird_party/ \
 			-I/usr/local/include/

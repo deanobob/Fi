@@ -26,7 +26,7 @@ namespace services
         return start_listen_thread();
     }
 
-    void console::update(utilities::gametime& p_gametime)
+    void console::update(const utilities::gametime& p_gametime)
     {
         std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
 
