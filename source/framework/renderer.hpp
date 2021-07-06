@@ -63,9 +63,6 @@ namespace framework
     class renderer
     {
         public:
-        /// @brief flags - converted from SDL as required
-        static constexpr auto FLAGS_WINDOW_OPENGL = 2;
-
         /// @brief Add a display event listener
         /// @param p_event_listener The event listener
         void add_event_listener(renderer_event_listener* p_event_listener)

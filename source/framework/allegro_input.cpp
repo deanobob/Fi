@@ -152,8 +152,8 @@ namespace framework
                 break;
         }
 
-        // Return unknown as we restrict key presses to keys we have explicit support for
-        return services::key::unknown;
+        // Return unknown key_code cast as a key to allow unsupported keys to raise events
+        return static_cast<services::key>(key_code);
     }
 
     services::mouse_button allegro_input::allegro_mouse_button_to_mouse_button(unsigned int button_id)

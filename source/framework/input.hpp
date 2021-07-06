@@ -13,9 +13,6 @@ namespace framework
     class input
     {
         public:
-        /// @brief flags - converted from SDL as required
-        static constexpr auto FLAGS_WINDOW_OPENGL = 2;
-
         /// @brief Add a input event listener
         /// @param p_event_listener The event listener
         void add_event_listener(input_event_listener* p_event_listener)

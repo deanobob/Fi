@@ -25,7 +25,7 @@ namespace services
 
 		private:
 			/// @brief List containing all the currently pressed keys
-			std::list<key> pressed_key_list{};
+			std::list<key> m_pressed_key_list{};
 	};
 } /// namespace services
 

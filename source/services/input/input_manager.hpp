@@ -4,11 +4,12 @@
 #ifndef INPUT_MANAGER_HPP
 #define INPUT_MANAGER_HPP
 
-#include <vector>
+#include <map>
 #include "gametime.hpp"
 #include "input_event_listener.hpp"
 #include "joypad_state.hpp"
 #include "keyboard_state.hpp"
+#include "mouse_state.hpp"
 #include "renderer.hpp"
 #include "service.hpp"
 
@@ -38,30 +39,39 @@ namespace services
         void shutdown() override;
 
         /// @brief Get the state of a joypad by id
+        /// @param joypad_id The joypad identifier
+        /// @return The joypad state for a given joypad id. If not found an empty joypad state is returned.
         const joypad_state* get_joypad_state(unsigned int joypad_id) const;
         /// @brief Get the current keyboard state
+        /// @return The keyboard state
         const keyboard_state* get_keyboard_state() const;
         /// @brief Get the current mouse state
+        /// @return The mouse state
         const mouse_state* get_mouse_state() const;
 
         void on_key_state_changed(const key key_code, bool pressed) override;
         void on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position) override;
         void on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed) override;
         void on_mouse_button_state_changed(const mouse_button mouse_button,
-                                                   int x_position,
-                                                   int y_position,
-                                                   bool pressed) override;
+                                           int x_position,
+                                           int y_position,
+                                           bool pressed) override;
         void on_mouse_axis_changed(int position_x, int position_y, int position_z) override;
 
         private:
         /// @brief Reference to input system
-        framework::input* mp_input {nullptr};
-        // /// @brief List containing all joypad states
-        // std::vector<joypad_state> joypad_states{joypad_state()};
-        // /// @brief The current keyboard state
-        // keyboard_state keyboard_state{};
-        // /// @brief The current mouse state;
-        // mouse_state mouse_state{};
+        framework::input* mp_input{nullptr};
+        /// @brief List containing all joypad states
+        std::map<unsigned int, joypad_state> m_joypad_states{};
+        /// @brief The current keyboard state
+        keyboard_state m_keyboard_state{};
+        /// @brief The current mouse state;
+        mouse_state m_mouse_state{};
+
+        /// @brief Get a joypad state by ID
+        /// @param joypad_id The joypad identifier
+        /// @return The joypad state. This always succeeds as it will create a joypad state if currently missing
+        joypad_state* get_joypad_state(unsigned int joypad_id);
     };
 } /// namespace services
 

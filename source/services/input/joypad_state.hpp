@@ -38,9 +38,9 @@ namespace services
 
         private:
         /// @brief Map that contains the sticks and their axis positions
-        std::map<unsigned int, std::vector<float> > stick_list;
+        std::map<unsigned int, std::vector<float> > m_stick_list{};
         /// @brief List of currently pressed buttons
-        std::list<unsigned int> pressed_button_list;
+        std::list<unsigned int> m_pressed_button_list{};
     };
 } /// namespace services
 

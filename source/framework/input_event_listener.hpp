@@ -32,7 +32,7 @@ namespace framework
         virtual void on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed) = 0;
 
         /// @brief Mouse button state changed
-        /// @param button The mouse button whose state changed
+        /// @param mouse_button The mouse button whose state changed
         /// @param x_position The mouse x position
         /// @param y_position The mouse y position
         /// @param pressed The mouse button state

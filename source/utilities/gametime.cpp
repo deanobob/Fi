@@ -1,9 +1,4 @@
-/*
- * gametime.cpp
- *
- *  Created on: 12 Jan 2019
- *      Author: deanh
- */
+/// @file gametime.cpp
 
 #include "gametime.hpp"
 #include "time.hpp"

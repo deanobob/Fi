@@ -1,9 +1,4 @@
-/*
- * keyboard_state.cpp
- *
- *  Created on: 1 Sep 2013
- *      Author: deano
- */
+/// @file keyboard_state.cpp
 
 #include <algorithm>
 #include "keyboard_state.hpp"
@@ -11,26 +6,21 @@
 namespace services
 {
 
-keyboard_state::keyboard_state()
-{
-
-}
-
 void keyboard_state::set_key_state(key key, bool pressed)
 {
     if (pressed)
     {
-        pressed_key_list.remove(key);
+        m_pressed_key_list.push_back(key);
     }
     else
     {
-        pressed_key_list.push_back(key);
+        m_pressed_key_list.remove(key);
     }
 }
 
-bool keyboard_state::is_key_pressed(Key key) const
+bool keyboard_state::is_key_pressed(key key) const
 {
-    return std::find(pressed_key_list.begin(), pressed_key_list.end(), key) != pressed_key_list.end();
+    return std::find(m_pressed_key_list.begin(), m_pressed_key_list.end(), key) != m_pressed_key_list.end();
 }
 
 } /// namespace services

@@ -7,12 +7,12 @@
 namespace services
 {
 
-void joypad_state::setAxisState(unsigned int stick, unsigned int axis, float position)
+void joypad_state::set_axis_state(unsigned int stick, unsigned int axis, float position)
 {
     std::vector<float> axis_list;
 
-    auto it = stick_list.find(stick);
-    if (it != stick_list.end())
+    auto it = m_stick_list.find(stick);
+    if (it != m_stick_list.end())
     {
         axis_list = it->second;
     }
@@ -28,13 +28,13 @@ void joypad_state::setAxisState(unsigned int stick, unsigned int axis, float pos
 
     axis_list[axis] = position;
 
-    stick_list[stick] = axis_list;
+    m_stick_list[stick] = axis_list;
 }
 
-float joypad_state::getAxisState(unsigned int stick, unsigned int axis) const
+float joypad_state::get_axis_state(unsigned int stick, unsigned int axis) const
 {
-    auto it = stick_list.find(stick);
-    if (it != stick_list.end())
+    auto it = m_stick_list.find(stick);
+    if (it != m_stick_list.end())
     {
         std::vector<float> axis_list = it->second;
 
@@ -51,18 +51,17 @@ void joypad_state::set_button_state(int button, bool pressed)
 {
     if (pressed)
     {
-        pressed_button_list.push_back(button);
+        m_pressed_button_list.push_back(button);
     }
     else
     {
-        pressed_button_list.remove(button);
+        m_pressed_button_list.remove(button);
     }
 }
 
 bool joypad_state::is_button_pressed(int button) const
 {
-    return std::find(pressed_button_list.begin(), pressed_button_list.end(), button)
-        != pressed_button_list.end();
+    return std::find(m_pressed_button_list.begin(), m_pressed_button_list.end(), button) != m_pressed_button_list.end();
 }
 
-} /* namespace services */
+} /// namespace services
