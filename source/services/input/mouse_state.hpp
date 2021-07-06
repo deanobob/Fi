@@ -49,7 +49,7 @@ namespace services
 
         private:
         /// @brief List of buttons that are currently pressed
-        std::list<mouse_button> m_pressed_button_list{};
+        std::list<mouse_button> m_pressed_buttons{};
         /// @brief The mouse cursor x coordinate
         int m_position_x{0};
         /// @brief The mouse cursor y coordinate

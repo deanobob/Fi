@@ -13,7 +13,8 @@
 namespace framework
 {
     /// @brief Implementation of input framework interface using liballegro
-    class allegro_input: public input
+    class allegro_input
+        : public input
     {
         public:
         /// @brief Constructor

@@ -10,17 +10,17 @@ void mouse_state::set_button_state(const mouse_button button, bool pressed)
 {
     if (pressed)
     {
-        m_pressed_button_list.push_back(button);
+        m_pressed_buttons.push_back(button);
     }
     else
     {
-        m_pressed_button_list.remove(button);
+        m_pressed_buttons.remove(button);
     }
 }
 
 bool mouse_state::is_button_pressed(const mouse_button button) const
 {
-    return std::find(m_pressed_button_list.begin(), m_pressed_button_list.end(), button) != m_pressed_button_list.end();
+    return std::find(m_pressed_buttons.begin(), m_pressed_buttons.end(), button) != m_pressed_buttons.end();
 }
 
 void mouse_state::set_position_x(int x)

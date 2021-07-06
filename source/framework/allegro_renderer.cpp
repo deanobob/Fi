@@ -342,6 +342,11 @@ namespace framework
         {
             al_destroy_event_queue(mp_event_queue);
         }
+
+        al_shutdown_primitives_addon();
+        al_shutdown_ttf_addon();
+        al_shutdown_font_addon();
+        al_shutdown_image_addon();
     }
 
     ALLEGRO_BITMAP* allegro_renderer::get_bitmap(uint32_t bitmap_id) const

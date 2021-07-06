@@ -14,7 +14,8 @@
 namespace framework
 {
     /// @brief Implementation of renderer framework interface using liballegro
-    class allegro_renderer: public renderer
+    class allegro_renderer
+        : public renderer
     {
         public:
         /// @brief Constructor

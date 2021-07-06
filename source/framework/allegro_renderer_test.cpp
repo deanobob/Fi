@@ -3,7 +3,7 @@
 #include "catch2/catch.hpp"
 #include "allegro_renderer.hpp"
 
-TEST_CASE("framework/allegro_renderer.hpp - renderer tests", "[utilities]")
+TEST_CASE("framework/allegro_renderer.hpp - renderer tests", "[framework]")
 {
     SECTION("1 Create Window")
     {

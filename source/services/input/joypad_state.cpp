@@ -7,40 +7,30 @@
 namespace services
 {
 
-void joypad_state::set_axis_state(unsigned int stick, unsigned int axis, float position)
+void joypad_state::set_axis_state(unsigned int joystick_id, unsigned int axis_id, float position)
 {
-    std::vector<float> axis_list;
-
-    auto it = m_stick_list.find(stick);
-    if (it != m_stick_list.end())
+    auto joystick = get_joystick(joystick_id);
+    auto axis = joystick.find(axis_id);
+    if (axis != joystick.end())
     {
-        axis_list = it->second;
+        axis->second = position;
     }
-
-    //TODO: this can probably be deleted
-    if (axis_list.size() < axis + 1)
+    else
     {
-        while (axis_list.size() < axis + 1)
-        {
-            axis_list.push_back(0.0f);
-        }
+        joystick.emplace(axis_id, position);
     }
-
-    axis_list[axis] = position;
-
-    m_stick_list[stick] = axis_list;
 }
 
-float joypad_state::get_axis_state(unsigned int stick, unsigned int axis) const
+float joypad_state::get_axis_state(unsigned int joystick_id, unsigned int axis_id) const
 {
-    auto it = m_stick_list.find(stick);
-    if (it != m_stick_list.end())
+    const auto& joystick_iter = m_joysticks.find(joystick_id);
+    if (joystick_iter != m_joysticks.end())
     {
-        std::vector<float> axis_list = it->second;
-
-        if (axis_list.size() > axis)
+        const auto joystick = joystick_iter->second;
+        const auto axis = joystick.find(axis_id);
+        if (axis != joystick.end())
         {
-            return axis_list.at(axis);
+            return axis->second;
         }
     }
 
@@ -51,17 +41,29 @@ void joypad_state::set_button_state(int button, bool pressed)
 {
     if (pressed)
     {
-        m_pressed_button_list.push_back(button);
+        m_pressed_buttons.push_back(button);
     }
     else
     {
-        m_pressed_button_list.remove(button);
+        m_pressed_buttons.remove(button);
     }
 }
 
 bool joypad_state::is_button_pressed(int button) const
 {
-    return std::find(m_pressed_button_list.begin(), m_pressed_button_list.end(), button) != m_pressed_button_list.end();
+    return std::find(m_pressed_buttons.begin(), m_pressed_buttons.end(), button) != m_pressed_buttons.end();
+}
+
+std::map<unsigned int, float>& joypad_state::get_joystick(unsigned int joystick_id)
+{
+    const auto& joystick_iter = m_joysticks.find(joystick_id);
+    if (joystick_iter != m_joysticks.end())
+    {
+        return joystick_iter->second;
+    }
+
+    auto emplace_result = m_joysticks.emplace(joystick_id, std::map<unsigned int, float>());
+    return emplace_result.first->second;
 }
 
 } /// namespace services
