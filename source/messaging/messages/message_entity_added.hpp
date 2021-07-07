@@ -27,9 +27,16 @@ namespace messages
 
         const std::string get_type() const override { return TYPE; };
 
+        /// @brief Get the entity pointer
+        /// @return The entity
+        core::entity* get_entity()
+        {
+            return mp_entity;
+        }
+
         private:
         /// @brief Reference to the newly added entity
-        const core::entity* mp_entity;
+        core::entity* mp_entity{nullptr};
     };
 } /// namespace messages
 

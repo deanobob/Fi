@@ -13,7 +13,6 @@
 namespace core
 {
     game::game()
-        : m_draw_manager{this}
     {
         m_game_status_messager.subscribe(this, {
             messages::message_exit::TYPE,
@@ -21,8 +20,11 @@ namespace core
             messages::message_resume::TYPE});
 
         add_service(std::make_unique<services::input_manager>(this));
-        add_service(std::make_unique<services::console>(this));
         add_service(std::make_unique<services::entity_manager>(this));
+        add_service(std::make_unique<services::console>(this));
+        add_service(std::make_unique<draw_manager>(this));
+
+        mp_draw_manager = get_service<draw_manager>(service_type::draw_manager);
     }
 
     game::~game()
@@ -64,7 +66,7 @@ namespace core
 
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
-                m_draw_manager.draw(accumulator / dt);
+                mp_draw_manager->draw(accumulator / dt);
             }
 
             shutdown();
@@ -78,7 +80,7 @@ namespace core
         m_game_status_messager.publish(&exit_message);
     }
 
-    void game::on_publish(const messaging::message* p_message)
+    void game::on_publish(messaging::message* p_message)
     {
         if (p_message->get_type() == messages::message_pause::TYPE)
         {
@@ -109,41 +111,38 @@ namespace core
     {
         bool success = true;
 
-        for (auto& service : m_services)
+        for (auto& service_iter : m_services)
         {
+            const auto& service = service_iter.second;
             success &= service->initialise();
         }
-
-        success &= m_draw_manager.initialise();
 
         return success;
     }
 
     void game::update()
     {
-        for (auto& service : m_services)
+        for (auto& service_iter : m_services)
         {
+            const auto& service = service_iter.second;
             if (!m_paused || !service->pauseable())
             {
                 service->update(m_gametime);
             }
         }
-
-        m_draw_manager.update(m_gametime);
     }
 
     void game::shutdown()
     {
-        m_draw_manager.shutdown();
-
-        for (auto& service : m_services)
+        for (auto& service_iter : m_services)
         {
+            const auto& service = service_iter.second;
             service->shutdown();
         }
     }
 
     void game::add_service(std::unique_ptr<service> service)
     {
-        m_services.push_back(std::move(service));
+        m_services.emplace(service->get_type(), std::move(service));
     }
 }

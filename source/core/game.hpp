@@ -5,8 +5,8 @@
 #define GAME_HPP
 
 #include <atomic>
+#include <map>
 #include <memory>
-#include <vector>
 #include "draw_manager.hpp"
 #include "gametime.hpp"
 #include "publisher.hpp"
@@ -36,11 +36,28 @@ namespace core
 
         /// @brief Handles events from publishers the game has subscribed to
         /// @param p_message The message
-        void on_publish(const messaging::message* p_message) override;
+        void on_publish(messaging::message* p_message) override;
 
         /// @brief Get the framework system interface
-        /// @return A reference to the framework system interface
+        /// @return A pointer to the framework system interface
         framework::system_interface* get_system_interface();
+
+        /// @brief Get the service of the given type, cast to the template type
+        /// @note Defined in header due to non-specialized template
+        /// @param type The service type
+        /// @return The service pointer cast to template type T or nullptr
+        template <typename T>
+        T* get_service(service_type type)
+        {
+            const auto& service_iter = m_services.find(type);
+            if (service_iter == m_services.end())
+            {
+                // Component of given type doesn't exist
+                return nullptr;
+            }
+
+            return dynamic_cast<T*>(service_iter->second.get());
+        }
 
         private:
         /// @brief Flag indicating whether to exit the game
@@ -50,11 +67,11 @@ namespace core
         /// @brief Records the elapsed and total time the game has been running
         utilities::gametime m_gametime{};
         /// @brief Container for services
-        std::vector<std::unique_ptr<service> > m_services;
+        std::map<service_type, std::unique_ptr<service> > m_services{};
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
         /// @brief The draw manager
-        core::draw_manager m_draw_manager;
+        core::draw_manager* mp_draw_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();

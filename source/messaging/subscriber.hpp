@@ -19,7 +19,7 @@ namespace messaging
 
         /// @brief Overwrite to handle publisher messages
         /// @param p_message The message
-        virtual void on_publish(const message* p_message) = 0;
+        virtual void on_publish(message* p_message) = 0;
     };
 } /// namespace messaging
 

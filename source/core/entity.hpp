@@ -47,7 +47,7 @@ namespace core
         /// @brief Get the component of the given type, cast to the template type
         /// @note Defined in header due to non-specialized template
         /// @param type The component type
-        /// @return The component reference cast to template type T or nullptr
+        /// @return The component pointer cast to template type T or nullptr
         template <typename T>
         T* get_component(component_type type)
         {

@@ -33,7 +33,7 @@ namespace messaging
 
         /// @brief Publish the message to all subscribers of its type
         /// @param p_message The event args
-        void publish(const message* p_message);
+        void publish(message* p_message);
 
         private:
         /// @brief Container that stores subscribers against the message types they are subscribed to

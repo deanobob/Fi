@@ -5,12 +5,11 @@
 
 namespace core
 {
-    service::service(game* p_game):
-        mp_game(p_game)
+    service::service(game* p_game)
+        : mp_game(p_game)
     {
 
     }
-
 
     framework::system_interface* service::get_system_interface()
     {

@@ -19,7 +19,7 @@ namespace services
 
     void command_resume::execute(const std::vector<std::string>& args) const
     {
-        const auto message = messages::message_resume();
+        auto message = messages::message_resume();
         mp_game->m_game_status_messager.publish(&message);
     }
 }

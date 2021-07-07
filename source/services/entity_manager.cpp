@@ -18,7 +18,7 @@ namespace services
     {
         for (const auto& entity_iter : m_entities)
         {
-            const auto message = messages::message_entity_removed(entity_iter.second.get());
+            auto message = messages::message_entity_removed(entity_iter.second.get());
             m_entity_status_publisher.publish(&message);
         }
 
@@ -41,11 +41,11 @@ namespace services
             m_tagged_entities.emplace(entity->get_tag(), entity->get_id());
         }
 
-        m_entities.emplace(entity->get_id(), std::move(entity));
-
         // Publish addition of entity
-        const auto message = messages::message_entity_added(entity.get());
+        auto message = messages::message_entity_added(entity.get());
         m_entity_status_publisher.publish(&message);
+
+        m_entities.emplace(entity->get_id(), std::move(entity));
     }
 
     core::entity* entity_manager::get(core::entity_id id)
@@ -85,7 +85,7 @@ namespace services
         }
 
         // Publish removal of entity
-        const auto message = messages::message_entity_removed(entity_iter->second.get());
+        auto message = messages::message_entity_removed(entity_iter->second.get());
         m_entity_status_publisher.publish(&message);
 
         // Delete entity
@@ -93,7 +93,7 @@ namespace services
         return true;
     }
 
-    void entity_manager::on_publish(const messaging::message* p_message)
+    void entity_manager::on_publish(messaging::message* p_message)
     {
 
     }

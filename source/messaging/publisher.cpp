@@ -33,7 +33,7 @@ namespace messaging
         }
     }
 
-    void publisher::publish(const message* p_message)
+    void publisher::publish(message* p_message)
     {
         const auto& subscriber_iter = m_subscribers.find(p_message->get_type());
         if (subscriber_iter != m_subscribers.end())

@@ -1,14 +1,19 @@
 /// @file draw_manager.cpp
 
+#include <memory>
 #include "plog/Log.h"
 #include "draw_manager.hpp"
 #include "game.hpp"
 #include "time.hpp"
 
+
+#include "entity.hpp"
+#include "body_component.hpp"
+
 namespace core
 {
     draw_manager::draw_manager(game* p_game)
-        : mp_game{p_game}
+        : component_service{p_game, component_type::body}
     {
         mp_renderer = p_game->get_system_interface()->get_renderer();
         assert(mp_renderer != nullptr);
@@ -24,6 +29,10 @@ namespace core
     bool draw_manager::initialise()
     {
         framework::window_properties window_properties{};
+
+        auto e = std::make_unique<entity>();
+        e->add_component(std::make_unique<body_component>());
+        get_entity_manager()->put(std::move(e));
 
         return mp_renderer->initialise()
             && mp_renderer->create_window(window_properties);

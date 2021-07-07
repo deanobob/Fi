@@ -30,7 +30,7 @@ class test_subscriber : public messaging::subscriber
 
     /// @brief Handles messages from the entity manager publisher
     /// @param p_message The message
-    void on_publish(const messaging::message* p_message) override
+    void on_publish(messaging::message* p_message) override
     {
         if (p_message->get_type() == messages::message_entity_added::TYPE)
         {

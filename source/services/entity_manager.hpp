@@ -30,6 +30,11 @@ namespace services
         /// @brief Destructor
         virtual ~entity_manager();
 
+        core::service_type get_type() const override
+        {
+            return core::service_type::entity_manager;
+        }
+
         bool initialise() override { return true; }
 
         void update(const utilities::gametime& gametime) override;
@@ -57,7 +62,7 @@ namespace services
 
         /// @brief Handles events from publishers the entity_manager has subscribed to
         /// @param p_message The message
-        void on_publish(const messaging::message* p_message) override;
+        void on_publish(messaging::message* p_message) override;
 
         private:
         /// @brief Stores entity component masks

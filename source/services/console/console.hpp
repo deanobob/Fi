@@ -26,14 +26,22 @@ namespace services
         /// @param p_game The game instance
         console(core::game* p_game);
 
+        core::service_type get_type() const override
+        {
+            return core::service_type::console;
+        }
+
         /// @brief Initialises the console reader
         /// @return True if initialised successfully
         bool initialise();
+
         /// @brief Called on every tick allowing console input to be processed
         /// @param gametime The gametime maintaining instance
         void update(const utilities::gametime& gametime) override;
+
         /// @brief Shutsdown the service
         void shutdown() override;
+
         /// @brief Returns false for pausable check, ensuring service runs when game is paused
         /// @return True if pauseable, else false
         bool pauseable() const override;
