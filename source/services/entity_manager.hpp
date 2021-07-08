@@ -18,7 +18,9 @@
 namespace services
 {
     /// @brief The base entity_manager class
-    class entity_manager : public core::service, public messaging::subscriber
+    class entity_manager
+        : public core::service
+        , public messaging::subscriber
     {
         public:
         /// @brief Publisher that notifies subscribers the entity_manager is exiting

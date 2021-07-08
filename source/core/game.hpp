@@ -17,7 +17,8 @@
 namespace core
 {
     /// @brief The base game class
-    class game : public messaging::subscriber
+    class game
+        : public messaging::subscriber
     {
         public:
         /// @brief Publisher that notifies subscribers the game is exiting

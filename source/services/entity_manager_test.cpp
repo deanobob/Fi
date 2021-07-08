@@ -9,7 +9,8 @@
 #include "subscriber.hpp"
 
 /// @brief A test subscriber
-class test_subscriber : public messaging::subscriber
+class test_subscriber
+    : public messaging::subscriber
 {
     public:
     /// @brief Constructor - subscribes to messages from entity_manager

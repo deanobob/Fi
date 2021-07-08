@@ -12,7 +12,8 @@
 namespace services
 {
     /// @brief Command class that resumes the game
-    class command_resume : public command
+    class command_resume
+        : public command
     {
         public:
         /// @brief Constructor

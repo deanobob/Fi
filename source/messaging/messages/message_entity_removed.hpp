@@ -11,7 +11,8 @@
 namespace messages
 {
     /// @brief Message that informs subscribers a message is being removed
-    class message_entity_removed : public messaging::message
+    class message_entity_removed
+        : public messaging::message
     {
         public:
         /// @brief Constructor

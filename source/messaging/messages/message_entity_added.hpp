@@ -11,7 +11,8 @@
 namespace messages
 {
     /// @brief Message that informs subscribers that an entity has been added
-    class message_entity_added : public messaging::message
+    class message_entity_added
+        : public messaging::message
     {
         public:
         /// @brief Constructor

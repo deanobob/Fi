@@ -11,7 +11,8 @@
 namespace core
 {
     /// @brief The body component
-    class body_component : public component
+    class body_component
+        : public component
     {
         public:
         /// @brief Get the body component type

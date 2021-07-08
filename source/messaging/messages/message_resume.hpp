@@ -10,7 +10,8 @@
 namespace messages
 {
     /// @brief Message that causes the application to resume if paused
-    class message_resume : public messaging::message
+    class message_resume
+        : public messaging::message
     {
         public:
         /// @brief The message type

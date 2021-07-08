@@ -20,7 +20,9 @@ namespace services
     class game;
 
     /// @brief Manages rendering the game
-    class input_manager : public core::service, public framework::input_event_listener
+    class input_manager
+        : public core::service
+        , public framework::input_event_listener
     {
         public:
         /// @brief Constructor

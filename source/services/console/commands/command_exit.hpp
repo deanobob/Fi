@@ -12,7 +12,8 @@
 namespace services
 {
     /// @brief Command class that instructs the game to exit
-    class command_exit : public command
+    class command_exit
+        : public command
     {
         public:
         /// @brief Constructor

@@ -12,7 +12,8 @@
 namespace services
 {
     /// @brief Command class that pauses the game
-    class command_pause : public command
+    class command_pause
+        : public command
     {
         public:
         /// @brief Constructor

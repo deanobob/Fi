@@ -19,7 +19,9 @@
 namespace services
 {
     /// @brief Base class for services
-    class console : public core::service, public utilities::server
+    class console
+        : public core::service
+        , public utilities::server
     {
         public:
         /// @brief Constructor
