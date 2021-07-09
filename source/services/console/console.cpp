@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include "plog/Log.h"
+#include "command_add_entity.hpp"
 #include "command_exit.hpp"
 #include "command_pause.hpp"
 #include "command_resume.hpp"
@@ -16,6 +17,7 @@ namespace services
         : service(p_game)
         , server(5050) // Defaults to port 5050
     {
+        add_command(std::make_shared<services::command_add_entity>(mp_game));
         add_command(std::make_shared<services::command_exit>(mp_game));
         add_command(std::make_shared<services::command_pause>(mp_game));
         add_command(std::make_shared<services::command_resume>(mp_game));
