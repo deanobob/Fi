@@ -1,8 +1,8 @@
-/// @file command_resume.hpp
-/// @brief The command_resume base class
+/// @file command_add_entity.hpp
+/// @brief Command that adds a test entity to the game
 
-#ifndef COMMAND_RESUME_HPP
-#define COMMAND_RESUME_HPP
+#ifndef COMMAND_ADD_ENTITY_HPP
+#define COMMAND_ADD_ENTITY_HPP
 
 #include <string>
 #include "command.hpp"
@@ -12,13 +12,13 @@
 namespace services
 {
     /// @brief Command class that resumes the game
-    class command_resume
+    class command_add_entity
         : public command
     {
         public:
         /// @brief Constructor
         /// @param p_game Pointer to instance of the game
-        command_resume(core::game* p_game);
+        command_add_entity(core::game* p_game);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -33,4 +33,4 @@ namespace services
     };
 } /// namespace services
 
-#endif /// COMMAND_RESUME_HPP
+#endif /// COMMAND_ADD_ENTITY_HPP

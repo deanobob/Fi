@@ -1,5 +1,6 @@
 /// @file draw_manager.cpp
 
+#include <memory>
 #include "plog/Log.h"
 #include "draw_manager.hpp"
 #include "game.hpp"
@@ -29,7 +30,7 @@ namespace core
             && mp_renderer->create_window(window_properties);
     }
 
-    void draw_manager::update(const utilities::gametime& gametime)
+    void draw_manager::process_events()
     {
         mp_renderer->process_events();
     }

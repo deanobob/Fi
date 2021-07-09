@@ -10,7 +10,8 @@
 namespace messages
 {
     /// @brief Message that causes the application to pause
-    class message_pause : public messaging::message
+    class message_pause
+        : public messaging::message
     {
         public:
         /// @brief The message type

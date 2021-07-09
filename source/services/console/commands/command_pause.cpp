@@ -19,7 +19,7 @@ namespace services
 
     void command_pause::execute(const std::vector<std::string>& args) const
     {
-        const auto message = messages::message_pause();
+        auto message = messages::message_pause();
         mp_game->m_game_status_messager.publish(&message);
     }
 }

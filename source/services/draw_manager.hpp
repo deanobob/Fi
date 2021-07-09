@@ -15,7 +15,8 @@ namespace core
     class game;
 
     /// @brief Manages rendering the game
-    class draw_manager : public framework::renderer_event_listener
+    class draw_manager
+        : public framework::renderer_event_listener
     {
         public:
         /// @brief Constructor
@@ -27,12 +28,14 @@ namespace core
         /// @brief Creates the game window and loads resources
         /// @return True if initialised successfully
         bool initialise();
-        /// @brief Method that is called on every tick, allowing draw manager to process events etc.
-        /// @param gametime The game time object
-        void update(const utilities::gametime& gametime);
+
+        /// @brief Processes window events etc.
+        void process_events();
+
         /// @brief Update entity positions and render game
         /// @param delta The remaining duration of this frame
         void draw(double delta);
+
         /// @brief Destroy the window and tidy up
         void shutdown();
 
@@ -41,11 +44,11 @@ namespace core
         void on_display_lost_focus() override;
 
         private:
-        /// @brief Pointer to the instance of the game
-        game* mp_game {nullptr};
+        /// @brief Pointer to renderer system
+        framework::renderer* mp_renderer{nullptr};
 
-        /// @brief Reference to renderer system
-        framework::renderer* mp_renderer {nullptr};
+        /// @brief Pointer to game
+        game* mp_game{nullptr};
     };
 } /// namespace core
 

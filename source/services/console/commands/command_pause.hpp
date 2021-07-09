@@ -12,7 +12,8 @@
 namespace services
 {
     /// @brief Command class that pauses the game
-    class command_pause : public command
+    class command_pause
+        : public command
     {
         public:
         /// @brief Constructor
@@ -28,7 +29,7 @@ namespace services
 
         private:
         /// @brief Reference to game instance
-        core::game* mp_game;
+        core::game* mp_game{nullptr};
     };
 } /// namespace services
 

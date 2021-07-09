@@ -10,7 +10,8 @@
 namespace messages
 {
     /// @brief Message that causes the application to exit
-    class message_exit : public messaging::message
+    class message_exit
+        : public messaging::message
     {
         public:
         /// @brief The message type

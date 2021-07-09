@@ -5,7 +5,8 @@
 #include "entity.hpp"
 
 /// @brief A test component
-class test_component : public core::component
+class test_component
+    : public core::component
 {
     public:
     /// @brief Constructor
@@ -44,7 +45,8 @@ class test_component : public core::component
 };
 
 /// @brief A test entity
-class test_entity : public core::entity
+class test_entity
+    : public core::entity
 {
     public:
     /// @brief The total number of times update is called

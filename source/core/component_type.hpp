@@ -12,7 +12,7 @@ namespace core
 {
     /// @enum component_type The component type enum
     /// @brief Contains bitwise operation compatible types for components
-    enum class component_type : uint32_t
+    enum class component_type : unsigned int
     {
         none = 0 << 0,
         body = 1 << 0,
