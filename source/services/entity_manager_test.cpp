@@ -1,46 +1,39 @@
 /// @file entity_manager_test.cpp
 
 #include "catch2/catch.hpp"
+#include "body_component.hpp"
 #include "component.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
-#include "message_entity_added.hpp"
-#include "message_entity_removed.hpp"
-#include "subscriber.hpp"
+#include "entity_manager_listener.hpp"
 
 /// @brief A test subscriber
-class test_subscriber
-    : public messaging::subscriber
+class test_listener
+    : public services::entity_manager_listener
 {
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
     /// @param p_entity_manager The entity manager
-    test_subscriber(services::entity_manager* p_entity_manager)
+    test_listener(services::entity_manager* p_entity_manager)
         : mp_entity_manager{p_entity_manager}
     {
-        mp_entity_manager->m_entity_status_publisher.subscribe(
-            this,
-            {messages::message_entity_added::TYPE, messages::message_entity_removed::TYPE});
+        mp_entity_manager->add_listener(this);
     }
 
     /// @brief Destructor - unsubscribes from entity_manager
-    virtual ~test_subscriber()
+    virtual ~test_listener()
     {
-        mp_entity_manager->m_entity_status_publisher.unsubscribe(this);
+        mp_entity_manager->remove_listener(this);
     }
 
-    /// @brief Handles messages from the entity manager publisher
-    /// @param p_message The message
-    void on_publish(messaging::message* p_message) override
+    void on_entity_added(core::entity* p_entity) override
     {
-        if (p_message->get_type() == messages::message_entity_added::TYPE)
-        {
-            m_num_added++;
-        }
-        else if (p_message->get_type() == messages::message_entity_removed::TYPE)
-        {
-            m_num_removed++;
-        }
+        m_num_added++;
+    }
+
+    void on_entity_removed(core::entity* p_entity) override
+    {
+        m_num_removed++;
     }
 
     /// @brief Get the number of added messages
@@ -72,15 +65,15 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 
     SECTION("1 Put entity")
     {
-        test_subscriber subscriber(&entity_manager);
+        test_listener listener(&entity_manager);
 
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
         entity_manager.put(std::move(entity));
         REQUIRE(entity_manager.get(id) != nullptr);
         REQUIRE(entity_manager.get(id + 1) == nullptr);
-        REQUIRE(subscriber.num_added() == 1);
-        REQUIRE(subscriber.num_removed() == 0);
+        REQUIRE(listener.num_added() == 1);
+        REQUIRE(listener.num_removed() == 0);
     }
 
     SECTION("2 Get entity by ID")
@@ -103,14 +96,14 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 
     SECTION("4 Remove entity")
     {
-        test_subscriber subscriber(&entity_manager);
+        test_listener listener(&entity_manager);
 
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
         entity_manager.put(std::move(entity));
         REQUIRE(entity_manager.remove(id));
         REQUIRE_FALSE(entity_manager.remove(id));
-        REQUIRE(subscriber.num_added() == 1);
-        REQUIRE(subscriber.num_removed() == 1);
+        REQUIRE(listener.num_added() == 1);
+        REQUIRE(listener.num_removed() == 1);
     }
 }

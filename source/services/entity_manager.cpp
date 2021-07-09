@@ -3,8 +3,6 @@
 #include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
-#include "message_entity_added.hpp"
-#include "message_entity_removed.hpp"
 
 namespace services
 {
@@ -18,11 +16,19 @@ namespace services
     {
         for (const auto& entity_iter : m_entities)
         {
-            auto message = messages::message_entity_removed(entity_iter.second.get());
-            m_entity_status_publisher.publish(&message);
+            // Publish removal of entity - TODO: publish single event for entities cleared
+            for (auto listener_iter : m_listeners)
+            {
+                listener_iter->on_entity_removed(entity_iter.second.get());
+            }
         }
 
         m_entities.clear();
+    }
+
+    bool entity_manager::initialise()
+    {
+        return true;
     }
 
     void entity_manager::update(const utilities::gametime& gametime)
@@ -33,17 +39,34 @@ namespace services
         }
     }
 
+    void entity_manager::shutdown()
+    {
+
+    }
+
+    void entity_manager::add_listener(entity_manager_listener* p_listener)
+    {
+        m_listeners.push_back(p_listener);
+    }
+
+    void entity_manager::remove_listener(entity_manager_listener* p_listener)
+    {
+        m_listeners.remove(p_listener);
+    }
+
     void entity_manager::put(std::unique_ptr<core::entity> entity)
     {
         const auto& tag = entity->get_tag();
         if (!tag.empty())
         {
-            m_tagged_entities.emplace(entity->get_tag(), entity->get_id());
+            m_tagged_entities[entity->get_tag()] = entity->get_id();
         }
 
         // Publish addition of entity
-        auto message = messages::message_entity_added(entity.get());
-        m_entity_status_publisher.publish(&message);
+        for (auto listener_iter : m_listeners)
+        {
+            listener_iter->on_entity_added(entity.get());
+        }
 
         m_entities.emplace(entity->get_id(), std::move(entity));
     }
@@ -85,16 +108,13 @@ namespace services
         }
 
         // Publish removal of entity
-        auto message = messages::message_entity_removed(entity_iter->second.get());
-        m_entity_status_publisher.publish(&message);
+        for (auto listener_iter : m_listeners)
+        {
+            listener_iter->on_entity_removed(entity_iter->second.get());
+        }
 
         // Delete entity
         m_entities.erase(entity_iter);
         return true;
-    }
-
-    void entity_manager::on_publish(messaging::message* p_message)
-    {
-
     }
 }

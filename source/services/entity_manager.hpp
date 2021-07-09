@@ -10,9 +10,9 @@
 #include <memory>
 #include <stdlib.h>
 #include "entity.hpp"
+#include "entity_manager_listener.hpp"
 #include "publisher.hpp"
 #include "service.hpp"
-#include "subscriber.hpp"
 
 /// @namespace services namespace
 namespace services
@@ -20,7 +20,6 @@ namespace services
     /// @brief The base entity_manager class
     class entity_manager
         : public core::service
-        , public messaging::subscriber
     {
         public:
         /// @brief Publisher that notifies subscribers the entity_manager is exiting
@@ -37,11 +36,19 @@ namespace services
             return core::service_type::entity_manager;
         }
 
-        bool initialise() override { return true; }
+        bool initialise() override;
 
         void update(const utilities::gametime& gametime) override;
 
-        void shutdown() override {}
+        void shutdown() override;
+
+        /// @brief Add entity manager listener
+        /// @param p_listener The entity manager listener
+        void add_listener(entity_manager_listener* p_listener);
+
+        /// @brief Remove entity manager listener
+        /// @param p_listener The entity manager listener
+        void remove_listener(entity_manager_listener* p_listener);
 
         /// @brief Add an entity
         /// @param entity The entity
@@ -62,17 +69,15 @@ namespace services
         /// @return True on success, false if the entity was not found
         bool remove(core::entity_id id);
 
-        /// @brief Handles events from publishers the entity_manager has subscribed to
-        /// @param p_message The message
-        void on_publish(messaging::message* p_message) override;
-
         private:
         /// @brief Stores entity component masks
         std::map<core::entity_id, std::unique_ptr<core::entity> > m_entities{};
         /// @brief Stores entities by tag
         std::map<const std::string, unsigned int> m_tagged_entities{};
-        /// @brief Contains a list of entity IDs awaiting to be deleted
+        /// @brief List of entity IDs awaiting to be deleted
         std::list<core::entity_id> m_deleted_entities{};
+        /// @brief List of entity manager listeners
+        std::list<entity_manager_listener*> m_listeners{};
     };
 } /// namespace core
 

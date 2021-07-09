@@ -8,8 +8,8 @@
 #include "component_type.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
+#include "entity_manager_listener.hpp"
 #include "service.hpp"
-#include "subscriber.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -17,7 +17,7 @@ namespace core
     /// @brief Base class for component services
     class component_service
         : public service
-        , public messaging::subscriber
+        , public services::entity_manager_listener
     {
         public:
         /// @brief Constructor
@@ -26,7 +26,9 @@ namespace core
         /// @brief Default destructor
         virtual ~component_service();
 
-        void on_publish(messaging::message* p_message) override;
+        void on_entity_added(core::entity* p_entity) override;
+
+        void on_entity_removed(core::entity* p_entity) override;
 
         protected:
         /// @brief Get the service entities
