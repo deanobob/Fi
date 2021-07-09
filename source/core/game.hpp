@@ -72,7 +72,7 @@ namespace core
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
         /// @brief The draw manager
-        core::draw_manager* mp_draw_manager{nullptr};
+        std::unique_ptr<core::draw_manager> m_draw_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();

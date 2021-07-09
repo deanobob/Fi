@@ -22,9 +22,8 @@ namespace core
         add_service(std::make_unique<services::input_manager>(this));
         add_service(std::make_unique<services::entity_manager>(this));
         add_service(std::make_unique<services::console>(this));
-        add_service(std::make_unique<draw_manager>(this));
 
-        mp_draw_manager = get_service<draw_manager>(service_type::draw_manager);
+        m_draw_manager = std::make_unique<draw_manager>(this);
     }
 
     game::~game()
@@ -61,12 +60,13 @@ namespace core
                     m_gametime.add_elapsed_time_in_seconds(dt);
 
                     update();
+
                     accumulator -= dt;
                 }
 
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
-                mp_draw_manager->draw(accumulator / dt);
+                m_draw_manager->draw(accumulator / dt);
             }
 
             shutdown();
@@ -117,11 +117,15 @@ namespace core
             success &= service->initialise();
         }
 
+        m_draw_manager->initialise();
+
         return success;
     }
 
     void game::update()
     {
+        m_draw_manager->process_events();
+
         for (auto& service_iter : m_services)
         {
             const auto& service = service_iter.second;
@@ -134,6 +138,8 @@ namespace core
 
     void game::shutdown()
     {
+        m_draw_manager->shutdown();
+
         for (auto& service_iter : m_services)
         {
             const auto& service = service_iter.second;
