@@ -17,7 +17,7 @@
 /// @namespace services namespace
 namespace services
 {
-    /// @brief The base entity_manager class
+    /// @brief Class that manages entities and notifies listeners when entities are added / removed
     class entity_manager
         : public core::service
     {

@@ -30,6 +30,8 @@ namespace core
 
         void on_entity_removed(core::entity* p_entity) override;
 
+        void on_entities_cleared() override;
+
         protected:
         /// @brief Get the service entities
         /// @return The entity list

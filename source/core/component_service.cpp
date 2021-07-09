@@ -38,6 +38,12 @@ namespace core
         }
     }
 
+    void component_service::on_entities_cleared()
+    {
+        m_entities.clear();
+        PLOG_DEBUG << "Entities cleared";
+    }
+
     const std::list<entity*>& component_service::get_entities()
     {
         return m_entities;

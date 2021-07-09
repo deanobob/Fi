@@ -14,13 +14,10 @@ namespace services
 
     entity_manager::~entity_manager()
     {
-        for (const auto& entity_iter : m_entities)
+        // Publish removal of all entities
+        for (auto listener_iter : m_listeners)
         {
-            // Publish removal of entity - TODO: publish single event for entities cleared
-            for (auto listener_iter : m_listeners)
-            {
-                listener_iter->on_entity_removed(entity_iter.second.get());
-            }
+            listener_iter->on_entities_cleared();
         }
 
         m_entities.clear();
