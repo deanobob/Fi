@@ -13,7 +13,7 @@
 namespace core
 {
     draw_manager::draw_manager(game* p_game)
-        : component_service{p_game, component_type::body}
+        : component_service{p_game, component_type::render}
     {
         mp_renderer = p_game->get_system_interface()->get_renderer();
         assert(mp_renderer != nullptr);

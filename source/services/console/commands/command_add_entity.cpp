@@ -5,6 +5,7 @@
 #include "command_add_entity.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
+#include "render_component.hpp"
 
 namespace services
 {
@@ -37,6 +38,7 @@ namespace services
         const auto tag{args[1]};
         auto entity{std::make_unique<core::entity>(tag)};
         entity->add_component(std::make_unique<core::body_component>());
+        entity->add_component(std::make_unique<core::render_component>());
         p_entity_manager->put(std::move(entity));
     }
 }
