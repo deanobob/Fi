@@ -22,6 +22,8 @@ namespace core
         public:
         /// @brief Constructor
         /// @param p_game The game instance
+        /// @param component_mask Bitmask indicating the components an entity must have for it to be registered with
+        /// the entity list.
         component_service(game* p_game, component_type component_mask);
         /// @brief Default destructor
         virtual ~component_service();

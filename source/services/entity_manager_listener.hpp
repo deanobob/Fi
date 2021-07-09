@@ -13,11 +13,11 @@ namespace services
     {
         public:
         /// @brief Entity added event
-        /// @param entity Pointer for the newly added entity
+        /// @param p_entity Pointer for the newly added entity
         virtual void on_entity_added(core::entity* p_entity) {};
 
         /// @brief Entity removed event
-        /// @param entity Pointer for the removed entity
+        /// @param p_entity Pointer for the removed entity
         virtual void on_entity_removed(core::entity* p_entity) {};
 
         /// @brief Entities cleared event
