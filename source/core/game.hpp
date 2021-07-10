@@ -54,7 +54,6 @@ namespace core
         std::list<std::unique_ptr<service> > m_services{};
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
-
         /// @brief Publisher that notifies subscribers the game is exiting
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
         /// @brief The entity manager
@@ -64,8 +63,13 @@ namespace core
 
         /// @brief Initialise the game
         bool initialise();
+
         /// @brief Called on every tick to update services
         void update();
+
+        /// @brief Draw called on every frame to update drawables
+        void draw();
+
         /// @brief Shutdown the game
         void shutdown();
 

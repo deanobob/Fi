@@ -36,12 +36,22 @@ namespace core
         mp_render_controller->process_events();
     }
 
+    void draw_manager::draw_line(const utilities::vector2& p1, const utilities::vector2& p2)
+    {
+        mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, utilities::color(255, 0, 0));
+    }
+
+    void draw_manager::draw_text(const std::string text, const utilities::vector2& position)
+    {
+        // TODO
+    }
+
     void draw_manager::draw(double delta)
     {
         mp_render_controller->clear();
 
         // draw stuff here
-        utilities::time::sleep_msec(16);
+        utilities::time::sleep_msec(1);
 
         mp_render_controller->flip();
     }

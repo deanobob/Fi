@@ -29,6 +29,11 @@ namespace input
         mp_input_controller->process_events();
     }
 
+    void input_service::draw(core::draw_manager* p_draw_manager)
+    {
+
+    }
+
     void input_service::shutdown()
     {
         mp_input_controller->shutdown();

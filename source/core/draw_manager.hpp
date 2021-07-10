@@ -31,6 +31,16 @@ namespace core
         /// @brief Processes window events etc.
         void process_events();
 
+        /// @brief Draw line to the display from p1 to p2
+        /// @param p1 The start point
+        /// @param p2 The end point
+        void draw_line(const utilities::vector2& p1, const utilities::vector2& p2);
+
+        /// @brief Draws text to the display at the given position
+        /// @param text The text to draw
+        /// @param position The position of the text
+        void draw_text(const std::string text, const utilities::vector2& position);
+
         /// @brief Update entity positions and render game
         /// @param delta The remaining duration of this frame
         void draw(double delta);
@@ -47,6 +57,7 @@ namespace core
         private:
         /// @brief Pointer to the message bus
         core::message_bus* mp_message_bus{nullptr};
+
         /// @brief Pointer to render controller
         render::render_controller* mp_render_controller{nullptr};
 

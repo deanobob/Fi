@@ -73,6 +73,8 @@ namespace core
                     accumulator -= dt;
                 }
 
+                draw();
+
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
                 mp_draw_manager->draw(accumulator / dt);
@@ -144,6 +146,15 @@ namespace core
             {
                 service->update(m_gametime);
             }
+        }
+    }
+
+    void game::draw()
+    {
+        for (auto& service_iter : m_services)
+        {
+            const auto& service = service_iter.get();
+            service->draw(mp_draw_manager.get());
         }
     }
 

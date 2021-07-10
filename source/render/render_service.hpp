@@ -26,6 +26,8 @@ namespace render
 
         void update(const utilities::gametime& gametime) override;
 
+        void draw(core::draw_manager* p_draw_manager) override;
+
         void shutdown() override;
     };
 } /// namespace render
