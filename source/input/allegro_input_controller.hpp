@@ -46,12 +46,12 @@ namespace input
 
 #else /// CI
 
-#include "input.hpp"
+#include "input_controller.hpp"
 
 namespace input
 {
-    /// @brief Implementation of input input interface using liballegro
-    class allegro_input_controller: public input
+    /// @brief Implementation of input controller interface using liballegro
+    class allegro_input_controller: public input_controller
     {
         public:
         /// @brief Constructor

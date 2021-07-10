@@ -73,7 +73,7 @@ class test_listener
 TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 {
     core::message_bus message_bus{};
-    core::entity_manager entity_manager{message_bus};
+    core::entity_manager entity_manager{&message_bus};
 
     SECTION("1 Put entity")
     {

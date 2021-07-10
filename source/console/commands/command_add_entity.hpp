@@ -18,7 +18,7 @@ namespace console
     {
         public:
         /// @brief Constructor
-        /// @param entity_manager Pointer to the entity manager
+        /// @param p_entity_manager Pointer to the entity manager
         command_add_entity(core::entity_manager* p_entity_manager);
 
         /// @brief The console command names that will invoke this command

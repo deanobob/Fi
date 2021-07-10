@@ -16,6 +16,7 @@ namespace messages
     {
         public:
         /// @brief Constructor
+        /// @param p_entity The added entity
         message_entity_added(core::entity* p_entity)
             : mp_entity{p_entity}
         {}

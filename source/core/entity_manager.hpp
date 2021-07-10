@@ -20,7 +20,7 @@ namespace core
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Pointer to the game message bus
+        /// @param p_message_bus Pointer to the game message bus
         entity_manager(message_bus* p_message_bus);
         /// @brief Destructor
         virtual ~entity_manager();

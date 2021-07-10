@@ -22,7 +22,7 @@ namespace core
     {
         public:
         /// @brief Constructor
-        /// @brief p_message_bus The game message bus
+        /// @param p_message_bus The game message bus
         /// @param p_entity_manager The game entity manager
         /// @param component_mask Bitmask indicating the components an entity must have for it to be registered with
         /// the entity list.
@@ -44,14 +44,14 @@ namespace core
         core::entity_manager* get_entity_manager();
 
         private:
-        /// @brief The mask used to determine if an entity interesting to this service
-        const component_type m_component_mask;
-
         /// @brief Pointer to entity manager
         core::entity_manager* mp_entity_manager{nullptr};
 
         /// @brief Pointer to message bus
         core::message_bus* mp_message_bus{nullptr};
+
+        /// @brief The mask used to determine if an entity interesting to this service
+        const component_type m_component_mask;
 
         /// @brief List containing all interesting entities
         std::list<entity*> m_entities{};

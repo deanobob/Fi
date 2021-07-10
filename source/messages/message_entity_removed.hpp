@@ -16,6 +16,7 @@ namespace messages
     {
         public:
         /// @brief Constructor
+        /// @param p_entity The removed entity
         message_entity_removed(core::entity* p_entity)
             : mp_entity{p_entity}
         {}

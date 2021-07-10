@@ -17,7 +17,7 @@ namespace console
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Pointer to the game message bus
+        /// @param p_message_bus Pointer to the game message bus
         command_exit(core::message_bus* p_message_bus);
 
         /// @brief The console command names that will invoke this command

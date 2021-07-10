@@ -106,12 +106,12 @@ namespace render
 
 #else /// CI
 
-#include "renderer.hpp"
+#include "render_controller.hpp"
 
 namespace render
 {
-    /// @brief Implementation of renderer render interface using liballegro
-    class allegro_render_controller: public renderer
+    /// @brief Implementation of renderer component interface using liballegro
+    class allegro_render_controller: public render_controller
     {
         public:
         /// @brief Constructor
