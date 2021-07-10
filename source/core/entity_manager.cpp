@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
+#include "message_entities_cleared.hpp"
 #include "message_entity_added.hpp"
 #include "message_entity_removed.hpp"
 
@@ -34,6 +35,10 @@ namespace core
 
     void entity_manager::shutdown()
     {
+        // Publish entities cleared message
+        messages::message_entities_cleared message{};
+        m_message_bus.send(&message);
+
         m_entities.clear();
     }
 

@@ -4,6 +4,7 @@
 #include "component_service.hpp"
 #include "game.hpp"
 #include "message.hpp"
+#include "message_entities_cleared.hpp"
 #include "message_entity_added.hpp"
 #include "message_entity_removed.hpp"
 #include "service_type.hpp"
@@ -21,6 +22,7 @@ namespace core
         m_message_bus.subscribe(
             this,
             {
+                messages::message_entities_cleared::TYPE,
                 messages::message_entity_added::TYPE,
                 messages::message_entity_removed::TYPE
             });
@@ -39,7 +41,6 @@ namespace core
             if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
             {
                 m_entities.push_back(p_entity);
-                PLOG_DEBUG << "Entity added";
             }
         }
         else if (p_message->get_type() == messages::message_entity_removed::TYPE)
@@ -48,8 +49,11 @@ namespace core
             if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
             {
                 m_entities.remove(p_entity);
-                PLOG_DEBUG << "Entity removed";
             }
+        }
+        else if (p_message->get_type() == messages::message_entities_cleared::TYPE)
+        {
+            m_entities.clear();
         }
         else
         {
