@@ -1,4 +1,4 @@
-/// @file console.cpp
+/// @file console_service.cpp
 
 #include <algorithm>
 #include <string>
@@ -7,27 +7,27 @@
 #include "command_exit.hpp"
 #include "command_pause.hpp"
 #include "command_resume.hpp"
-#include "console.hpp"
+#include "console_service.hpp"
 #include "game.hpp"
 #include "strings.hpp"
 
-namespace services
+namespace console
 {
-    console::console(core::message_bus& message_bus, core::entity_manager& entity_manager)
+    console_service::console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
         : server(5050) // Defaults to port 5050
     {
-        add_command(std::make_shared<services::command_add_entity>(entity_manager));
-        add_command(std::make_shared<services::command_exit>(message_bus));
-        add_command(std::make_shared<services::command_pause>(message_bus));
-        add_command(std::make_shared<services::command_resume>(message_bus));
+        add_command(std::make_shared<command_add_entity>(p_entity_manager));
+        add_command(std::make_shared<command_exit>(p_message_bus));
+        add_command(std::make_shared<command_pause>(p_message_bus));
+        add_command(std::make_shared<command_resume>(p_message_bus));
     }
 
-    bool console::initialise()
+    bool console_service::initialise()
     {
         return start_listen_thread();
     }
 
-    void console::update(const utilities::gametime& p_gametime)
+    void console_service::update(const utilities::gametime& p_gametime)
     {
         std::lock_guard<std::mutex> lock(m_command_buffer_mutex);
 
@@ -44,17 +44,17 @@ namespace services
         }
     }
 
-    void console::shutdown()
+    void console_service::shutdown()
     {
         stop_listen_thread();
     }
 
-    bool console::pauseable() const
+    bool console_service::pauseable() const
     {
         return false;
     }
 
-    void console::on_receive(const std::string& message)
+    void console_service::on_receive(const std::string& message)
     {
         // Convert command to tokens
         const auto& args = utilities::strings::tokenise(message);
@@ -84,7 +84,7 @@ namespace services
         }
     }
 
-    void console::add_command(std::shared_ptr<services::command> command)
+    void console_service::add_command(std::shared_ptr<command> command)
     {
         for (const auto& command_name : command->get_command_names())
         {

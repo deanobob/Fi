@@ -9,8 +9,8 @@
 
 namespace core
 {
-    entity_manager::entity_manager(core::message_bus& message_bus)
-        : m_message_bus{message_bus}
+    entity_manager::entity_manager(message_bus* p_message_bus)
+        : mp_message_bus{p_message_bus}
     {
 
     }
@@ -37,12 +37,12 @@ namespace core
     {
         // Publish entities cleared message
         messages::message_entities_cleared message{};
-        m_message_bus.send(&message);
+        mp_message_bus->send(&message);
 
         m_entities.clear();
     }
 
-    void entity_manager::put(std::unique_ptr<core::entity> entity)
+    void entity_manager::put(std::unique_ptr<entity> entity)
     {
         const auto& tag = entity->get_tag();
         if (!tag.empty())
@@ -52,12 +52,12 @@ namespace core
 
         // Publish addition of entity
         messages::message_entity_added message(entity.get());
-        m_message_bus.send(&message);
+        mp_message_bus->send(&message);
 
         m_entities.emplace(entity->get_id(), std::move(entity));
     }
 
-    core::entity* entity_manager::get(core::entity_id id)
+    entity* entity_manager::get(entity_id id)
     {
         const auto entity_iter = m_entities.find(id);
         if (entity_iter != m_entities.end())
@@ -67,7 +67,7 @@ namespace core
         return nullptr;
     }
 
-    core::entity* entity_manager::get(const std::string& tag)
+    entity* entity_manager::get(const std::string& tag)
     {
         const auto entity_id_iter = m_tagged_entities.find(tag);
         if (entity_id_iter == m_tagged_entities.end())
@@ -84,7 +84,7 @@ namespace core
         return entity_iter->second.get();
     }
 
-    bool entity_manager::remove(core::entity_id id)
+    bool entity_manager::remove(entity_id id)
     {
         const auto& entity_iter = m_entities.find(id);
         if (entity_iter == m_entities.end())
@@ -95,7 +95,7 @@ namespace core
 
         // Publish removal of entity
         messages::message_entity_removed message(entity_iter->second.get());
-        m_message_bus.send(&message);
+        mp_message_bus->send(&message);
 
         // Delete entity
         m_entities.erase(entity_iter);

@@ -8,8 +8,8 @@
 #include "command.hpp"
 #include "game.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace console namespace
+namespace console
 {
     /// @brief Command class that instructs the game to exit
     class command_exit
@@ -17,8 +17,8 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Reference to the game message bus
-        command_exit(core::message_bus& message_bus);
+        /// @param message_bus Pointer to the game message bus
+        command_exit(core::message_bus* p_message_bus);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -28,9 +28,9 @@ namespace services
         void execute(const std::vector<std::string>& args) const override;
 
         private:
-        /// @brief Reference to message_bus instance
-        core::message_bus& m_message_bus;
+        /// @brief Pointer to message_bus instance
+        core::message_bus* mp_message_bus{nullptr};
     };
-} /// namespace services
+} /// namespace console
 
 #endif /// COMMAND_EXIT_HPP

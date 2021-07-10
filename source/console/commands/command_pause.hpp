@@ -1,24 +1,24 @@
-/// @file command_resume.hpp
-/// @brief The command_resume base class
+/// @file command_pause.hpp
+/// @brief The command_pause base class
 
-#ifndef COMMAND_RESUME_HPP
-#define COMMAND_RESUME_HPP
+#ifndef COMMAND_PAUSE_HPP
+#define COMMAND_PAUSE_HPP
 
 #include <string>
 #include "command.hpp"
 #include "game.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace console namespace
+namespace console
 {
-    /// @brief Command class that resumes the game
-    class command_resume
+    /// @brief Command class that pauses the game
+    class command_pause
         : public command
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Reference to the game message bus
-        command_resume(core::message_bus& message_bus);
+        /// @param message_bus Pointer to the game message bus
+        command_pause(core::message_bus* p_message_bus);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -28,9 +28,9 @@ namespace services
         void execute(const std::vector<std::string>& args) const override;
 
         private:
-        /// @brief Reference to message_bus instance
-        core::message_bus& m_message_bus;
+        /// @brief Pointer to message_bus instance
+        core::message_bus* mp_message_bus{nullptr};
     };
-} /// namespace services
+} /// namespace console
 
-#endif /// COMMAND_RESUME_HPP
+#endif /// COMMAND_PAUSE_HPP

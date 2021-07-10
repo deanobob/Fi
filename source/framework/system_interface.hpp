@@ -16,9 +16,9 @@ namespace framework
     class system_interface
     {
         public:
-        /// @brief Get the render controller
-        /// @return Reference to the render controller
-        render::render_controller* get_render_component()
+        /// @brief Get the renderer system
+        /// @return Pointer to the render controller
+        render::render_controller* get_render_controller()
         {
             if (!m_render_controller)
             {
@@ -27,8 +27,8 @@ namespace framework
             return m_render_controller.get();
         }
 
-        /// @brief Get the input controller
-        /// @return Reference to the input controller
+        /// @brief Get the input system
+        /// @return Pointer to the input controller
         input::input_controller* get_input_controller()
         {
             if (!m_input_controller)

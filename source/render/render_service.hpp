@@ -7,15 +7,8 @@
 #include "gametime.hpp"
 #include "component_service.hpp"
 
-/// @namespace core namespace
-namespace core
-{
-    /// Forward declarations
-    class game;
-}
-
-/// @namespace services namespace
-namespace services
+/// @namespace render namespace
+namespace render
 {
     /// @brief Manages rendering the game
     class render_service
@@ -23,16 +16,11 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Reference to the game message bus
-        /// @param entity_manager Reference to the entity manager
-        render_service(core::message_bus& message_bus, core::entity_manager& entity_manager);
+        /// @param p_message_bus Reference to the game message bus
+        /// @param p_entity_manager Reference to the entity manager
+        render_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager);
         /// @brief Destructor
         virtual ~render_service();
-
-        core::service_type get_type() const override
-        {
-            return core::service_type::render_service;
-        }
 
         bool initialise() override;
 
@@ -40,6 +28,6 @@ namespace services
 
         void shutdown() override;
     };
-} /// namespace services
+} /// namespace render
 
 #endif /// RENDER_SERVICE_HPP

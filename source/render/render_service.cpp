@@ -5,10 +5,10 @@
 #include "game.hpp"
 #include "render_service.hpp"
 
-namespace services
+namespace render
 {
-    render_service::render_service(core::message_bus& message_bus, core::entity_manager& entity_manager)
-        : component_service{message_bus, entity_manager, core::component_type::render}
+    render_service::render_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
+        : component_service{p_message_bus, p_entity_manager, core::component_type::render}
     {
 
     }

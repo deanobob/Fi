@@ -8,10 +8,10 @@
 #include <map>
 #include <memory>
 #include <stdlib.h>
+#include <string>
 #include "component.hpp"
 #include "component_type.hpp"
 #include "gametime.hpp"
-#include "message_bus.hpp"
 
 /// @namespace core namespace
 namespace core

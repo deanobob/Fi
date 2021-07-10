@@ -18,6 +18,6 @@ namespace input
         space,
         escape
     };
-} /// input services
+} /// namespace input
 
 #endif /// KEY_HPP

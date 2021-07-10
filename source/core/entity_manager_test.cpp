@@ -15,7 +15,7 @@ class test_listener
 {
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
-    /// @param p_entity_manager The entity manager
+    /// @param message_bus The message bus
     test_listener(core::message_bus& message_bus)
         : m_message_bus(message_bus)
     {

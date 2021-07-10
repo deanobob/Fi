@@ -5,25 +5,16 @@
 #define SERVICE_HPP
 
 #include "gametime.hpp"
-#include "service_type.hpp"
-#include "system_interface.hpp"
 
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Forward declare game class
-    class game;
-
     /// @brief Base class for services
     class service
     {
         public:
-        /// @param default destructor
+        /// @brief Default destructor
         virtual ~service() = default;
-
-        /// @brief Get the service type
-        /// @return The service type
-        virtual service_type get_type() const = 0;
 
         /// @brief Initialises the service
         /// @return True if successfully initialised, else false

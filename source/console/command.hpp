@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 
-/// @namespace services namespace
-namespace services
+/// @namespace console namespace
+namespace console
 {
     /// @brief Base class for console commands
     class command
@@ -24,6 +24,6 @@ namespace services
         /// @param args The command arguments
         virtual void execute(const std::vector<std::string>& args) const = 0;
     };
-} /// namespace services
+} /// namespace console
 
 #endif /// COMMAND_HPP

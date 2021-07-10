@@ -1,12 +1,12 @@
-/// @file input_manager.cpp
+/// @file input_service.cpp
 
 #include "plog/Log.h"
-#include "input_manager.hpp"
+#include "input_service.hpp"
 #include "game.hpp"
 
-namespace services
+namespace input
 {
-    input_manager::input_manager(input::input_controller* p_input_controller)
+    input_service::input_service(input_controller* p_input_controller)
         : mp_input_controller{p_input_controller}
     {
         assert(mp_input_controller != nullptr);
@@ -14,27 +14,27 @@ namespace services
         mp_input_controller->add_event_listener(this);
     }
 
-    input_manager::~input_manager()
+    input_service::~input_service()
     {
         mp_input_controller->remove_event_listener(this);
     }
 
-    bool input_manager::initialise()
+    bool input_service::initialise()
     {
         return mp_input_controller->initialise();
     }
 
-    void input_manager::update(const utilities::gametime& gametime)
+    void input_service::update(const utilities::gametime& gametime)
     {
         mp_input_controller->process_events();
     }
 
-    void input_manager::shutdown()
+    void input_service::shutdown()
     {
         mp_input_controller->shutdown();
     }
 
-    const input::joypad_state* input_manager::get_joypad_state(unsigned int joypad_id) const
+    const joypad_state* input_service::get_joypad_state(unsigned int joypad_id) const
     {
         const auto& joypad_state_iter = m_joypad_states.find(joypad_id);
         if (joypad_state_iter != m_joypad_states.end())
@@ -44,38 +44,38 @@ namespace services
         return nullptr;
     }
 
-    const input::keyboard_state* input_manager::get_keyboard_state() const
+    const keyboard_state* input_service::get_keyboard_state() const
     {
         return &m_keyboard_state;
     }
 
-    const input::mouse_state* input_manager::get_mouse_state() const
+    const mouse_state* input_service::get_mouse_state() const
     {
         return &m_mouse_state;
     }
 
-    void input_manager::on_key_state_changed(const input::key key_code, bool pressed)
+    void input_service::on_key_state_changed(const key key_code, bool pressed)
     {
         PLOG_DEBUG << "key changed: " << static_cast<int>(key_code) << " " << pressed;
 
         m_keyboard_state.set_key_state(key_code, pressed);
     }
 
-    void input_manager::on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position)
+    void input_service::on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position)
     {
         PLOG_DEBUG << "joystick axis changed: " << joypad_id << " " << joystick << " " << axis << " " << position;
 
         get_joypad_state(joypad_id)->set_axis_state(joystick, axis, position);
     }
 
-    void input_manager::on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed)
+    void input_service::on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed)
     {
         PLOG_DEBUG << "joystick button changed: " << joypad_id << " " << button_id << " " << pressed;
 
         get_joypad_state(joypad_id)->set_button_state(button_id, pressed);
     }
 
-    void input_manager::on_mouse_button_state_changed(const input::mouse_button mouse_button,
+    void input_service::on_mouse_button_state_changed(const mouse_button mouse_button,
                                                       int x_position,
                                                       int y_position,
                                                       bool pressed)
@@ -91,7 +91,7 @@ namespace services
         m_mouse_state.set_button_state(mouse_button, pressed);
     }
 
-    void input_manager::on_mouse_axis_changed(int position_x, int position_y, int position_z)
+    void input_service::on_mouse_axis_changed(int position_x, int position_y, int position_z)
     {
         PLOG_DEBUG << "mouse axis changed: " << position_x << " " << position_y << " " << position_z;
 
@@ -100,7 +100,7 @@ namespace services
         m_mouse_state.set_wheel_position(position_z);
     }
 
-    input::joypad_state* input_manager::get_joypad_state(unsigned int joypad_id)
+    joypad_state* input_service::get_joypad_state(unsigned int joypad_id)
     {
         const auto& joypad_state_iter = m_joypad_states.find(joypad_id);
         if (joypad_state_iter != m_joypad_states.end())
@@ -108,7 +108,7 @@ namespace services
             return &joypad_state_iter->second;
         }
 
-        const auto emplace_result = m_joypad_states.emplace(joypad_id, input::joypad_state());
+        const auto emplace_result = m_joypad_states.emplace(joypad_id, joypad_state());
         /// Emplace result contains tuple(iter(pair(joypad_id, joypad_state)));
         /// The following extracts iter, then joypad_state.
         return &emplace_result.first->second;

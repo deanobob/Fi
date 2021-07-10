@@ -8,6 +8,7 @@
 #include "component_type.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
+#include "message_bus.hpp"
 #include "service.hpp"
 #include "subscriber.hpp"
 
@@ -16,17 +17,17 @@ namespace core
 {
     /// @brief Base class for component services
     class component_service
-        : public service
-        , public subscriber
+        : public core::service
+        , public core::subscriber
     {
         public:
         /// @brief Constructor
-        /// @param message_bus Reference to the game message bus
-        /// @param entity_manager Reference to the entity manager
+        /// @brief p_message_bus The game message bus
+        /// @param p_entity_manager The game entity manager
         /// @param component_mask Bitmask indicating the components an entity must have for it to be registered with
         /// the entity list.
-        component_service(message_bus& message_bus,
-                          core::entity_manager& entity_manager,
+        component_service(core::message_bus* p_message_bus,
+                          core::entity_manager* p_entity_manager,
                           component_type component_mask);
         /// @brief Default destructor
         virtual ~component_service();
@@ -39,16 +40,19 @@ namespace core
         const std::list<entity*>& get_entities();
 
         /// @brief Get entity manager
-        /// @return Reference to the entity manager
-        core::entity_manager& get_entity_manager();
+        /// @return Pointer to the entity manager
+        core::entity_manager* get_entity_manager();
 
         private:
-        /// @brief The game message bus
-        message_bus& m_message_bus;
-        /// @brief Reference to entity manager
-        core::entity_manager& m_entity_manager;
         /// @brief The mask used to determine if an entity interesting to this service
         const component_type m_component_mask;
+
+        /// @brief Pointer to entity manager
+        core::entity_manager* mp_entity_manager{nullptr};
+
+        /// @brief Pointer to message bus
+        core::message_bus* mp_message_bus{nullptr};
+
         /// @brief List containing all interesting entities
         std::list<entity*> m_entities{};
     };

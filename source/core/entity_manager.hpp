@@ -20,8 +20,8 @@ namespace core
     {
         public:
         /// @brief Constructor
-        /// @param p_game Reference to the game message bus
-        entity_manager(core::message_bus& message_bus);
+        /// @param message_bus Pointer to the game message bus
+        entity_manager(message_bus* p_message_bus);
         /// @brief Destructor
         virtual ~entity_manager();
 
@@ -38,32 +38,32 @@ namespace core
 
         /// @brief Add an entity
         /// @param entity The entity
-        void put(std::unique_ptr<core::entity> entity);
+        void put(std::unique_ptr<entity> entity);
 
         /// @brief Get entity by ID
         /// @param id The entity ID
         /// @return The entity or nullptr if not found
-        core::entity* get(core::entity_id id);
+        entity* get(entity_id id);
 
         /// @brief Get entity by tag
         /// @param tag The entity tag
         /// @return The entity or nullptr if not found
-        core::entity* get(const std::string& tag);
+        entity* get(const std::string& tag);
 
         /// @brief Remove entity by entity_id
         /// @param id The ID of the entity to delete
         /// @return True on success, false if the entity was not found
-        bool remove(core::entity_id id);
+        bool remove(entity_id id);
 
         private:
         /// @brief The game message bus
-        core::message_bus& m_message_bus;
+        message_bus* mp_message_bus;
         /// @brief Stores entity component masks
-        std::map<core::entity_id, std::unique_ptr<core::entity> > m_entities{};
+        std::map<entity_id, std::unique_ptr<entity> > m_entities{};
         /// @brief Stores entities by tag
         std::map<const std::string, unsigned int> m_tagged_entities{};
         /// @brief List of entity IDs awaiting to be deleted
-        std::list<core::entity_id> m_deleted_entities{};
+        std::list<entity_id> m_deleted_entities{};
     };
 } /// namespace core
 

@@ -1,8 +1,8 @@
-/// @file console.hpp
-/// @brief The console base class
+/// @file console_service.hpp
+/// @brief The console service class
 
-#ifndef CONSOLE_HPP
-#define CONSOLE_HPP
+#ifndef CONSOLE_SERVICE_HPP
+#define CONSOLE_SERVICE_HPP
 
 #include <atomic>
 #include <map>
@@ -16,11 +16,11 @@
 #include "server.hpp"
 #include "service.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace console namespace
+namespace console
 {
-    /// @brief Base class for services
-    class console
+    /// @brief Service that provides a console interface to the game
+    class console_service
         : public core::service
         , public utilities::server
     {
@@ -28,12 +28,9 @@ namespace services
         /// @brief Constructor
         /// @param message_bus Reference to the game message bus
         /// @param entity_manager Reference to the entity manager
-        console(core::message_bus& message_bus, core::entity_manager& entity_manager);
-
-        core::service_type get_type() const override
-        {
-            return core::service_type::console;
-        }
+        console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager);
+        /// @brief Destructor
+        virtual ~console_service() = default;
 
         /// @brief Initialises the console reader
         /// @return True if initialised successfully
@@ -57,7 +54,7 @@ namespace services
 
         private:
         /// @brief Buffer that contains the available commands
-        std::map<const std::string, std::shared_ptr<services::command> > m_commands;
+        std::map<const std::string, std::shared_ptr<command> > m_commands;
         /// @brief Message buffer mutex
         /// @details Synchronises the command buffer access across the read thread and the game thread
         std::mutex m_command_buffer_mutex{};
@@ -66,8 +63,8 @@ namespace services
 
         /// @brief Adds a command to the available command map
         /// @param command The command to add to the map
-        void add_command(std::shared_ptr<services::command> command);
+        void add_command(std::shared_ptr<command> command);
     };
-} /// namespace services
+} /// namespace console
 
 #endif /// CONSOLE_HPP

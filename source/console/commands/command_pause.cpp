@@ -4,10 +4,10 @@
 #include "game.hpp"
 #include "message_pause.hpp"
 
-namespace services
+namespace console
 {
-    command_pause::command_pause(core::message_bus& message_bus):
-        m_message_bus{message_bus}
+    command_pause::command_pause(core::message_bus* p_message_bus):
+        mp_message_bus{p_message_bus}
     {
 
     }
@@ -20,6 +20,6 @@ namespace services
     void command_pause::execute(const std::vector<std::string>& args) const
     {
         auto message = messages::message_pause();
-        m_message_bus.send(&message);
+        mp_message_bus->send(&message);
     }
 }

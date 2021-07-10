@@ -1,7 +1,7 @@
-/// @file renderer.hpp
+/// @file render_controller.hpp
 
-#ifndef RENDERER_HPP
-#define RENDERER_HPP
+#ifndef RENDER_CONTROLLER_HPP
+#define RENDER_CONTROLLER_HPP
 
 #include <list>
 #include <string>
@@ -179,4 +179,4 @@ namespace render
 
 } /// namespace render
 
-#endif /// RENDERER_HPP
+#endif /// RENDER_CONTROLLER_HPP

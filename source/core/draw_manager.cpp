@@ -4,14 +4,15 @@
 #include "plog/Log.h"
 #include "draw_manager.hpp"
 #include "game.hpp"
+#include "message_exit.hpp"
 #include "time.hpp"
 
 namespace core
 {
-    draw_manager::draw_manager(game* p_game)
-        : mp_game{p_game}
+    draw_manager::draw_manager(core::message_bus* p_message_bus, render::render_controller* p_render_controller)
+        : mp_message_bus{p_message_bus}, mp_render_controller{p_render_controller}
     {
-        mp_render_controller = p_game->get_system_interface()->get_render_component();
+        assert(mp_message_bus != nullptr);
         assert(mp_render_controller != nullptr);
 
         mp_render_controller->add_event_listener(this);
@@ -53,7 +54,8 @@ namespace core
 
     void draw_manager::on_display_close()
     {
-        mp_game->exit();
+        auto message = messages::message_exit();
+        mp_message_bus->send(&message);
     }
 
     void draw_manager::on_display_gained_focus()

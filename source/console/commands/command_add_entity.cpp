@@ -6,10 +6,10 @@
 #include "game.hpp"
 #include "render_component.hpp"
 
-namespace services
+namespace console
 {
-    command_add_entity::command_add_entity(core::entity_manager& entity_manager):
-        m_entity_manager{entity_manager}
+    command_add_entity::command_add_entity(core::entity_manager* p_entity_manager):
+        mp_entity_manager{p_entity_manager}
     {
 
     }
@@ -31,6 +31,6 @@ namespace services
         auto entity{std::make_unique<core::entity>(tag)};
         entity->add_component(std::make_unique<core::body_component>());
         entity->add_component(std::make_unique<core::render_component>());
-        m_entity_manager.put(std::move(entity));
+        mp_entity_manager->put(std::move(entity));
     }
 }
