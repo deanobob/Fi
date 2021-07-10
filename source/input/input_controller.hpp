@@ -6,8 +6,8 @@
 #include <list>
 #include "input_event_listener.hpp"
 
-/// @namespace framework namespace
-namespace framework
+/// @namespace input namespace
+namespace input
 {
     /// @brief The input_controller class
     class input_controller
@@ -42,6 +42,6 @@ namespace framework
         std::list<input_event_listener*> mp_event_listeners{};
     };
 
-} /// namespace framework
+} /// namespace input
 
 #endif /// INPUT_CONTROLLER_HPP

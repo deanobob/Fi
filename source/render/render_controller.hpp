@@ -7,14 +7,14 @@
 #include <string>
 #include "color.hpp"
 #include "rectangle.hpp"
-#include "renderer_event_listener.hpp"
+#include "render_event_listener.hpp"
 #include "vector2.hpp"
 
-/// @namespace framework namespace
-namespace framework
+/// @namespace render namespace
+namespace render
 {
     /// @brief The window properties struct
-    /// @details Defines the properties that are used when generating a renderer window
+    /// @details Defines the properties that are used when generating a window
     struct window_properties
     {
         /// @brief Undefined window position
@@ -48,7 +48,7 @@ namespace framework
         uint8_t msaa_samples{DEFAULT_MSAA_SAMPLES};
     };
 
-    /// @brief Defines the renderer window location scale and rotation.
+    /// @brief Defines the window location scale and rotation.
     struct transform
     {
         /// @brief The viewport boundaries
@@ -59,29 +59,29 @@ namespace framework
         float rotation{0.0f};
     };
 
-    /// @brief The renderer class
-    class renderer
+    /// @brief The render controller class
+    class render_controller
     {
         public:
         /// @brief Add a display event listener
         /// @param p_event_listener The event listener
-        void add_event_listener(renderer_event_listener* p_event_listener)
+        void add_event_listener(render_event_listener* p_event_listener)
         {
             mp_event_listeners.push_back(p_event_listener);
         }
 
         /// @brief Remove a display event listener
         /// @param p_event_listener The event listener
-        void remove_event_listener(renderer_event_listener* p_event_listener)
+        void remove_event_listener(render_event_listener* p_event_listener)
         {
             mp_event_listeners.remove(p_event_listener);
         }
 
-        /// @brief Initialise the renderer
+        /// @brief Initialise the render controller
         /// @return True on success, false if failed to intialise
         virtual bool initialise() = 0;
 
-        /// @brief Process events from renderer i.e. window close, etc.
+        /// @brief Process events from render controller i.e. window close, etc.
         virtual void process_events() = 0;
 
         /// @brief Create an application window
@@ -169,14 +169,14 @@ namespace framework
         /// @brief Destroy the window
         virtual void destroy_window() = 0;
 
-        /// @brief Terminates all renderer functions
+        /// @brief Terminates all render controller functions
         virtual void shutdown() = 0;
 
         protected:
         /// @brief Container for event listeners subscribed to receive display events
-        std::list<renderer_event_listener*> mp_event_listeners{};
+        std::list<render_event_listener*> mp_event_listeners{};
     };
 
-} /// namespace framework
+} /// namespace render
 
 #endif /// RENDERER_HPP

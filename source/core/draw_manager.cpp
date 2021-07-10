@@ -11,44 +11,44 @@ namespace core
     draw_manager::draw_manager(game* p_game)
         : mp_game{p_game}
     {
-        mp_renderer = p_game->get_system_interface()->get_renderer();
-        assert(mp_renderer != nullptr);
+        mp_render_controller = p_game->get_system_interface()->get_render_component();
+        assert(mp_render_controller != nullptr);
 
-        mp_renderer->add_event_listener(this);
+        mp_render_controller->add_event_listener(this);
     }
 
     draw_manager::~draw_manager()
     {
-        mp_renderer->remove_event_listener(this);
+        mp_render_controller->remove_event_listener(this);
     }
 
     bool draw_manager::initialise()
     {
-        framework::window_properties window_properties{};
+        render::window_properties window_properties{};
 
-        return mp_renderer->initialise()
-            && mp_renderer->create_window(window_properties);
+        return mp_render_controller->initialise()
+            && mp_render_controller->create_window(window_properties);
     }
 
     void draw_manager::process_events()
     {
-        mp_renderer->process_events();
+        mp_render_controller->process_events();
     }
 
     void draw_manager::draw(double delta)
     {
-        mp_renderer->clear();
+        mp_render_controller->clear();
 
         // draw stuff here
         utilities::time::sleep_msec(16);
 
-        mp_renderer->flip();
+        mp_render_controller->flip();
     }
 
     void draw_manager::shutdown()
     {
-        mp_renderer->destroy_window();
-        mp_renderer->shutdown();
+        mp_render_controller->destroy_window();
+        mp_render_controller->shutdown();
     }
 
     void draw_manager::on_display_close()

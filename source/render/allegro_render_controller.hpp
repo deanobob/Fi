@@ -1,4 +1,4 @@
-/// @file allegro_renderer.hpp
+/// @file allegro_render_controller.hpp
 
 #ifndef ALLEGRO_RENDERER_HPP
 #define ALLEGRO_RENDERER_HPP
@@ -9,18 +9,18 @@
 #include <map>
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_font.h"
-#include "renderer.hpp"
+#include "render_controller.hpp"
 
-namespace framework
+namespace render
 {
-    /// @brief Implementation of renderer framework interface using liballegro
-    class allegro_renderer
-        : public renderer
+    /// @brief Implementation of render interface using liballegro
+    class allegro_render_controller
+        : public render_controller
     {
         public:
         /// @brief Constructor
         /// @param p_event_queue The allegro event queue
-        allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue = nullptr);
+        allegro_render_controller(ALLEGRO_EVENT_QUEUE* p_event_queue = nullptr);
 
         bool initialise() override;
 
@@ -102,20 +102,20 @@ namespace framework
         const std::string get_assets_path() const;
     };
 
-} /// namespace framework
+} /// namespace render
 
 #else /// CI
 
 #include "renderer.hpp"
 
-namespace framework
+namespace render
 {
-    /// @brief Implementation of renderer framework interface using liballegro
-    class allegro_renderer: public renderer
+    /// @brief Implementation of renderer render interface using liballegro
+    class allegro_render_controller: public renderer
     {
         public:
         /// @brief Constructor
-        allegro_renderer() = default;
+        allegro_render_controller() = default;
 
         bool initialise() override;
 
@@ -172,7 +172,7 @@ namespace framework
         uint32_t m_next_sprite_id{1};
     };
 
-} /// namespace framework
+} /// namespace render
 
 #endif /// CI
 

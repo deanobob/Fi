@@ -5,8 +5,8 @@
 #define DRAW_MANAGER_HPP
 
 #include "gametime.hpp"
-#include "renderer.hpp"
-#include "renderer_event_listener.hpp"
+#include "render_controller.hpp"
+#include "render_event_listener.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -16,7 +16,7 @@ namespace core
 
     /// @brief Manages rendering the game
     class draw_manager
-        : public framework::renderer_event_listener
+        : public render::render_event_listener
     {
         public:
         /// @brief Constructor
@@ -44,8 +44,8 @@ namespace core
         void on_display_lost_focus() override;
 
         private:
-        /// @brief Pointer to renderer system
-        framework::renderer* mp_renderer{nullptr};
+        /// @brief Pointer to render controller
+        render::render_controller* mp_render_controller{nullptr};
 
         /// @brief Pointer to game
         game* mp_game{nullptr};

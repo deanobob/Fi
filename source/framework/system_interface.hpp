@@ -5,9 +5,9 @@
 
 #include <memory>
 #include "allegro_input_controller.hpp"
-#include "allegro_renderer.hpp"
+#include "allegro_render_controller.hpp"
 #include "input_controller.hpp"
-#include "renderer.hpp"
+#include "render_controller.hpp"
 
 /// @namespace framework namespace
 namespace framework
@@ -16,33 +16,33 @@ namespace framework
     class system_interface
     {
         public:
-        /// @brief Get the renderer system
-        /// @return Reference to the renderer instance
-        renderer* get_renderer()
+        /// @brief Get the render controller
+        /// @return Reference to the render controller
+        render::render_controller* get_render_component()
         {
-            if (!m_renderer)
+            if (!m_render_controller)
             {
-                m_renderer = std::make_unique<allegro_renderer>();
+                m_render_controller = std::make_unique<render::allegro_render_controller>();
             }
-            return m_renderer.get();
+            return m_render_controller.get();
         }
 
         /// @brief Get the input controller
         /// @return Reference to the input controller
-        input_controller* get_input_controller()
+        input::input_controller* get_input_controller()
         {
-            if (!m_input)
+            if (!m_input_controller)
             {
-                m_input = std::make_unique<allegro_input_controller>();
+                m_input_controller = std::make_unique<input::allegro_input_controller>();
             }
-            return m_input.get();
+            return m_input_controller.get();
         }
 
         private:
-        /// @brief The renderer instance
-        std::unique_ptr<renderer> m_renderer {nullptr};
+        /// @brief The render controller instance
+        std::unique_ptr<render::render_controller> m_render_controller {nullptr};
         /// @brief The input controller instance
-        std::unique_ptr<input_controller> m_input {nullptr};
+        std::unique_ptr<input::input_controller> m_input_controller {nullptr};
     };
 }
 

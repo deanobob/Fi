@@ -10,7 +10,7 @@
 #include "plog/Log.h"
 #include "allegro_input_controller.hpp"
 
-namespace framework
+namespace input
 {
     allegro_input_controller::allegro_input_controller(ALLEGRO_EVENT_QUEUE* p_event_queue)
         : mp_event_queue(p_event_queue)
@@ -171,14 +171,14 @@ namespace framework
         // Returns whatever the ID was, despite not knowing it explicitly.
         return static_cast<input::mouse_button>(button_id);
     }
-} /// namespace framework
+} /// namespace input
 
 #else
 
 #include "plog/Log.h"
 #include "allegro_input_controller.hpp"
 
-namespace framework
+namespace input
 {
     bool allegro_input_controller::initialise()
     {

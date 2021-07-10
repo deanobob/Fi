@@ -10,9 +10,9 @@
 #include "allegro5/allegro.h"
 #include "input_controller.hpp"
 
-namespace framework
+namespace input
 {
-    /// @brief Implementation of input framework interface using liballegro
+    /// @brief Implementation of input input interface using liballegro
     class allegro_input_controller
         : public input_controller
     {
@@ -42,15 +42,15 @@ namespace framework
         static input::mouse_button allegro_mouse_button_to_mouse_button(unsigned int button_id);
     };
 
-} /// namespace framework
+} /// namespace input
 
 #else /// CI
 
 #include "input.hpp"
 
-namespace framework
+namespace input
 {
-    /// @brief Implementation of input framework interface using liballegro
+    /// @brief Implementation of input input interface using liballegro
     class allegro_input_controller: public input
     {
         public:
@@ -64,7 +64,7 @@ namespace framework
         void shutdown() override;
     };
 
-} /// namespace framework
+} /// namespace input
 
 #endif /// CI
 

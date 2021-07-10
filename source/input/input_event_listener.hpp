@@ -6,8 +6,8 @@
 #include "key.hpp"
 #include "mouse.hpp"
 
-/// @namespace framework namespace
-namespace framework
+/// @namespace input namespace
+namespace input
 {
     /// @brief Interface that can be registered with an input, providing ability to implement responses to input events
     class input_event_listener
@@ -46,7 +46,6 @@ namespace framework
         /// @param position_y The y position
         /// @param position_z The mouse wheel position
         virtual void on_mouse_axis_changed(int position_x, int position_y, int position_z) = 0;
-
     };
 }
 

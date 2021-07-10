@@ -10,7 +10,6 @@
 #include "joypad_state.hpp"
 #include "keyboard_state.hpp"
 #include "mouse_state.hpp"
-#include "renderer.hpp"
 #include "service.hpp"
 
 /// @namespace services namespace
@@ -22,7 +21,7 @@ namespace services
     /// @brief Manages rendering the game
     class input_manager
         : public core::service
-        , public framework::input_event_listener
+        , public input::input_event_listener
     {
         public:
         /// @brief Constructor
@@ -71,7 +70,7 @@ namespace services
 
         private:
         /// @brief Reference to input system
-        framework::input_controller* mp_input_controller{nullptr};
+        input::input_controller* mp_input_controller{nullptr};
         /// @brief List containing all joypad states
         std::map<unsigned int, input::joypad_state> m_joypad_states{};
         /// @brief The current keyboard state

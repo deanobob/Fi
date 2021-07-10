@@ -1,4 +1,4 @@
-/// @file allegro_renderer.cpp
+/// @file allegro_render_controller.cpp
 
 #ifndef CI
 
@@ -8,11 +8,11 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 #include "plog/Log.h"
-#include "allegro_renderer.hpp"
+#include "allegro_render_controller.hpp"
 
-namespace framework
+namespace render
 {
-    allegro_renderer::allegro_renderer(ALLEGRO_EVENT_QUEUE* p_event_queue)
+    allegro_render_controller::allegro_render_controller(ALLEGRO_EVENT_QUEUE* p_event_queue)
         : mp_event_queue(p_event_queue)
     {
         al_init();
@@ -20,7 +20,7 @@ namespace framework
         mp_event_queue = p_event_queue ? p_event_queue : al_create_event_queue();
     }
 
-    bool allegro_renderer::initialise()
+    bool allegro_render_controller::initialise()
     {
         if (!al_init_image_addon())
         {
@@ -49,7 +49,7 @@ namespace framework
         return true;
     }
 
-    void allegro_renderer::process_events()
+    void allegro_render_controller::process_events()
     {
         ALLEGRO_EVENT event;
 
@@ -82,7 +82,7 @@ namespace framework
         }
     }
 
-    bool allegro_renderer::create_window(const window_properties& properties)
+    bool allegro_render_controller::create_window(const window_properties& properties)
     {
         // Define flags based on properties configuration
         int flags{0};
@@ -132,17 +132,17 @@ namespace framework
         return true;
     }
 
-    void allegro_renderer::set_clear_color(const utilities::color& color)
+    void allegro_render_controller::set_clear_color(const utilities::color& color)
     {
         m_clear_color = al_map_rgb(color.r, color.g, color.b);
     }
 
-    void allegro_renderer::clear()
+    void allegro_render_controller::clear()
     {
         al_clear_to_color(m_clear_color);
     }
 
-    void allegro_renderer::set_transform(const transform& transform)
+    void allegro_render_controller::set_transform(const transform& transform)
     {
         ALLEGRO_TRANSFORM al_transform;
         al_identity_transform(&al_transform);
@@ -162,10 +162,11 @@ namespace framework
                                   static_cast<int>(transform.viewport.height));
     }
 
-    bool allegro_renderer::load_bitmap(const std::string& filename,
-                                       const utilities::vector2& position,
-                                       const utilities::vector2& size,
-                                       uint32_t& bitmap_id)
+    bool allegro_render_controller::load_bitmap(
+        const std::string& filename,
+        const utilities::vector2& position,
+        const utilities::vector2& size,
+        uint32_t& bitmap_id)
     {
         ALLEGRO_BITMAP* p_parent_bitmap{nullptr};
 
@@ -189,11 +190,12 @@ namespace framework
             }
         }
 
-        ALLEGRO_BITMAP* p_sub_bitmap = al_create_sub_bitmap(p_parent_bitmap,
-                                                            static_cast<int>(position.x),
-                                                            static_cast<int>(position.y),
-                                                            static_cast<int>(size.x),
-                                                            static_cast<int>(size.y));
+        ALLEGRO_BITMAP* p_sub_bitmap = al_create_sub_bitmap(
+            p_parent_bitmap,
+            static_cast<int>(position.x),
+            static_cast<int>(position.y),
+            static_cast<int>(size.x),
+            static_cast<int>(size.y));
         if (p_sub_bitmap != nullptr)
         {
             // assign m_next_sprite_id to bitmap_id and save sub bitmap in sprite cache
@@ -209,7 +211,11 @@ namespace framework
         return true;
     }
 
-    bool allegro_renderer::load_font(const std::string& filename, uint32_t font_size, uint32_t flags, uint32_t& font_id)
+    bool allegro_render_controller::load_font(
+        const std::string& filename,
+        uint32_t font_size,
+        uint32_t flags,
+        uint32_t& font_id)
     {
         // Generate font unique name (combination of font name and font size)
         const std::string font_unique_name = filename + std::to_string(font_size);
@@ -242,7 +248,10 @@ namespace framework
         return true;
     }
 
-    void allegro_renderer::render_bitmap(uint32_t bitmap_id, const utilities::vector2& position, uint32_t flags)
+    void allegro_render_controller::render_bitmap(
+        uint32_t bitmap_id,
+        const utilities::vector2& position,
+        uint32_t flags)
     {
         ALLEGRO_BITMAP* p_bitmap = get_bitmap(bitmap_id);
         if (p_bitmap != nullptr)
@@ -251,7 +260,7 @@ namespace framework
         }
     }
 
-    void allegro_renderer::render_fill_rect(const utilities::rectangle& rect, const utilities::color& color)
+    void allegro_render_controller::render_fill_rect(const utilities::rectangle& rect, const utilities::color& color)
     {
       ALLEGRO_COLOR al_color = al_map_rgba(color.r, color.g, color.b, color.a);
 
@@ -259,7 +268,7 @@ namespace framework
           rect.y + rect.height, al_color);
     }
 
-    void allegro_renderer::render_draw_line(const float x1, const float y1, const float x2,
+    void allegro_render_controller::render_draw_line(const float x1, const float y1, const float x2,
         const float y2, const utilities::color& color)
     {
         ALLEGRO_COLOR al_color{};
@@ -271,8 +280,13 @@ namespace framework
         al_draw_line(x1, y1, x2, y2, al_color, 1);
     }
 
-    void allegro_renderer::render_text(const uint32_t m_font_id, const std::string& text, const float x, const float y,
-        const utilities::color& color, const uint32_t flags)
+    void allegro_render_controller::render_text(
+        const uint32_t m_font_id,
+        const std::string& text,
+        const float x,
+        const float y,
+        const utilities::color& color,
+        const uint32_t flags)
     {
         const auto& font_iter = m_font_cache.find(m_font_id);
         if (font_iter == m_font_cache.end())
@@ -283,21 +297,22 @@ namespace framework
         const ALLEGRO_FONT* p_font = font_iter->second;
         if (p_font != nullptr)
         {
-            al_draw_text(p_font,
-                         al_map_rgba(color.r, color.g, color.b, color.a),
-                         x,
-                         y,
-                         flags,
-                         text.c_str());
+            al_draw_text(
+                p_font,
+                al_map_rgba(color.r, color.g, color.b, color.a),
+                x,
+                y,
+                flags,
+                text.c_str());
         }
     }
 
-    void allegro_renderer::flip()
+    void allegro_render_controller::flip()
     {
         al_flip_display();
     }
 
-    void allegro_renderer::destroy_window()
+    void allegro_render_controller::destroy_window()
     {
         if (mp_target != nullptr)
         {
@@ -336,7 +351,7 @@ namespace framework
         m_font_cache.clear();
     }
 
-    void allegro_renderer::shutdown()
+    void allegro_render_controller::shutdown()
     {
         if (mp_event_queue)
         {
@@ -349,7 +364,7 @@ namespace framework
         al_shutdown_image_addon();
     }
 
-    ALLEGRO_BITMAP* allegro_renderer::get_bitmap(uint32_t bitmap_id) const
+    ALLEGRO_BITMAP* allegro_render_controller::get_bitmap(uint32_t bitmap_id) const
     {
         const auto& iter = m_sprite_cache.find(bitmap_id);
         if (iter != m_sprite_cache.end())
@@ -360,51 +375,51 @@ namespace framework
         return nullptr;
     }
 
-    const std::string allegro_renderer::get_assets_path() const
+    const std::string allegro_render_controller::get_assets_path() const
     {
         return std::string(al_path_cstr(al_get_standard_path(ALLEGRO_RESOURCES_PATH), '/')) + "assets/";
     }
 
-} /// namespace framework
+} /// namespace render
 
 #else
 
 #include "plog/Log.h"
-#include "allegro_renderer.hpp"
+#include "allegro_render_controller.hpp"
 
-namespace framework
+namespace render
 {
-    bool allegro_renderer::initialise()
+    bool allegro_render_controller::initialise()
     {
         return true;
     }
 
-    void allegro_renderer::process_events()
+    void allegro_render_controller::process_events()
     {
 
     }
 
-    bool allegro_renderer::create_window(const window_properties& properties)
+    bool allegro_render_controller::create_window(const window_properties& properties)
     {
         return true;
     }
 
-    void allegro_renderer::set_clear_color(const utilities::color& color)
+    void allegro_render_controller::set_clear_color(const utilities::color& color)
     {
 
     }
 
-    void allegro_renderer::clear()
+    void allegro_render_controller::clear()
     {
 
     }
 
-    void allegro_renderer::set_transform(const transform& transform)
+    void allegro_render_controller::set_transform(const transform& transform)
     {
 
     }
 
-    bool allegro_renderer::load_bitmap(const std::string& filename,
+    bool allegro_render_controller::load_bitmap(const std::string& filename,
                                        const utilities::vector2& position,
                                        const utilities::vector2& size,
                                        uint32_t& bitmap_id)
@@ -414,46 +429,58 @@ namespace framework
         return true;
     }
 
-    bool allegro_renderer::load_font(const std::string& filename, uint32_t font_size, uint32_t flags, uint32_t& font_id)
+    bool allegro_render_controller::load_font(
+        const std::string& filename,
+        uint32_t font_size,
+        uint32_t flags,
+        uint32_t& font_id)
     {
         font_id = m_next_font_id++;
 
         return true;
     }
 
-    void allegro_renderer::render_bitmap(uint32_t bitmap_id, const utilities::vector2& position, uint32_t flags)
+    void allegro_render_controller::render_bitmap(
+        uint32_t bitmap_id,
+        const utilities::vector2& position,
+        uint32_t flags)
     {
 
     }
 
-    void allegro_renderer::render_fill_rect(const utilities::rectangle& rect, const utilities::color& color)
+    void allegro_render_controller::render_fill_rect(const utilities::rectangle& rect, const utilities::color& color)
     {
 
     }
 
-    void allegro_renderer::render_draw_line(const float x1, const float y1, const float x2,
+    void allegro_render_controller::render_draw_line(const float x1, const float y1, const float x2,
         const float y2, const utilities::color& color)
     {
 
     }
 
-    void allegro_renderer::render_text(const uint32_t font_id, const std::string& text, const float x, const float y,
-        const utilities::color& color, const uint32_t flags)
+    void allegro_render_controller::render_text(
+        const uint32_t font_id,
+        const std::string& text,
+        const float x,
+        const float y,
+        const utilities::color& color,
+        const uint32_t flags)
     {
 
     }
 
-    void allegro_renderer::flip()
+    void allegro_render_controller::flip()
     {
 
     }
 
-    void allegro_renderer::destroy_window()
+    void allegro_render_controller::destroy_window()
     {
 
     }
 
-    void allegro_renderer::shutdown()
+    void allegro_render_controller::shutdown()
     {
 
     }
