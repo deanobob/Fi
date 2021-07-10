@@ -11,7 +11,7 @@
 #include "component.hpp"
 #include "component_type.hpp"
 #include "gametime.hpp"
-#include "publisher.hpp"
+#include "message_bus.hpp"
 
 /// @namespace core namespace
 namespace core

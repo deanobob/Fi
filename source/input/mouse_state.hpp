@@ -6,8 +6,8 @@
 #include <list>
 #include "mouse.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace input namespace
+namespace input
 {
     /// @brief Class that stores the current mouse state
     class mouse_state
@@ -57,6 +57,6 @@ namespace services
         /// @brief The mouse wheel position
         int m_wheel_y{0};
     };
-} /// services namespace
+} /// namespace input
 
 #endif /// MOUSE_STATE_HPP

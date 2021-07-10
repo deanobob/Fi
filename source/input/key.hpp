@@ -3,8 +3,8 @@
 #ifndef KEY_HPP
 #define KEY_HPP
 
-/// @namespace services namespace
-namespace services
+/// @namespace input namespace
+namespace input
 {
     /// @brief Enum class containing definitions for all keyboard keys that the game will process
     enum class key : unsigned int
@@ -18,6 +18,6 @@ namespace services
         space,
         escape
     };
-} /// namespace services
+} /// input services
 
 #endif /// KEY_HPP

@@ -1,22 +1,23 @@
-/// @file publisher.cpp
+/// @file message_bus.cpp
 
 #include <assert.h>
-#include "publisher.hpp"
+#include "message_bus.hpp"
 #include "plog/Log.h"
 
-namespace messaging
+namespace core
 {
-    void publisher::subscribe(subscriber* p_subscriber, const std::list<std::string>& message_types)
+    void message_bus::subscribe(subscriber* p_subscriber, const std::list<std::string>& message_types)
     {
         assert(p_subscriber != nullptr);
 
         for (const auto& message_type : message_types)
         {
+            PLOG_DEBUG << "FIDDLE";
             m_subscribers[message_type].push_back(p_subscriber);
         }
     }
 
-    void publisher::unsubscribe(subscriber* p_subscriber)
+    void message_bus::unsubscribe(subscriber* p_subscriber)
     {
         for (auto& subscriber_iter : m_subscribers)
         {
@@ -24,7 +25,7 @@ namespace messaging
         }
     }
 
-    void publisher::unsubscribe(subscriber* p_subscriber, const std::string& message_type)
+    void message_bus::unsubscribe(subscriber* p_subscriber, const std::string& message_type)
     {
         auto subscriber_iter = m_subscribers.find(message_type);
         if (subscriber_iter != m_subscribers.end())
@@ -33,7 +34,7 @@ namespace messaging
         }
     }
 
-    void publisher::publish(message* p_message)
+    void message_bus::send(message* p_message)
     {
         const auto& subscriber_iter = m_subscribers.find(p_message->get_type());
         if (subscriber_iter != m_subscribers.end())

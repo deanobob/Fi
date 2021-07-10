@@ -3,6 +3,9 @@
 #include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
+#include "game.hpp"
+#include "message_entity_added.hpp"
+#include "message_entity_removed.hpp"
 
 namespace services
 {
@@ -14,11 +17,7 @@ namespace services
 
     entity_manager::~entity_manager()
     {
-        // Publish removal of all entities
-        for (auto listener_iter : m_listeners)
-        {
-            listener_iter->on_entities_cleared();
-        }
+        // TODO: notify entities cleared
 
         m_entities.clear();
     }
@@ -41,16 +40,6 @@ namespace services
 
     }
 
-    void entity_manager::add_listener(entity_manager_listener* p_listener)
-    {
-        m_listeners.push_back(p_listener);
-    }
-
-    void entity_manager::remove_listener(entity_manager_listener* p_listener)
-    {
-        m_listeners.remove(p_listener);
-    }
-
     void entity_manager::put(std::unique_ptr<core::entity> entity)
     {
         const auto& tag = entity->get_tag();
@@ -60,10 +49,8 @@ namespace services
         }
 
         // Publish addition of entity
-        for (auto listener_iter : m_listeners)
-        {
-            listener_iter->on_entity_added(entity.get());
-        }
+        messages::message_entity_added message(entity.get());
+        mp_game->m_message_bus.send(&message);
 
         m_entities.emplace(entity->get_id(), std::move(entity));
     }
@@ -105,10 +92,8 @@ namespace services
         }
 
         // Publish removal of entity
-        for (auto listener_iter : m_listeners)
-        {
-            listener_iter->on_entity_removed(entity_iter->second.get());
-        }
+        messages::message_entity_removed message(entity_iter->second.get());
+        mp_game->m_message_bus.send(&message);
 
         // Delete entity
         m_entities.erase(entity_iter);

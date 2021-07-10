@@ -18,7 +18,7 @@ namespace core
         console = 1 << 0,
         entity_manager = 1 << 1,
         input_manager = 1 << 2,
-        draw_manager = 1 << 3,
+        render_service = 1 << 3,
         // TODO: define more
     };
 

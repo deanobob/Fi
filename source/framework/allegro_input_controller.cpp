@@ -1,4 +1,4 @@
-/// @file allegro_input.cpp
+/// @file allegro_input_controller.cpp
 
 #ifndef CI
 
@@ -8,11 +8,11 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 #include "plog/Log.h"
-#include "allegro_input.hpp"
+#include "allegro_input_controller.hpp"
 
 namespace framework
 {
-    allegro_input::allegro_input(ALLEGRO_EVENT_QUEUE* p_event_queue)
+    allegro_input_controller::allegro_input_controller(ALLEGRO_EVENT_QUEUE* p_event_queue)
         : mp_event_queue(p_event_queue)
     {
         al_init();
@@ -20,7 +20,7 @@ namespace framework
         mp_event_queue = p_event_queue ? p_event_queue : al_create_event_queue();
     }
 
-    bool allegro_input::initialise()
+    bool allegro_input_controller::initialise()
     {
         bool rc = true;
 
@@ -49,7 +49,7 @@ namespace framework
         return rc;
     }
 
-    void allegro_input::process_events()
+    void allegro_input_controller::process_events()
     {
         ALLEGRO_EVENT event;
 
@@ -61,7 +61,7 @@ namespace framework
                 case ALLEGRO_EVENT_KEY_UP:
                     {
                         const auto key_code = allegro_key_to_key(event.keyboard.keycode);
-                        if (key_code != services::key::unknown)
+                        if (key_code != input::key::unknown)
                         {
                             for (auto& listener_iter : mp_event_listeners)
                             {
@@ -124,7 +124,7 @@ namespace framework
         }
     }
 
-    void allegro_input::shutdown()
+    void allegro_input_controller::shutdown()
     {
         if (mp_event_queue)
         {
@@ -132,65 +132,65 @@ namespace framework
         }
     }
 
-    services::key allegro_input::allegro_key_to_key(unsigned int key_code)
+    input::key allegro_input_controller::allegro_key_to_key(unsigned int key_code)
     {
         switch (key_code)
         {
             case ALLEGRO_KEY_LEFT:
-                return services::key::left;
+                return input::key::left;
             case ALLEGRO_KEY_RIGHT:
-                return services::key::right;
+                return input::key::right;
             case ALLEGRO_KEY_UP:
-                return services::key::up;
+                return input::key::up;
             case ALLEGRO_KEY_SPACE:
-                return services::key::space;
+                return input::key::space;
             case ALLEGRO_KEY_ESCAPE:
-                return services::key::escape;
+                return input::key::escape;
             case ALLEGRO_KEY_R:
-                return services::key::r;
+                return input::key::r;
             default:
                 break;
         }
 
         // Return unknown key_code cast as a key to allow unsupported keys to raise events
-        return static_cast<services::key>(key_code);
+        return static_cast<input::key>(key_code);
     }
 
-    services::mouse_button allegro_input::allegro_mouse_button_to_mouse_button(unsigned int button_id)
+    input::mouse_button allegro_input_controller::allegro_mouse_button_to_mouse_button(unsigned int button_id)
     {
         switch (button_id)
         {
             case 1:
-                return services::mouse_button::left;
+                return input::mouse_button::left;
             case 2:
-                return services::mouse_button::right;
+                return input::mouse_button::right;
             default:
                 break;
         }
 
         // Returns whatever the ID was, despite not knowing it explicitly.
-        return static_cast<services::mouse_button>(button_id);
+        return static_cast<input::mouse_button>(button_id);
     }
 } /// namespace framework
 
 #else
 
 #include "plog/Log.h"
-#include "allegro_input.hpp"
+#include "allegro_input_controller.hpp"
 
 namespace framework
 {
-    bool allegro_input::initialise()
+    bool allegro_input_controller::initialise()
     {
         return true;
     }
 
-    void allegro_input::process_events()
+    void allegro_input_controller::process_events()
     {
 
     }
 
-    void allegro_input::shutdown()
+    void allegro_input_controller::shutdown()
     {
 
     }

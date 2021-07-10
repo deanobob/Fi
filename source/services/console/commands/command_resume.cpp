@@ -20,6 +20,6 @@ namespace services
     void command_resume::execute(const std::vector<std::string>& args) const
     {
         auto message = messages::message_resume();
-        mp_game->m_game_status_messager.publish(&message);
+        mp_game->m_message_bus.send(&message);
     }
 }

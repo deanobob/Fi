@@ -11,7 +11,7 @@ namespace messages
 {
     /// @brief Message that causes the application to pause
     class message_pause
-        : public messaging::message
+        : public core::message
     {
         public:
         /// @brief The message type

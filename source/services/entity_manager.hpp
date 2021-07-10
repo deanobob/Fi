@@ -10,8 +10,7 @@
 #include <memory>
 #include <stdlib.h>
 #include "entity.hpp"
-#include "entity_manager_listener.hpp"
-#include "publisher.hpp"
+#include "message_bus.hpp"
 #include "service.hpp"
 
 /// @namespace services namespace
@@ -22,9 +21,6 @@ namespace services
         : public core::service
     {
         public:
-        /// @brief Publisher that notifies subscribers the entity_manager is exiting
-        messaging::publisher m_entity_status_publisher{};
-
         /// @brief Constructor
         /// @param p_game Reference to the game
         entity_manager(core::game* p_game);
@@ -41,14 +37,6 @@ namespace services
         void update(const utilities::gametime& gametime) override;
 
         void shutdown() override;
-
-        /// @brief Add entity manager listener
-        /// @param p_listener The entity manager listener
-        void add_listener(entity_manager_listener* p_listener);
-
-        /// @brief Remove entity manager listener
-        /// @param p_listener The entity manager listener
-        void remove_listener(entity_manager_listener* p_listener);
 
         /// @brief Add an entity
         /// @param entity The entity
@@ -76,8 +64,6 @@ namespace services
         std::map<const std::string, unsigned int> m_tagged_entities{};
         /// @brief List of entity IDs awaiting to be deleted
         std::list<core::entity_id> m_deleted_entities{};
-        /// @brief List of entity manager listeners
-        std::list<entity_manager_listener*> m_listeners{};
     };
 } /// namespace core
 

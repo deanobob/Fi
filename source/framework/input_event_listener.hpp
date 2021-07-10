@@ -16,7 +16,7 @@ namespace framework
         /// @brief Keyboard key state changed
         /// @param key_code The key code
         /// @param pressed The key state
-        virtual void on_key_state_changed(const services::key key_code, bool pressed) = 0;
+        virtual void on_key_state_changed(const input::key key_code, bool pressed) = 0;
 
         /// @brief Joypad axis state changed
         /// @param joypad_id The id of the joypad that raised the event
@@ -36,7 +36,7 @@ namespace framework
         /// @param x_position The mouse x position
         /// @param y_position The mouse y position
         /// @param pressed The mouse button state
-        virtual void on_mouse_button_state_changed(const services::mouse_button mouse_button,
+        virtual void on_mouse_button_state_changed(const input::mouse_button mouse_button,
                                                    int x_position,
                                                    int y_position,
                                                    bool pressed) = 0;

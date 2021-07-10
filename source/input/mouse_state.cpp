@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "mouse_state.hpp"
 
-namespace services
+namespace input
 {
 
 void mouse_state::set_button_state(const mouse_button button, bool pressed)
@@ -53,4 +53,4 @@ int mouse_state::get_wheel_position() const
     return m_wheel_y;
 }
 
-} /// namespace services
+} /// namespace input

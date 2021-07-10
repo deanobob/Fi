@@ -1,5 +1,5 @@
 /// @file subscriber.hpp
-/// @brief Handles messages from publishers
+/// @brief Handles messages from message_bus
 
 #ifndef SUBSCRIBER_HPP
 #define SUBSCRIBER_HPP
@@ -7,8 +7,8 @@
 #include "message.hpp"
 #include "subscriber.hpp"
 
-/// @namespace messaging namespace
-namespace messaging
+/// @namespace core namespace
+namespace core
 {
     /// @brief Class that distributes messages to subscribers
     class subscriber
@@ -17,10 +17,10 @@ namespace messaging
         /// @brief Default destructor
         virtual ~subscriber() = default;
 
-        /// @brief Overwrite to handle publisher messages
+        /// @brief Overwrite to handle message_bus messages
         /// @param p_message The message
         virtual void on_publish(message* p_message) = 0;
     };
-} /// namespace messaging
+} /// namespace core
 
 #endif /// SUBSCRIBER_HPP

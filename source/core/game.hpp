@@ -9,7 +9,7 @@
 #include <memory>
 #include "draw_manager.hpp"
 #include "gametime.hpp"
-#include "publisher.hpp"
+#include "message_bus.hpp"
 #include "service.hpp"
 #include "subscriber.hpp"
 
@@ -18,11 +18,11 @@ namespace core
 {
     /// @brief The base game class
     class game
-        : public messaging::subscriber
+        : public subscriber
     {
         public:
-        /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_game_status_messager{};
+        /// @brief Message bus shared across all services
+        message_bus m_message_bus{};
 
         /// @brief Constructor
         game();
@@ -35,9 +35,9 @@ namespace core
         /// @brief Request the game to exit
         void exit();
 
-        /// @brief Handles events from publishers the game has subscribed to
+        /// @brief Handles events from message_bus the game has subscribed to
         /// @param p_message The message
-        void on_publish(messaging::message* p_message) override;
+        void on_publish(message* p_message) override;
 
         /// @brief Get the framework system interface
         /// @return A pointer to the framework system interface
@@ -72,7 +72,7 @@ namespace core
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
         /// @brief The draw manager
-        std::unique_ptr<core::draw_manager> m_draw_manager{nullptr};
+        std::unique_ptr<draw_manager> m_draw_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();

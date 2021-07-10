@@ -7,8 +7,8 @@
 #include <map>
 #include <vector>
 
-/// @namespace services namespace
-namespace services
+/// @namespace input namespace
+namespace input
 {
     /// @brief Class that stores the current joypad state
     class joypad_state
@@ -47,6 +47,6 @@ namespace services
         /// @return The joystick axes and their positions in a map
         std::map<unsigned int, float>& get_joystick(unsigned int joystick_id);
     };
-} /// namespace services
+} /// namespace input
 
 #endif /// JOYPAD_STATE_HPP

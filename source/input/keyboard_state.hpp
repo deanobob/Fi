@@ -6,8 +6,8 @@
 #include <list>
 #include "key.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace input namespace
+namespace input
 {
     /// @brief Class that stores the current keyboard state
 	class keyboard_state
@@ -27,6 +27,6 @@ namespace services
 			/// @brief List containing all the currently pressed keys
 			std::list<key> m_pressed_key_list{};
 	};
-} /// namespace services
+} /// namespace input
 
 #endif /// KEYBOARD_STATE_HPP

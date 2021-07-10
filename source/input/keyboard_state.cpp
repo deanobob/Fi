@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "keyboard_state.hpp"
 
-namespace services
+namespace input
 {
 
 void keyboard_state::set_key_state(key key, bool pressed)
@@ -23,4 +23,4 @@ bool keyboard_state::is_key_pressed(key key) const
     return std::find(m_pressed_key_list.begin(), m_pressed_key_list.end(), key) != m_pressed_key_list.end();
 }
 
-} /// namespace services
+} /// namespace input

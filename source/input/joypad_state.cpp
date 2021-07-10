@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-namespace services
+namespace input
 {
 
 void joypad_state::set_axis_state(unsigned int joystick_id, unsigned int axis_id, float position)
@@ -66,4 +66,4 @@ std::map<unsigned int, float>& joypad_state::get_joystick(unsigned int joystick_
     return emplace_result.first->second;
 }
 
-} /// namespace services
+} /// namespace input

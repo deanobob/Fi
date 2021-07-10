@@ -5,16 +5,16 @@
 #include "component.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
-#include "entity_manager_listener.hpp"
+#include "subscriber.hpp"
 
 /// @brief A test subscriber
 class test_listener
-    : public services::entity_manager_listener
+    : public core::subscriber
 {
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
     /// @param p_entity_manager The entity manager
-    test_listener(services::entity_manager* p_entity_manager)
+    test_listener(core::message_bus& message_bus, services::entity_manager* p_entity_manager)
         : mp_entity_manager{p_entity_manager}
     {
         mp_entity_manager->add_listener(this);
@@ -65,6 +65,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 
     SECTION("1 Put entity")
     {
+        core::message_bus message_bus{};
         test_listener listener(&entity_manager);
 
         auto entity = std::make_unique<core::entity>();

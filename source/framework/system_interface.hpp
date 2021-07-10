@@ -4,9 +4,9 @@
 #define SYSTEM_INTERFACE_HPP
 
 #include <memory>
-#include "allegro_input.hpp"
+#include "allegro_input_controller.hpp"
 #include "allegro_renderer.hpp"
-#include "input.hpp"
+#include "input_controller.hpp"
 #include "renderer.hpp"
 
 /// @namespace framework namespace
@@ -27,13 +27,13 @@ namespace framework
             return m_renderer.get();
         }
 
-        /// @brief Get the input system
-        /// @return Reference to the input instance
-        input* get_input()
+        /// @brief Get the input controller
+        /// @return Reference to the input controller
+        input_controller* get_input_controller()
         {
             if (!m_input)
             {
-                m_input = std::make_unique<allegro_input>();
+                m_input = std::make_unique<allegro_input_controller>();
             }
             return m_input.get();
         }
@@ -41,8 +41,8 @@ namespace framework
         private:
         /// @brief The renderer instance
         std::unique_ptr<renderer> m_renderer {nullptr};
-        /// @brief The input instance
-        std::unique_ptr<input> m_input {nullptr};
+        /// @brief The input controller instance
+        std::unique_ptr<input_controller> m_input {nullptr};
     };
 }
 

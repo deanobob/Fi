@@ -8,13 +8,14 @@
 #include "message_exit.hpp"
 #include "message_pause.hpp"
 #include "message_resume.hpp"
+#include "render_service.hpp"
 #include "time.hpp"
 
 namespace core
 {
     game::game()
     {
-        m_game_status_messager.subscribe(this, {
+        m_message_bus.subscribe(this, {
             messages::message_exit::TYPE,
             messages::message_pause::TYPE,
             messages::message_resume::TYPE});
@@ -22,6 +23,7 @@ namespace core
         add_service(std::make_unique<services::input_manager>(this));
         add_service(std::make_unique<services::entity_manager>(this));
         add_service(std::make_unique<services::console>(this));
+        add_service(std::make_unique<services::render_service>(this));
 
         m_draw_manager = std::make_unique<draw_manager>(this);
     }
@@ -77,10 +79,10 @@ namespace core
     {
         // Publish exit event so all subscribers can terminate cleanly
         auto exit_message = messages::message_exit();
-        m_game_status_messager.publish(&exit_message);
+        m_message_bus.send(&exit_message);
     }
 
-    void game::on_publish(messaging::message* p_message)
+    void game::on_publish(message* p_message)
     {
         if (p_message->get_type() == messages::message_pause::TYPE)
         {

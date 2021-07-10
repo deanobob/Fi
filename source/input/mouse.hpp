@@ -3,8 +3,8 @@
 #ifndef MOUSE_HPP
 #define MOUSE_HPP
 
-/// @namespace services namespace
-namespace services
+/// @namespace input namespace
+namespace input
 {
     /// @brief Enum class containing definitions for all mouse buttons that the game will process
     enum class mouse_button : unsigned int
@@ -13,6 +13,6 @@ namespace services
         left,
         right
     };
-} /// namespace services
+} /// namespace input
 
 #endif /// MOUSE_HPP

@@ -6,8 +6,8 @@
 
 #include <string>
 
-/// @namespace messaging namespace
-namespace messaging
+/// @namespace core namespace
+namespace core
 {
     /// @brief Base class for event arguments
     class message
@@ -22,6 +22,6 @@ namespace messaging
         /// @return The message type
         virtual const std::string get_type() const = 0;
     };
-} /// namespace messaging
+} /// namespace core
 
 #endif /// MESSAGE_HPP
