@@ -1,29 +1,38 @@
 /// @file game.cpp
 
 #include "plog/Log.h"
-#include "console.hpp"
+#include "console_service.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
-#include "input_manager.hpp"
+#include "input_service.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
 #include "message_resume.hpp"
+#include "render_service.hpp"
 #include "time.hpp"
 
 namespace core
 {
     game::game()
+        : mp_message_bus{std::make_unique<message_bus>()}
     {
-        m_game_status_messager.subscribe(this, {
-            messages::message_exit::TYPE,
-            messages::message_pause::TYPE,
-            messages::message_resume::TYPE});
+        mp_message_bus->subscribe(
+            this,
+            {
+                messages::message_exit::TYPE,
+                messages::message_pause::TYPE,
+                messages::message_resume::TYPE
+            }
+        );
 
-        add_service(std::make_unique<services::input_manager>(this));
-        add_service(std::make_unique<services::entity_manager>(this));
-        add_service(std::make_unique<services::console>(this));
+        mp_entity_manager = std::make_unique<entity_manager>(mp_message_bus.get());
+        mp_draw_manager = std::make_unique<draw_manager>(
+            mp_message_bus.get(),
+            get_system_interface()->get_render_controller());
 
-        m_draw_manager = std::make_unique<draw_manager>(this);
+        add_service(std::make_unique<input::input_service>(get_system_interface()->get_input_controller()));
+        add_service(std::make_unique<console::console_service>(mp_message_bus.get(), mp_entity_manager.get()));
+        add_service(std::make_unique<render::render_service>(mp_message_bus.get(), mp_entity_manager.get()));
     }
 
     game::~game()
@@ -66,7 +75,7 @@ namespace core
 
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
-                m_draw_manager->draw(accumulator / dt);
+                mp_draw_manager->draw(accumulator / dt);
             }
 
             shutdown();
@@ -77,10 +86,10 @@ namespace core
     {
         // Publish exit event so all subscribers can terminate cleanly
         auto exit_message = messages::message_exit();
-        m_game_status_messager.publish(&exit_message);
+        mp_message_bus->send(&exit_message);
     }
 
-    void game::on_publish(messaging::message* p_message)
+    void game::on_publish(core::message* p_message)
     {
         if (p_message->get_type() == messages::message_pause::TYPE)
         {
@@ -113,22 +122,24 @@ namespace core
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.second;
+            const auto& service = service_iter.get();
             success &= service->initialise();
         }
 
-        m_draw_manager->initialise();
+        mp_draw_manager->initialise();
+        mp_entity_manager->initialise();
 
         return success;
     }
 
     void game::update()
     {
-        m_draw_manager->process_events();
+        mp_draw_manager->process_events();
+        mp_entity_manager->update(m_gametime);
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.second;
+            const auto& service = service_iter.get();
             if (!m_paused || !service->pauseable())
             {
                 service->update(m_gametime);
@@ -138,17 +149,18 @@ namespace core
 
     void game::shutdown()
     {
-        m_draw_manager->shutdown();
+        mp_draw_manager->shutdown();
+        mp_entity_manager->shutdown();
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.second;
+            const auto& service = service_iter.get();
             service->shutdown();
         }
     }
 
     void game::add_service(std::unique_ptr<service> service)
     {
-        m_services.emplace(service->get_type(), std::move(service));
+        m_services.push_back(std::move(service));
     }
 }

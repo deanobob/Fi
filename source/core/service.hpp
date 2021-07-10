@@ -5,32 +5,16 @@
 #define SERVICE_HPP
 
 #include "gametime.hpp"
-#include "service_type.hpp"
-#include "system_interface.hpp"
 
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Forward declare game class
-    class game;
-
     /// @brief Base class for services
     class service
     {
         public:
-        /// @brief Constructor
-        /// @param p_game The game instance
-        service(game* p_game);
         /// @brief Default destructor
         virtual ~service() = default;
-
-        /// @brief Get the service type
-        /// @return The service type
-        virtual service_type get_type() const = 0;
-
-        /// @brief Get the framework system interface
-        /// @return Reference to the framework system interface
-        framework::system_interface* get_system_interface();
 
         /// @brief Initialises the service
         /// @return True if successfully initialised, else false
@@ -46,10 +30,6 @@ namespace core
         /// @brief Getter that indicates if this service is pauseable. Defaults to true.
         /// @return True if pauseable, else false
         virtual bool pauseable() const { return true; }
-
-        protected:
-        /// @brief Pointer to the instance of the game
-        game* mp_game{nullptr};
     };
 } /// namespace core
 

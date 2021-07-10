@@ -3,45 +3,65 @@
 #include "plog/Log.h"
 #include "component_service.hpp"
 #include "game.hpp"
-#include "service_type.hpp"
+#include "message_entity_added.hpp"
+#include "message_entity_removed.hpp"
+#include "message_entities_cleared.hpp"
 
 namespace core
 {
-    component_service::component_service(game* p_game, component_type component_mask)
-        : service(p_game)
+    component_service::component_service(
+        core::message_bus* p_message_bus,
+        core::entity_manager* p_entity_manager,
+        component_type component_mask)
+        : mp_entity_manager{p_entity_manager}
+        , mp_message_bus{p_message_bus}
         , m_component_mask{component_mask}
-        , mp_entity_manager{mp_game->get_service<services::entity_manager>(service_type::entity_manager)}
+
     {
-        mp_entity_manager->add_listener(this);
+        mp_message_bus->subscribe(
+            this,
+            {
+                messages::message_entity_added::TYPE,
+                messages::message_entity_removed::TYPE,
+                messages::message_entities_cleared::TYPE
+            }
+        );
     }
 
     component_service::~component_service()
     {
-        mp_entity_manager->remove_listener(this);
+        mp_message_bus->unsubscribe(this);
     }
 
-    void component_service::on_entity_added(core::entity* p_entity)
+    void component_service::on_publish(message* p_message)
     {
-        if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
+        if (p_message->get_type() == messages::message_entity_added::TYPE)
         {
-            m_entities.push_back(p_entity);
-            PLOG_DEBUG << "Entity added";
+            const auto p_entity = dynamic_cast<messages::message_entity_added*>(p_message)->get_entity();
+            if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
+            {
+                m_entities.push_back(p_entity);
+                PLOG_DEBUG << "Entity added";
+            }
         }
-    }
-
-    void component_service::on_entity_removed(core::entity* p_entity)
-    {
-        if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
+        else if (p_message->get_type() == messages::message_entity_removed::TYPE)
         {
-            m_entities.remove(p_entity);
-            PLOG_DEBUG << "Entity removed";
+            const auto p_entity = dynamic_cast<messages::message_entity_removed*>(p_message)->get_entity();
+            if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
+            {
+                m_entities.remove(p_entity);
+                PLOG_DEBUG << "Entity removed";
+            }
         }
-    }
-
-    void component_service::on_entities_cleared()
-    {
-        m_entities.clear();
-        PLOG_DEBUG << "Entities cleared";
+        else if (p_message->get_type() == messages::message_entities_cleared::TYPE)
+        {
+            m_entities.clear();
+            PLOG_DEBUG << "Entities cleared";
+        }
+        else
+        {
+            PLOG_ERROR << "Unhandled message type: " << p_message->get_type();
+        }
     }
 
     const std::list<entity*>& component_service::get_entities()
@@ -49,7 +69,7 @@ namespace core
         return m_entities;
     }
 
-    services::entity_manager* component_service::get_entity_manager()
+    core::entity_manager* component_service::get_entity_manager()
     {
         return mp_entity_manager;
     }

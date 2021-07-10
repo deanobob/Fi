@@ -5,14 +5,13 @@ IS_LINUX := $(shell uname -a | grep -c Linux)
 
 # Define paths and library files
 INC_PATH := -Isource/ \
-            -Isource/messaging/ \
-		    -Isource/messaging/messages/ \
+			-Isource/console/ \
+			-Isource/console/commands/ \
 			-Isource/core/ \
-			-Isource/services/ \
-			-Isource/services/console/ \
-			-Isource/services/console/commands/ \
-			-Isource/services/input \
 			-Isource/framework/ \
+			-Isource/input/ \
+		    -Isource/messages/ \
+			-Isource/render/ \
             -Isource/utilities/ \
 			-Ithird_party/ \
 			-I/usr/local/include/
