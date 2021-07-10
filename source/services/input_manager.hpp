@@ -25,8 +25,8 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param p_game The game instance
-        input_manager(core::game* p_game);
+        /// @param p_input_controller The input controller
+        input_manager(input::input_controller* p_input_controller);
         /// @brief Destructor
         virtual ~input_manager();
 

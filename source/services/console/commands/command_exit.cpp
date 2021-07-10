@@ -6,8 +6,8 @@
 
 namespace services
 {
-    command_exit::command_exit(core::game* p_game):
-        mp_game{p_game}
+    command_exit::command_exit(core::message_bus& message_bus):
+        m_message_bus{message_bus}
     {
 
     }
@@ -20,6 +20,6 @@ namespace services
     void command_exit::execute(const std::vector<std::string>& args) const
     {
         auto message = messages::message_exit();
-        mp_game->m_message_bus.send(&message);
+        m_message_bus.send(&message);
     }
 }

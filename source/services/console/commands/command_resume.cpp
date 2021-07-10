@@ -6,8 +6,8 @@
 
 namespace services
 {
-    command_resume::command_resume(core::game* p_game):
-        mp_game{p_game}
+    command_resume::command_resume(core::message_bus& message_bus):
+        m_message_bus{message_bus}
     {
 
     }
@@ -20,6 +20,6 @@ namespace services
     void command_resume::execute(const std::vector<std::string>& args) const
     {
         auto message = messages::message_resume();
-        mp_game->m_message_bus.send(&message);
+        m_message_bus.send(&message);
     }
 }

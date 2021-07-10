@@ -10,12 +10,15 @@
 
 namespace core
 {
-    component_service::component_service(game* p_game, component_type component_mask)
-        : service(p_game)
+    component_service::component_service(
+        message_bus& message_bus,
+        core::entity_manager& entity_manager,
+        component_type component_mask)
+        : m_message_bus{message_bus}
+        , m_entity_manager{entity_manager}
         , m_component_mask{component_mask}
-        , mp_entity_manager{mp_game->get_service<services::entity_manager>(service_type::entity_manager)}
     {
-        mp_game->m_message_bus.subscribe(
+        m_message_bus.subscribe(
             this,
             {
                 messages::message_entity_added::TYPE,
@@ -59,8 +62,8 @@ namespace core
         return m_entities;
     }
 
-    services::entity_manager* component_service::get_entity_manager()
+    core::entity_manager& component_service::get_entity_manager()
     {
-        return mp_entity_manager;
+        return m_entity_manager;
     }
 }

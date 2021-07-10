@@ -12,7 +12,6 @@ namespace core
 
         for (const auto& message_type : message_types)
         {
-            PLOG_DEBUG << "FIDDLE";
             m_subscribers[message_type].push_back(p_subscriber);
         }
     }

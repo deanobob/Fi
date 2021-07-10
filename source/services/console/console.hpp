@@ -10,8 +10,9 @@
 #include <mutex>
 #include <thread>
 #include <vector>
-#include "gametime.hpp"
 #include "command.hpp"
+#include "entity_manager.hpp"
+#include "gametime.hpp"
 #include "server.hpp"
 #include "service.hpp"
 
@@ -25,8 +26,9 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param p_game The game instance
-        console(core::game* p_game);
+        /// @param message_bus Reference to the game message bus
+        /// @param entity_manager Reference to the entity manager
+        console(core::message_bus& message_bus, core::entity_manager& entity_manager);
 
         core::service_type get_type() const override
         {

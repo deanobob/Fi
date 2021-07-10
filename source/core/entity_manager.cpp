@@ -3,23 +3,20 @@
 #include <algorithm>
 #include "plog/Log.h"
 #include "entity_manager.hpp"
-#include "game.hpp"
 #include "message_entity_added.hpp"
 #include "message_entity_removed.hpp"
 
-namespace services
+namespace core
 {
-    entity_manager::entity_manager(core::game* p_game)
-        : service(p_game)
+    entity_manager::entity_manager(core::message_bus& message_bus)
+        : m_message_bus{message_bus}
     {
 
     }
 
     entity_manager::~entity_manager()
     {
-        // TODO: notify entities cleared
 
-        m_entities.clear();
     }
 
     bool entity_manager::initialise()
@@ -37,7 +34,7 @@ namespace services
 
     void entity_manager::shutdown()
     {
-
+        m_entities.clear();
     }
 
     void entity_manager::put(std::unique_ptr<core::entity> entity)
@@ -50,7 +47,7 @@ namespace services
 
         // Publish addition of entity
         messages::message_entity_added message(entity.get());
-        mp_game->m_message_bus.send(&message);
+        m_message_bus.send(&message);
 
         m_entities.emplace(entity->get_id(), std::move(entity));
     }
@@ -93,7 +90,7 @@ namespace services
 
         // Publish removal of entity
         messages::message_entity_removed message(entity_iter->second.get());
-        mp_game->m_message_bus.send(&message);
+        m_message_bus.send(&message);
 
         // Delete entity
         m_entities.erase(entity_iter);

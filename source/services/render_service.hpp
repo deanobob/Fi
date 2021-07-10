@@ -23,8 +23,9 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param p_game The game instance
-        render_service(core::game* p_game);
+        /// @param message_bus Reference to the game message bus
+        /// @param entity_manager Reference to the entity manager
+        render_service(core::message_bus& message_bus, core::entity_manager& entity_manager);
         /// @brief Destructor
         virtual ~render_service();
 

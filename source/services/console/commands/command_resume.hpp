@@ -17,8 +17,8 @@ namespace services
     {
         public:
         /// @brief Constructor
-        /// @param p_game Pointer to instance of the game
-        command_resume(core::game* p_game);
+        /// @param message_bus Reference to the game message bus
+        command_resume(core::message_bus& message_bus);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -28,8 +28,8 @@ namespace services
         void execute(const std::vector<std::string>& args) const override;
 
         private:
-        /// @brief Reference to game instance
-        core::game* mp_game{nullptr};
+        /// @brief Reference to message_bus instance
+        core::message_bus& m_message_bus;
     };
 } /// namespace services
 

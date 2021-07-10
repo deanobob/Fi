@@ -11,32 +11,30 @@
 #include <stdlib.h>
 #include "entity.hpp"
 #include "message_bus.hpp"
-#include "service.hpp"
 
-/// @namespace services namespace
-namespace services
+/// @namespace core namespace
+namespace core
 {
     /// @brief Class that manages entities and notifies listeners when entities are added / removed
     class entity_manager
-        : public core::service
     {
         public:
         /// @brief Constructor
-        /// @param p_game Reference to the game
-        entity_manager(core::game* p_game);
+        /// @param p_game Reference to the game message bus
+        entity_manager(core::message_bus& message_bus);
         /// @brief Destructor
         virtual ~entity_manager();
 
-        core::service_type get_type() const override
-        {
-            return core::service_type::entity_manager;
-        }
+        /// @brief Initialises the entity manager
+        /// @return True if successfully initialised, else false|
+        bool initialise();
 
-        bool initialise() override;
+        /// @brief Called on every tick allowing the entities to update
+        /// @param gametime The gametime maintaining instance
+        void update(const utilities::gametime& gametime);
 
-        void update(const utilities::gametime& gametime) override;
-
-        void shutdown() override;
+        /// @brief Called when the application is shutting down. Tidy up and clear down.
+        void shutdown();
 
         /// @brief Add an entity
         /// @param entity The entity
@@ -58,6 +56,8 @@ namespace services
         bool remove(core::entity_id id);
 
         private:
+        /// @brief The game message bus
+        core::message_bus& m_message_bus;
         /// @brief Stores entity component masks
         std::map<core::entity_id, std::unique_ptr<core::entity> > m_entities{};
         /// @brief Stores entities by tag

@@ -6,10 +6,9 @@
 
 namespace services
 {
-    input_manager::input_manager(core::game* p_game)
-        : service(p_game)
+    input_manager::input_manager(input::input_controller* p_input_controller)
+        : mp_input_controller{p_input_controller}
     {
-        mp_input_controller = p_game->get_system_interface()->get_input_controller();
         assert(mp_input_controller != nullptr);
 
         mp_input_controller->add_event_listener(this);

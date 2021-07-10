@@ -5,6 +5,8 @@
 #include "component.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
+#include "message_entity_added.hpp"
+#include "message_entity_removed.hpp"
 #include "subscriber.hpp"
 
 /// @brief A test subscriber
@@ -14,26 +16,35 @@ class test_listener
     public:
     /// @brief Constructor - subscribes to messages from entity_manager
     /// @param p_entity_manager The entity manager
-    test_listener(core::message_bus& message_bus, services::entity_manager* p_entity_manager)
-        : mp_entity_manager{p_entity_manager}
+    test_listener(core::message_bus& message_bus)
+        : m_message_bus(message_bus)
     {
-        mp_entity_manager->add_listener(this);
+        m_message_bus.subscribe(
+            this,
+            {
+                messages::message_entity_added::TYPE,
+                messages::message_entity_removed::TYPE
+            }
+        );
     }
 
-    /// @brief Destructor - unsubscribes from entity_manager
+    /// @brief Destructor
     virtual ~test_listener()
     {
-        mp_entity_manager->remove_listener(this);
+        m_message_bus.unsubscribe(this);
     }
 
-    void on_entity_added(core::entity* p_entity) override
+    /// @param p_message The message
+    void on_publish(core::message* p_message)
     {
-        m_num_added++;
-    }
-
-    void on_entity_removed(core::entity* p_entity) override
-    {
-        m_num_removed++;
+        if (p_message->get_type() == messages::message_entity_added::TYPE)
+        {
+            m_num_added++;
+        }
+        else if (p_message->get_type() == messages::message_entity_removed::TYPE)
+        {
+            m_num_removed++;
+        }
     }
 
     /// @brief Get the number of added messages
@@ -51,8 +62,8 @@ class test_listener
     }
 
     private:
-    /// @brief Reference to the entity manager
-    services::entity_manager* mp_entity_manager{nullptr};
+    /// @brief Reference to the message_bus
+    core::message_bus& m_message_bus;
     /// @brief Number of added messages
     uint32_t m_num_added{0};
     /// @brief Number of removed messages
@@ -61,12 +72,12 @@ class test_listener
 
 TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 {
-    services::entity_manager entity_manager{nullptr};
+    core::message_bus message_bus{};
+    core::entity_manager entity_manager{message_bus};
 
     SECTION("1 Put entity")
     {
-        core::message_bus message_bus{};
-        test_listener listener(&entity_manager);
+        test_listener listener(message_bus);
 
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();
@@ -97,7 +108,7 @@ TEST_CASE("core/entity_manager.hpp Entity Manager", "[entity_manager]")
 
     SECTION("4 Remove entity")
     {
-        test_listener listener(&entity_manager);
+        test_listener listener(message_bus);
 
         auto entity = std::make_unique<core::entity>();
         auto id = entity->get_id();

@@ -7,8 +7,8 @@
 
 namespace services
 {
-    render_service::render_service(core::game* p_game)
-        : component_service{p_game, core::component_type::render}
+    render_service::render_service(core::message_bus& message_bus, core::entity_manager& entity_manager)
+        : component_service{message_bus, entity_manager, core::component_type::render}
     {
 
     }

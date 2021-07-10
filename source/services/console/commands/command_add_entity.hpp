@@ -6,19 +6,20 @@
 
 #include <string>
 #include "command.hpp"
+#include "entity_manager.hpp"
 #include "game.hpp"
 
 /// @namespace services namespace
 namespace services
 {
-    /// @brief Command class that resumes the game
+    /// @brief Command class that adds an entity to the game
     class command_add_entity
         : public command
     {
         public:
         /// @brief Constructor
-        /// @param p_game Pointer to instance of the game
-        command_add_entity(core::game* p_game);
+        /// @param entity_manager Reference to the entity manager
+        command_add_entity(core::entity_manager& entity_manager);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -28,8 +29,8 @@ namespace services
         void execute(const std::vector<std::string>& args) const override;
 
         private:
-        /// @brief Reference to game instance
-        core::game* mp_game{nullptr};
+        /// @brief Reference to entity_manager instance
+        core::entity_manager& m_entity_manager;
     };
 } /// namespace services
 

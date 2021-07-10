@@ -13,14 +13,13 @@
 
 namespace services
 {
-    console::console(core::game* p_game)
-        : service(p_game)
-        , server(5050) // Defaults to port 5050
+    console::console(core::message_bus& message_bus, core::entity_manager& entity_manager)
+        : server(5050) // Defaults to port 5050
     {
-        add_command(std::make_shared<services::command_add_entity>(mp_game));
-        add_command(std::make_shared<services::command_exit>(mp_game));
-        add_command(std::make_shared<services::command_pause>(mp_game));
-        add_command(std::make_shared<services::command_resume>(mp_game));
+        add_command(std::make_shared<services::command_add_entity>(entity_manager));
+        add_command(std::make_shared<services::command_exit>(message_bus));
+        add_command(std::make_shared<services::command_pause>(message_bus));
+        add_command(std::make_shared<services::command_resume>(message_bus));
     }
 
     bool console::initialise()

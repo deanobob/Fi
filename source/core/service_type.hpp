@@ -16,9 +16,8 @@ namespace core
     {
         none = 0 << 0,
         console = 1 << 0,
-        entity_manager = 1 << 1,
-        input_manager = 1 << 2,
-        render_service = 1 << 3,
+        input_manager = 1 << 1,
+        render_service = 1 << 2,
         // TODO: define more
     };
 

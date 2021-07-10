@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include "draw_manager.hpp"
+#include "entity_manager.hpp"
 #include "gametime.hpp"
 #include "message_bus.hpp"
 #include "service.hpp"
@@ -71,8 +72,10 @@ namespace core
         std::map<service_type, std::unique_ptr<service> > m_services{};
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
+        /// @brief The entity manager;
+        entity_manager m_entity_manager;
         /// @brief The draw manager
-        std::unique_ptr<draw_manager> m_draw_manager{nullptr};
+        draw_manager m_draw_manager;
 
         /// @brief Initialise the game
         bool initialise();
