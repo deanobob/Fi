@@ -1,7 +1,6 @@
 /// @file command_pause.cpp
 
 #include "command_pause.hpp"
-#include "game.hpp"
 #include "message_pause.hpp"
 
 namespace console

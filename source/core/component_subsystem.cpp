@@ -2,7 +2,6 @@
 
 #include "plog/Log.h"
 #include "component_service.hpp"
-#include "game.hpp"
 #include "message_entity_added.hpp"
 #include "message_entity_removed.hpp"
 #include "message_entities_cleared.hpp"
@@ -13,8 +12,8 @@ namespace core
         core::message_bus* p_message_bus,
         core::entity_manager* p_entity_manager,
         component_type component_mask)
-        : mp_entity_manager{p_entity_manager}
-        , mp_message_bus{p_message_bus}
+        : service{p_message_bus}
+        , mp_entity_manager{p_entity_manager}
         , m_component_mask{component_mask}
 
     {

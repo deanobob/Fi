@@ -23,8 +23,9 @@ namespace input
     {
         public:
         /// @brief Constructor
+        /// @param p_message_bus The game message bus
         /// @param p_input_controller The input controller
-        input_service(input_controller* p_input_controller);
+        input_service(core::message_bus* p_message_bus, input_controller* p_input_controller);
         /// @brief Destructor
         virtual ~input_service();
 
@@ -35,6 +36,8 @@ namespace input
         void draw(core::draw_manager* p_draw_manager) override;
 
         void shutdown() override;
+        
+        void on_publish(core::message* p_message) override {};
 
         /// @brief Get the state of a joypad by id
         /// @param joypad_id The joypad identifier

@@ -7,7 +7,7 @@
 #include <string>
 #include "command.hpp"
 #include "entity_manager.hpp"
-#include "game.hpp"
+#include "message_bus.hpp"
 
 /// @namespace console namespace
 namespace console

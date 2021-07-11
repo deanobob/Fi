@@ -8,13 +8,13 @@
 #include "command_pause.hpp"
 #include "command_resume.hpp"
 #include "console_service.hpp"
-#include "game.hpp"
 #include "strings.hpp"
 
 namespace console
 {
     console_service::console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
-        : server(5050) // Defaults to port 5050
+        : service{p_message_bus}
+        , server{5050} // Defaults to port 5050
     {
         add_command(std::make_shared<command_add_entity>(p_entity_manager));
         add_command(std::make_shared<command_exit>(p_message_bus));

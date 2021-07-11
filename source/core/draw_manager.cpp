@@ -3,7 +3,6 @@
 #include <memory>
 #include "plog/Log.h"
 #include "draw_manager.hpp"
-#include "game.hpp"
 #include "message_exit.hpp"
 #include "time.hpp"
 

@@ -3,7 +3,6 @@
 #include "plog/Log.h"
 #include "body_component.hpp"
 #include "command_add_entity.hpp"
-#include "game.hpp"
 #include "render_component.hpp"
 
 namespace console

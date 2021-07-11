@@ -22,8 +22,8 @@ class test_listener
         m_message_bus.subscribe(
             this,
             {
-                messages::message_entity_added::TYPE,
-                messages::message_entity_removed::TYPE
+                messages::entity_added::TYPE,
+                messages::entity_removed::TYPE
             }
         );
     }
@@ -37,11 +37,11 @@ class test_listener
     /// @param p_message The message
     void on_publish(core::message* p_message)
     {
-        if (p_message->get_type() == messages::message_entity_added::TYPE)
+        if (p_message->get_type() == messages::entity_added::TYPE)
         {
             m_num_added++;
         }
-        else if (p_message->get_type() == messages::message_entity_removed::TYPE)
+        else if (p_message->get_type() == messages::entity_removed::TYPE)
         {
             m_num_removed++;
         }

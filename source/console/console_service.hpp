@@ -39,6 +39,8 @@ namespace console
         void draw(core::draw_manager* p_draw_manager) override;
 
         void shutdown() override;
+        
+        void on_publish(core::message* p_message) override {};
 
         /// @brief Returns false for pausable check, ensuring service runs when game is paused
         /// @return True if pauseable, else false

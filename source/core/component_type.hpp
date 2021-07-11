@@ -18,6 +18,7 @@ namespace core
         body = 1 << 0,
         render = 1 << 1,
         placeholder = 1 << 2,
+        
         // TODO: define more
     };
 

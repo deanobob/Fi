@@ -1,24 +1,22 @@
 /// @file component_service.hpp
 /// @brief The component service base class
 
-#ifndef COMPONENT_SERVICE_HPP
-#define COMPONENT_SERVICE_HPP
+#ifndef COMPONENT_SUBSYSTEM_HPP
+#define COMPONENT_SUBSYSTEM_HPP
 
 #include <list>
 #include "component_type.hpp"
 #include "entity.hpp"
 #include "entity_manager.hpp"
 #include "message_bus.hpp"
-#include "service.hpp"
-#include "subscriber.hpp"
+#include "subsystem.hpp"
 
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Base class for component services
-    class component_service
-        : public core::service
-        , public core::subscriber
+    /// @brief Base class for component subsystems
+    class component_subsystem
+        : public core::subsystem
     {
         public:
         /// @brief Constructor
@@ -26,11 +24,11 @@ namespace core
         /// @param p_entity_manager The game entity manager
         /// @param component_mask Bitmask indicating the components an entity must have for it to be registered with
         /// the entity list.
-        component_service(core::message_bus* p_message_bus,
-                          core::entity_manager* p_entity_manager,
-                          component_type component_mask);
+        component_subsystem(core::message_bus* p_message_bus,
+                            core::entity_manager* p_entity_manager,
+                            component_type component_mask);
         /// @brief Default destructor
-        virtual ~component_service();
+        virtual ~component_subsystem();
 
         void on_publish(message* p_message) override;
 
@@ -47,9 +45,6 @@ namespace core
         /// @brief Pointer to entity manager
         core::entity_manager* mp_entity_manager{nullptr};
 
-        /// @brief Pointer to message bus
-        core::message_bus* mp_message_bus{nullptr};
-
         /// @brief The mask used to determine if an entity interesting to this service
         const component_type m_component_mask;
 
@@ -58,4 +53,4 @@ namespace core
     };
 } /// namespace core
 
-#endif /// COMPONENT_SERVICE_HPP
+#endif /// COMPONENT_SUBSYSTEM_HPP

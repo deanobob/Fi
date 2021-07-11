@@ -1,7 +1,6 @@
 /// @file command_exit.cpp
 
 #include "command_exit.hpp"
-#include "game.hpp"
 #include "message_exit.hpp"
 
 namespace console
