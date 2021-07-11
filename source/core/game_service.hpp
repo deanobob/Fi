@@ -6,6 +6,7 @@
 
 #include "gametime.hpp"
 #include "service.hpp"
+#include "simulation.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -30,6 +31,16 @@ namespace core
         void shutdown() override;
         
         void on_publish(core::message* p_message) override;
+
+        private:
+        /// @brief The simulation instance
+        std::unique_ptr<simulation> mp_simulation{nullptr};
+
+        /// @brief Initiates the process that creates a new simulation
+        void create_simulation();
+
+        /// @brief Destroys the current simulation
+        void destroy_simulation();
     };
 } /// namespace core
 

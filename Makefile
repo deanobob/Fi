@@ -12,6 +12,7 @@ INC_PATH := -Isource/ \
 			-Isource/input/ \
 		    -Isource/message/ \
 			-Isource/render/ \
+			-Isource/ui/ \
             -Isource/utilities/ \
 			-Ithird_party/ \
 			-I/usr/local/include/

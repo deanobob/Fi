@@ -28,7 +28,7 @@ namespace console
         /// @brief Constructor
         /// @param p_message_bus Pointer to the game message bus
         /// @param p_entity_manager Pointer to the entity manager
-        console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager);
+        console_service(core::message_bus* p_message_bus);
         /// @brief Destructor
         virtual ~console_service() = default;
 

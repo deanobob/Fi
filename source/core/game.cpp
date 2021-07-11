@@ -10,6 +10,7 @@
 #include "message_pause.hpp"
 #include "message_resume.hpp"
 #include "time.hpp"
+#include "ui_service.hpp"
 
 namespace core
 {
@@ -25,7 +26,6 @@ namespace core
             }
         );
 
-        mp_entity_manager = std::make_unique<entity_manager>(mp_message_bus.get());
         mp_draw_manager = std::make_unique<draw_manager>(
             mp_message_bus.get(),
             get_system_interface()->get_render_controller());
@@ -33,8 +33,9 @@ namespace core
         add_service(std::make_unique<input::input_service>(
             mp_message_bus.get(), 
             get_system_interface()->get_input_controller()));
-        add_service(std::make_unique<console::console_service>(mp_message_bus.get(), mp_entity_manager.get()));
+        add_service(std::make_unique<console::console_service>(mp_message_bus.get()));
         add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
+        add_service(std::make_unique<ui::ui_service>(mp_message_bus.get()));
     }
 
     game::~game()
@@ -131,7 +132,6 @@ namespace core
         }
 
         mp_draw_manager->initialise();
-        mp_entity_manager->initialise();
 
         return success;
     }
@@ -139,7 +139,6 @@ namespace core
     void game::update()
     {
         mp_draw_manager->process_events();
-        mp_entity_manager->update(m_gametime);
 
         for (auto& service_iter : m_services)
         {
@@ -163,7 +162,6 @@ namespace core
     void game::shutdown()
     {
         mp_draw_manager->shutdown();
-        mp_entity_manager->shutdown();
 
         for (auto& service_iter : m_services)
         {

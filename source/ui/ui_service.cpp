@@ -16,7 +16,7 @@ namespace ui
             {
                 messages::message_new_game::TYPE,
             }
-        )
+        );
     }
 
     ui_service::~ui_service()
