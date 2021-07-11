@@ -10,7 +10,7 @@ INC_PATH := -Isource/ \
 			-Isource/core/ \
 			-Isource/framework/ \
 			-Isource/input/ \
-		    -Isource/messages/ \
+		    -Isource/message/ \
 			-Isource/render/ \
             -Isource/utilities/ \
 			-Ithird_party/ \
