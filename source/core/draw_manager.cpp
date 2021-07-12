@@ -47,7 +47,7 @@ namespace core
 
     void draw_manager::draw(double delta)
     {
-        mp_render_controller->clear();
+        //mp_render_controller->clear();
 
         // draw stuff here
         utilities::time::sleep_msec(1);

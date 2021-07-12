@@ -37,7 +37,13 @@ namespace core
 
     void game_service::draw(core::draw_manager* p_draw_manager)
     {
-        
+        const auto& renderables = mp_simulation->get_renderables();
+        for (auto renderable : renderables)
+        {
+            float x = std::get<0>(renderable);
+            float y = std::get<1>(renderable);
+            p_draw_manager->draw_line({x, y}, {x+1, y+1}); 
+        }   
     }
 
     void game_service::shutdown()

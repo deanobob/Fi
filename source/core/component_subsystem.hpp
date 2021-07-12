@@ -1,4 +1,4 @@
-/// @file component_service.hpp
+/// @file component_subsystem.hpp
 /// @brief The component service base class
 
 #ifndef COMPONENT_SUBSYSTEM_HPP

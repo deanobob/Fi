@@ -49,7 +49,7 @@ namespace console
 
     void console_service::draw(core::draw_manager* p_draw_manager)
     {
-        p_draw_manager->draw_line(utilities::vector2::ZERO, utilities::vector2(50, 50));
+        
     }
 
     void console_service::shutdown()

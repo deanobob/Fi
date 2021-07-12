@@ -20,7 +20,7 @@ namespace core
         /// @brief Constructor
         simulation();
         /// @brief Default destructor
-        virtual ~simulation() = default;
+        virtual ~simulation();
 
         /// @brief Initialise the simulation
         bool initialise();
@@ -28,6 +28,10 @@ namespace core
         /// @brief Called on every tick to update the simulation
         /// @param gametime The gametime
         void update(const utilities::gametime& gametime);
+
+        /// @brief Called on every frame to obtain all renderable items
+        /// @param renderables Reference to list that will contain all renderables for the current frame
+        const std::list<std::tuple<float, float> > get_renderables() const;
 
         /// @brief Shutdown the simulation
         void shutdown();
