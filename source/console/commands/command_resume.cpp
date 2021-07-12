@@ -1,7 +1,6 @@
 /// @file command_resume.cpp
 
 #include "command_resume.hpp"
-#include "game.hpp"
 #include "message_resume.hpp"
 
 namespace console

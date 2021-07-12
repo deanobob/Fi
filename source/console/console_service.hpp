@@ -27,21 +27,19 @@ namespace console
         public:
         /// @brief Constructor
         /// @param p_message_bus Pointer to the game message bus
-        /// @param p_entity_manager Pointer to the entity manager
-        console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager);
+        console_service(core::message_bus* p_message_bus);
         /// @brief Destructor
         virtual ~console_service() = default;
 
-        /// @brief Initialises the console reader
-        /// @return True if initialised successfully
-        bool initialise();
+        bool initialise() override;
 
-        /// @brief Called on every tick allowing console input to be processed
-        /// @param gametime The gametime maintaining instance
         void update(const utilities::gametime& gametime) override;
 
-        /// @brief Shutsdown the service
+        void draw(core::draw_manager* p_draw_manager) override;
+
         void shutdown() override;
+        
+        void on_publish(core::message* p_message) override {};
 
         /// @brief Returns false for pausable check, ensuring service runs when game is paused
         /// @return True if pauseable, else false

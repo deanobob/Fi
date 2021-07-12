@@ -2,12 +2,12 @@
 
 #include "plog/Log.h"
 #include "input_service.hpp"
-#include "game.hpp"
 
 namespace input
 {
-    input_service::input_service(input_controller* p_input_controller)
-        : mp_input_controller{p_input_controller}
+    input_service::input_service(core::message_bus* p_message_bus, input_controller* p_input_controller)
+        : service{p_message_bus}
+        , mp_input_controller{p_input_controller}
     {
         assert(mp_input_controller != nullptr);
 
@@ -27,6 +27,11 @@ namespace input
     void input_service::update(const utilities::gametime& gametime)
     {
         mp_input_controller->process_events();
+    }
+
+    void input_service::draw(core::draw_manager* p_draw_manager)
+    {
+
     }
 
     void input_service::shutdown()

@@ -1,8 +1,8 @@
-/// @file command_resume.hpp
-/// @brief The command_resume base class
+/// @file command_new_game.hpp
+/// @brief The command_new_game class
 
-#ifndef COMMAND_RESUME_HPP
-#define COMMAND_RESUME_HPP
+#ifndef COMMAND_NEW_GAME_HPP
+#define COMMAND_NEW_GAME_HPP
 
 #include <string>
 #include "command.hpp"
@@ -11,14 +11,14 @@
 /// @namespace console namespace
 namespace console
 {
-    /// @brief Command class that resumes the game
-    class command_resume
+    /// @brief Command class that creates a new game simulation
+    class command_new_game
         : public command
     {
         public:
         /// @brief Constructor
         /// @param p_message_bus Pointer to the game message bus
-        command_resume(core::message_bus* p_message_bus);
+        command_new_game(core::message_bus* p_message_bus);
 
         /// @brief The console command names that will invoke this command
         /// @return A vector containing all the command strings that can trigger this command
@@ -33,4 +33,4 @@ namespace console
     };
 } /// namespace console
 
-#endif /// COMMAND_RESUME_HPP
+#endif /// COMMAND_NEW_GAME_HPP

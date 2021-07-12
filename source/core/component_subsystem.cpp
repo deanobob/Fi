@@ -1,20 +1,19 @@
-/// @file component_service.cpp
+/// @file component_subsystem.cpp
 
 #include "plog/Log.h"
-#include "component_service.hpp"
-#include "game.hpp"
+#include "component_subsystem.hpp"
 #include "message_entity_added.hpp"
 #include "message_entity_removed.hpp"
 #include "message_entities_cleared.hpp"
 
 namespace core
 {
-    component_service::component_service(
+    component_subsystem::component_subsystem(
         core::message_bus* p_message_bus,
         core::entity_manager* p_entity_manager,
         component_type component_mask)
-        : mp_entity_manager{p_entity_manager}
-        , mp_message_bus{p_message_bus}
+        : subsystem{p_message_bus}
+        , mp_entity_manager{p_entity_manager}
         , m_component_mask{component_mask}
 
     {
@@ -28,12 +27,12 @@ namespace core
         );
     }
 
-    component_service::~component_service()
+    component_subsystem::~component_subsystem()
     {
         mp_message_bus->unsubscribe(this);
     }
 
-    void component_service::on_publish(message* p_message)
+    void component_subsystem::on_publish(message* p_message)
     {
         if (p_message->get_type() == messages::message_entity_added::TYPE)
         {
@@ -64,12 +63,12 @@ namespace core
         }
     }
 
-    const std::list<entity*>& component_service::get_entities()
+    const std::list<entity*>& component_subsystem::get_entities()
     {
         return m_entities;
     }
 
-    core::entity_manager* component_service::get_entity_manager()
+    core::entity_manager* component_subsystem::get_entity_manager()
     {
         return mp_entity_manager;
     }

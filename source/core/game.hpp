@@ -8,7 +8,6 @@
 #include <map>
 #include <memory>
 #include "draw_manager.hpp"
-#include "entity_manager.hpp"
 #include "gametime.hpp"
 #include "message_bus.hpp"
 #include "service.hpp"
@@ -54,18 +53,20 @@ namespace core
         std::list<std::unique_ptr<service> > m_services{};
         /// @brief Framework system interface
         framework::system_interface m_system_interface{};
-
-        /// @brief Publisher that notifies subscribers the game is exiting
+        /// @brief The game message bus
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
-        /// @brief The entity manager
-        std::unique_ptr<core::entity_manager> mp_entity_manager{nullptr};
         /// @brief The draw manager
         std::unique_ptr<core::draw_manager> mp_draw_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();
+
         /// @brief Called on every tick to update services
         void update();
+
+        /// @brief Draw called on every frame to update drawables
+        void draw();
+
         /// @brief Shutdown the game
         void shutdown();
 

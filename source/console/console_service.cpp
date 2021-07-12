@@ -6,20 +6,23 @@
 #include "command_add_entity.hpp"
 #include "command_exit.hpp"
 #include "command_pause.hpp"
+#include "command_new_game.hpp"
 #include "command_resume.hpp"
 #include "console_service.hpp"
-#include "game.hpp"
 #include "strings.hpp"
 
 namespace console
 {
-    console_service::console_service(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
-        : server(5050) // Defaults to port 5050
+    console_service::console_service(core::message_bus* p_message_bus)
+        : service{p_message_bus}
+        , server{5050} // Defaults to port 5050
     {
-        add_command(std::make_shared<command_add_entity>(p_entity_manager));
+        /// @todo re-enabled this later 
+        /// add_command(std::make_shared<command_add_entity>(nullptr));
         add_command(std::make_shared<command_exit>(p_message_bus));
         add_command(std::make_shared<command_pause>(p_message_bus));
         add_command(std::make_shared<command_resume>(p_message_bus));
+        add_command(std::make_shared<command_new_game>(p_message_bus));
     }
 
     bool console_service::initialise()
@@ -42,6 +45,11 @@ namespace console
             }
             m_command_buffer.clear();
         }
+    }
+
+    void console_service::draw(core::draw_manager* p_draw_manager)
+    {
+        
     }
 
     void console_service::shutdown()

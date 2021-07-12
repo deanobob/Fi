@@ -23,21 +23,21 @@ namespace input
     {
         public:
         /// @brief Constructor
+        /// @param p_message_bus The game message bus
         /// @param p_input_controller The input controller
-        input_service(input_controller* p_input_controller);
+        input_service(core::message_bus* p_message_bus, input_controller* p_input_controller);
         /// @brief Destructor
         virtual ~input_service();
 
-        /// @brief Creates the game window and loads resources
-        /// @return True if initialised successfully
         bool initialise() override;
 
-        /// @brief Method that is called on every tick, allowing draw manager to process events etc.
-        /// @param gametime The game time object
         void update(const utilities::gametime& gametime) override;
 
-        /// @brief Destroy the window and tidy up
+        void draw(core::draw_manager* p_draw_manager) override;
+
         void shutdown() override;
+        
+        void on_publish(core::message* p_message) override {};
 
         /// @brief Get the state of a joypad by id
         /// @param joypad_id The joypad identifier
@@ -53,12 +53,16 @@ namespace input
         const mouse_state* get_mouse_state() const;
 
         void on_key_state_changed(const key key_code, bool pressed) override;
+
         void on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position) override;
+
         void on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed) override;
+
         void on_mouse_button_state_changed(const mouse_button mouse_button,
                                            int x_position,
                                            int y_position,
                                            bool pressed) override;
+
         void on_mouse_axis_changed(int position_x, int position_y, int position_z) override;
 
         private:

@@ -1,5 +1,8 @@
 /// @file message_entity_added.hpp
 /// @brief Message that notifies subscribers that an entity has been added
+/// 
+/// @copyright Copyright (c) 2021
+/// 
 
 #ifndef MESSAGE_ENTITY_ADDED_HPP
 #define MESSAGE_ENTITY_ADDED_HPP
@@ -15,18 +18,18 @@ namespace messages
         : public core::message
     {
         public:
-        /// @brief Constructor
+        /// @brief Construct a new message entity added object
         /// @param p_entity The added entity
         message_entity_added(core::entity* p_entity)
             : mp_entity{p_entity}
         {}
 
-        /// @brief Default destructor
+        /// @brief Destroy the message entity added object
         virtual ~message_entity_added() = default;
 
         /// @brief The message type
         static constexpr auto TYPE { "ENTITY_ADDED" };
-
+        
         const std::string get_type() const override { return TYPE; };
 
         /// @brief Get entity
@@ -37,7 +40,7 @@ namespace messages
         }
 
         private:
-        /// @brief The newly added entity
+        /// @brief The added entity
         core::entity* mp_entity{nullptr};
     };
 } /// namespace messages

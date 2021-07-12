@@ -4,12 +4,13 @@
 #include "console_service.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
+#include "game_service.hpp"
 #include "input_service.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
 #include "message_resume.hpp"
-#include "render_service.hpp"
 #include "time.hpp"
+#include "ui_service.hpp"
 
 namespace core
 {
@@ -25,14 +26,16 @@ namespace core
             }
         );
 
-        mp_entity_manager = std::make_unique<entity_manager>(mp_message_bus.get());
         mp_draw_manager = std::make_unique<draw_manager>(
             mp_message_bus.get(),
             get_system_interface()->get_render_controller());
 
-        add_service(std::make_unique<input::input_service>(get_system_interface()->get_input_controller()));
-        add_service(std::make_unique<console::console_service>(mp_message_bus.get(), mp_entity_manager.get()));
-        add_service(std::make_unique<render::render_service>(mp_message_bus.get(), mp_entity_manager.get()));
+        add_service(std::make_unique<input::input_service>(
+            mp_message_bus.get(), 
+            get_system_interface()->get_input_controller()));
+        add_service(std::make_unique<console::console_service>(mp_message_bus.get()));
+        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
+        add_service(std::make_unique<ui::ui_service>(mp_message_bus.get()));
     }
 
     game::~game()
@@ -72,6 +75,8 @@ namespace core
 
                     accumulator -= dt;
                 }
+
+                draw();
 
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
@@ -127,7 +132,6 @@ namespace core
         }
 
         mp_draw_manager->initialise();
-        mp_entity_manager->initialise();
 
         return success;
     }
@@ -135,7 +139,6 @@ namespace core
     void game::update()
     {
         mp_draw_manager->process_events();
-        mp_entity_manager->update(m_gametime);
 
         for (auto& service_iter : m_services)
         {
@@ -147,10 +150,18 @@ namespace core
         }
     }
 
+    void game::draw()
+    {
+        for (auto& service_iter : m_services)
+        {
+            const auto& service = service_iter.get();
+            service->draw(mp_draw_manager.get());
+        }
+    }
+
     void game::shutdown()
     {
         mp_draw_manager->shutdown();
-        mp_entity_manager->shutdown();
 
         for (auto& service_iter : m_services)
         {
