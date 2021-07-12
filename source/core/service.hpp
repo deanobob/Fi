@@ -34,7 +34,7 @@ namespace core
         virtual void update(const utilities::gametime& gametime) = 0;
 
         /// @brief Called on every frame allowing service to queue drawables
-        /// @param draw_manager The draw manager instance
+        /// @param p_draw_manager The draw manager instance
         virtual void draw(draw_manager* p_draw_manager) = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.

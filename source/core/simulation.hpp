@@ -37,7 +37,7 @@ namespace core
         void shutdown();
 
         /// @brief Add subsystem to simulation
-        /// @param service The subsystem to add
+        /// @param subsystem The subsystem to add
         void add_subsystem(std::unique_ptr<subsystem> subsystem);
         
         void on_publish(core::message* p_message) override;
