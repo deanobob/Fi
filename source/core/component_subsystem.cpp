@@ -40,6 +40,7 @@ namespace core
             if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
             {
                 m_entities.push_back(p_entity);
+                on_entity_added(p_entity);
                 PLOG_DEBUG << "Entity added";
             }
         }
@@ -48,12 +49,14 @@ namespace core
             const auto p_entity = dynamic_cast<messages::message_entity_removed*>(p_message)->get_entity();
             if ((m_component_mask & p_entity->get_component_mask()) == m_component_mask)
             {
+                on_entity_removed(p_entity);
                 m_entities.remove(p_entity);
                 PLOG_DEBUG << "Entity removed";
             }
         }
         else if (p_message->get_type() == messages::message_entities_cleared::TYPE)
         {
+            on_entities_cleared();
             m_entities.clear();
             PLOG_DEBUG << "Entities cleared";
         }

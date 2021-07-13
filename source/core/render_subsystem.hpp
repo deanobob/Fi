@@ -8,6 +8,7 @@
 #include "component_type.hpp"
 #include "entity_manager.hpp"
 #include "message_bus.hpp"
+#include "quadtree.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -35,6 +36,14 @@ namespace core
         void shutdown() override;
 
         bool pauseable() const override { return true; }
+
+        void on_entity_added(entity* p_entity);
+
+        void on_entity_removed(entity* p_entity);
+
+        private:
+        /// @brief Quadtree object containing the locations of all entities
+        utilities::quadtree m_quadtree;
     };
 } /// namespace core
 

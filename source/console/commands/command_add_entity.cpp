@@ -28,7 +28,6 @@ namespace console
 
         const auto tag{args[1]};
         auto entity{std::make_unique<core::entity>(tag)};
-        entity->add_component(std::make_unique<core::body_component>());
         entity->add_component(std::make_unique<core::render_component>());
         mp_entity_manager->put(std::move(entity));
     }
