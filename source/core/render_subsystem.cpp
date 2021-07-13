@@ -11,7 +11,7 @@ namespace core
         core::message_bus* p_message_bus,
         core::entity_manager* p_entity_manager)
         : component_subsystem{p_message_bus, p_entity_manager, {component_type::body | component_type::render}}
-        , m_quadtree{utilities::rectangle{0, 0, 1000, 1000}}
+        , m_quadtree{utilities::rectangle{0, 0, 1000, 1000}} //TODO: determine world size
     {
 
     }
@@ -28,7 +28,7 @@ namespace core
 
     void render_subsystem::update(const utilities::gametime& gametime)
     {
-        
+
     }
     
     void render_subsystem::draw(std::list<std::tuple<float, float> >& renderables)
@@ -52,6 +52,7 @@ namespace core
     
     void render_subsystem::on_entity_added(entity* p_entity)
     {
+        // TODO: register for events indicating an entity has moved, and update the quadtree.
         const auto& p_body = p_entity->get_component<body_component>(component_type::body);
         const auto& position = p_body->get_position();
         const auto& size = p_body->get_size();
