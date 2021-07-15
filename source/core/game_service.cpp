@@ -37,13 +37,17 @@ namespace core
 
     void game_service::draw(core::draw_manager* p_draw_manager)
     {
-        const auto& renderables = mp_simulation->get_renderables();
-        for (auto renderable : renderables)
-        {
-            float x = std::get<0>(renderable);
-            float y = std::get<1>(renderable);
-            p_draw_manager->draw_line({x, y}, {x+1, y+1}); 
-        }   
+        //  TODO : This is going to be replaced with game views that have a pointer to a camera, obtained via a 
+        // create game view message from the simulation. The camera contains all the render data from the game
+        // from within the camera viewport.
+        
+        // const auto& renderables = mp_simulation->get_renderables();
+        // for (auto renderable : renderables)
+        // {
+        //     float x = std::get<0>(renderable);
+        //     float y = std::get<1>(renderable);
+        //     p_draw_manager->draw_line({x, y}, {x+1, y+1}); 
+        // }   
     }
 
     void game_service::shutdown()

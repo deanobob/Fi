@@ -4,10 +4,12 @@
 #ifndef RENDER_SUBSYSTEM_HPP
 #define RENDER_SUBSYSTEM_HPP
 
+#include "camera.hpp"
 #include "component_subsystem.hpp"
 #include "component_type.hpp"
 #include "entity_manager.hpp"
 #include "message_bus.hpp"
+#include "quadtree.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -30,11 +32,21 @@ namespace core
 
         void update(const utilities::gametime& gametime) override;
 
-        void draw(std::list<std::tuple<float, float> >& renderables) override;
+        void draw() override;
 
         void shutdown() override;
 
         bool pauseable() const override { return true; }
+
+        void on_entity_added(entity* p_entity);
+
+        void on_entity_removed(entity* p_entity);
+
+        private:
+        /// @brief Quadtree object containing the locations of all entities
+        utilities::quadtree m_quadtree;
+        /// @brief List of simulation cameras
+        std::list<camera> m_cameras{};
     };
 } /// namespace core
 

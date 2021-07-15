@@ -34,8 +34,7 @@ namespace core
         virtual void update(const utilities::gametime& gametime) = 0;
 
         /// @brief Called on every frame to obtain all renderable items
-        /// @param renderables Reference to list that will contain all renderables for the current frame
-        virtual void draw(std::list<std::tuple<float, float> >& renderables) = 0;
+        virtual void draw() = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.
         virtual void shutdown() = 0;

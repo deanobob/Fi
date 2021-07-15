@@ -2,9 +2,11 @@
 
 #include "plog/Log.h"
 #include "entity.hpp"
+#include "body_component.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
 #include "simulation.hpp"
+#include "vector2.hpp"
 
 namespace core
 {
@@ -35,11 +37,13 @@ namespace core
         // Initialise test entities
         {
             auto entity{std::make_unique<core::entity>()};
+            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{10, 10}, utilities::vector2{1, 1}));
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
         }
         {
             auto entity{std::make_unique<core::entity>()};
+            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{90, 10}, utilities::vector2{1, 1}));
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
         }
@@ -55,18 +59,6 @@ namespace core
         {
             subsystem->update(gametime);
         }
-    }
-
-    const std::list<std::tuple<float, float> > simulation::get_renderables() const
-    {
-        std::list<std::tuple<float, float> > renderables{};
-
-        for (auto& subsystem : m_subsystems)
-        {
-            subsystem->draw(renderables);
-        }
-
-        return renderables;
     }
 
     void simulation::shutdown()

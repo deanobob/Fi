@@ -41,6 +41,17 @@ namespace core
         /// @return Pointer to the entity manager
         core::entity_manager* get_entity_manager();
 
+        /// @brief Method called when a new entity is added to the subsystem
+        /// @param p_entity The entity
+        virtual void on_entity_added(entity* p_entity) {};
+
+        /// @brief Method called when an entity is removed from the subsystem
+        /// @param p_entity The entity
+        virtual void on_entity_removed(entity* p_entity) {};
+        
+        /// @brief Method called when all entities have been cleared
+        virtual void on_entities_cleared() {};
+
         private:
         /// @brief Pointer to entity manager
         core::entity_manager* mp_entity_manager{nullptr};
