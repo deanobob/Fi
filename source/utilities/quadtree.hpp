@@ -23,7 +23,7 @@ namespace utilities
         
         /// @brief Construct a new leaf object
         /// @param id The leaf identifier
-        /// @param bounds The boundary of the leaf node
+        /// @param boundary The boundary of the leaf node
         leaf(unsigned int id, const rectangle& boundary) :
             m_id(id), m_boundary(boundary)
         {}
@@ -51,6 +51,7 @@ namespace utilities
         std::list<unsigned int> query(const rectangle& region);
 
         /// @brief Remove the entity from the quadtree
+        /// @param entity_id The entity identifier
         bool remove(unsigned int entity_id);
 
         /// @brief Convert the quadtree state into a human readable string
