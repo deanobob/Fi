@@ -31,16 +31,23 @@ namespace core
 
     }
     
-    void render_subsystem::draw(std::list<std::tuple<float, float> >& renderables)
+    void render_subsystem::draw()
     {
-        for (auto& entity_id : m_quadtree.query({0, 0, 100, 100}))
+        for (auto& c : m_cameras)
         {
-            auto p_entity = get_entity_manager()->get(entity_id);
-            if (p_entity)
+            // Clear last frame renderables as they should have been rendered.
+            c.clear();
+
+            // Get all renderable elements from wthin the camera viewport and add it to the camera renderable list
+            for (auto& entity_id : m_quadtree.query(c.get_viewport()))
             {
-                const auto& p_body = p_entity->get_component<body_component>(component_type::body);
-                const auto& position = p_body->get_position();
-                renderables.push_back({position.x, position.y});
+                auto p_entity = get_entity_manager()->get(entity_id);
+                if (p_entity)
+                {
+                    const auto& p_body = p_entity->get_component<body_component>(component_type::body);
+                    const auto& position = p_body->get_position();
+                    c.add_renderable({position.x, position.y});
+                }
             }
         }
     }

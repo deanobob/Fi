@@ -61,18 +61,6 @@ namespace core
         }
     }
 
-    const std::list<std::tuple<float, float> > simulation::get_renderables() const
-    {
-        std::list<std::tuple<float, float> > renderables{};
-
-        for (auto& subsystem : m_subsystems)
-        {
-            subsystem->draw(renderables);
-        }
-
-        return renderables;
-    }
-
     void simulation::shutdown()
     {
         for (auto& subsystem : m_subsystems)
