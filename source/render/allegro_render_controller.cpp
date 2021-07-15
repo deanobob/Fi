@@ -75,6 +75,9 @@ namespace render
                         listener_iter->on_display_lost_focus();
                     }
                     break;
+                case ALLEGRO_EVENT_DISPLAY_RESIZE:
+                    al_acknowledge_resize(mp_display);
+                    break;
                 default:
                     PLOG_DEBUG << "Unknown event" << event.type;
                     break;

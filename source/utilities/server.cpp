@@ -45,13 +45,15 @@ namespace utilities
             std::lock_guard<std::mutex> lock(m_fd_mutex);
             if (m_listen_fd > 0)
             {
-                shutdown(m_listen_fd, SHUT_RDWR);
+                shutdown(m_listen_fd, SHUT_RDWR); // Required for Linux
+                close(m_listen_fd); // Required for Mac OS
                 m_listen_fd = 0;
             }
 
             if (m_conn_fd > 0)
             {
-                shutdown(m_conn_fd, SHUT_RDWR);
+                shutdown(m_conn_fd, SHUT_RDWR); // Required for Linux
+                close(m_conn_fd); // Required for Mac OS
                 m_conn_fd = 0;
             }
         }
