@@ -5,10 +5,13 @@
 
 #include <climits>
 #include <list>
+#include <memory>
 #include "alignment.hpp"
 #include "draw_manager.hpp"
+#include "key.hpp"
 #include "layout_mode.hpp"
 #include "measure_mode.hpp"
+#include "mouse.hpp"
 
 /// @brief ui namespace
 namespace ui
@@ -43,7 +46,7 @@ namespace ui
 
         /// @brief Add a child node
         /// @param p_node The child node
-        void add_child(node* p_node);
+        void add_child(std::unique_ptr<node> p_node);
 
         /// @brief Invalidate the node, flagging it to be remeasured on next update
         void invalidate();
@@ -132,6 +135,34 @@ namespace ui
         /// @param alignment The vertical alignment
         void set_vertical_alignment(vertical_alignment alignment);
 
+        /// @brief Called on the event a key is pressed
+        /// @param key_code The key that was pressed
+        virtual void on_key_press(const input::key key_code) {};
+
+        /// @brief Called on the event a key is released
+        /// @param key_code The key that was released
+        virtual void on_key_release(const input::key key_code) {};
+
+        /// @brief Called on the event a mouse button is pressed
+        /// @param mouse_button The mouse button
+        /// @param x_position The x coordinate
+        /// @param y_position The y coordinate
+        virtual void on_mouse_button_press(const input::mouse_button mouse_button, int x_position, int y_position) {};
+
+        /// @brief Called on the event a mouse button is released
+        /// @param mouse_button The mouse button
+        /// @param x_position The x coordinate
+        /// @param y_position The y coordinate
+        virtual void on_mouse_button_release(const input::mouse_button mouse_button,
+                                             int x_position,
+                                             int y_position) {};
+
+        /// @brief Called on the event the mouse is moved
+        /// @param position_x The mouse x coordinate
+        /// @param position_y The mouse y coordinate
+        /// @param position_z The mouse wheel position
+        virtual void on_mouse_axis_changed(int position_x, int position_y, int position_z) {};
+
         protected:
         /// @brief The node x position
         float m_x{0};
@@ -184,19 +215,19 @@ namespace ui
         /// @brief The distance to offset this element by from its parent on the Y axis
         float m_margin_y{0};
         /// @brief The horizontal alignment
-        horizontal_alignment m_h_align {horizontal_alignment::left};
+        horizontal_alignment m_h_align{horizontal_alignment::left};
         /// @brief The vertical alignment
-        vertical_alignment m_v_align {vertical_alignment::top};
+        vertical_alignment m_v_align{vertical_alignment::top};
         /// @brief The mode used to position the node horizontally
-        layout_mode m_h_layout_mode {layout_mode::align};
+        layout_mode m_h_layout_mode{layout_mode::align};
         /// @brief The mode used to position the node vertically
-        layout_mode m_v_layout_mode {layout_mode::align};
+        layout_mode m_v_layout_mode{layout_mode::align};
         /// @brief The horizontal measure mode - defines how the required width is measured
-        measure_mode m_h_measure_mode {measure_mode::inflate};
+        measure_mode m_h_measure_mode{measure_mode::inflate};
         /// @brief The vertical measure mode - defines how the required height is measured
-        measure_mode m_v_measure_mode {measure_mode::inflate};
+        measure_mode m_v_measure_mode{measure_mode::inflate};
         /// @brief List of child nodes
-        std::list<node*> m_children{};
+        std::list<std::unique_ptr<node> > m_children{};
 
         /// @brief Align the position of the node horizontally
         void align_horizontal();

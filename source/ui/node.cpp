@@ -85,10 +85,10 @@ namespace ui
         }
     }
 
-    void node::add_child(node* p_node)
+    void node::add_child(std::unique_ptr<node> p_node)
     {
         p_node->set_parent(this);
-        m_children.push_back(p_node);
+        m_children.push_back(std::move(p_node));
     }
 
     void node::invalidate()
