@@ -137,31 +137,31 @@ namespace ui
 
         /// @brief Called on the event a key is pressed
         /// @param key_code The key that was pressed
-        virtual void on_key_press(const input::key key_code) {};
+        virtual void key_pressed(const input::key key_code) {};
 
         /// @brief Called on the event a key is released
         /// @param key_code The key that was released
-        virtual void on_key_release(const input::key key_code) {};
+        virtual void key_released(const input::key key_code) {};
 
         /// @brief Called on the event a mouse button is pressed
         /// @param mouse_button The mouse button
         /// @param x_position The x coordinate
         /// @param y_position The y coordinate
-        virtual void on_mouse_button_press(const input::mouse_button mouse_button, int x_position, int y_position) {};
+        virtual void mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position) {};
 
         /// @brief Called on the event a mouse button is released
         /// @param mouse_button The mouse button
         /// @param x_position The x coordinate
         /// @param y_position The y coordinate
-        virtual void on_mouse_button_release(const input::mouse_button mouse_button,
-                                             int x_position,
-                                             int y_position) {};
+        virtual void mouse_button_released(const input::mouse_button mouse_button,
+                                           int x_position,
+                                           int y_position) {};
 
         /// @brief Called on the event the mouse is moved
         /// @param position_x The mouse x coordinate
         /// @param position_y The mouse y coordinate
         /// @param position_z The mouse wheel position
-        virtual void on_mouse_axis_changed(int position_x, int position_y, int position_z) {};
+        virtual void mouse_axis_changed(int position_x, int position_y, int position_z) {};
 
         protected:
         /// @brief The node x position

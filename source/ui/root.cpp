@@ -46,11 +46,11 @@ namespace ui
         {
             if (pressed)
             {
-                mp_focused->on_key_press(key_code);
+                mp_focused->key_pressed(key_code);
             }
             else
             {
-                mp_focused->on_key_release(key_code);
+                mp_focused->key_released(key_code);
             }
         }
     }
@@ -74,21 +74,21 @@ namespace ui
         {
             if (pressed)
             {
-                mp_focused->on_mouse_button_press(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_pressed(mouse_button, x_position, y_position);
             }
             else
             {
-                mp_focused->on_mouse_button_release(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_released(mouse_button, x_position, y_position);
             }
         }
     }
 
     void root::on_mouse_axis_changed(int position_x, int position_y, int position_z)
     {
-        mp_focused = get_node_at(position_x, position_y);
+        mp_focused = get_node_at(static_cast<float>(position_x), static_cast<float>(position_y));
         if (mp_focused)
         {
-            mp_focused->on_mouse_axis_changed(position_x, position_y, position_z);
+            mp_focused->mouse_axis_changed(position_x, position_y, position_z);
         }
     }
 } /// namespace ui

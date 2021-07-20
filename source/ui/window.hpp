@@ -21,7 +21,7 @@ namespace ui
 
         void on_draw(core::draw_manager* p_draw_manager) override;
 
-        void on_mouse_axis_changed(int position_x, int position_y, int position_z) override;
+        void mouse_axis_changed(int position_x, int position_y, int position_z) override;
     };
 } /// namespace ui
 

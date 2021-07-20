@@ -12,7 +12,7 @@ namespace ui
 
     void window::on_layout()
     {
-
+        PLOG_DEBUG << "ARGH";
     }
 
     void window::on_draw(core::draw_manager* p_draw_manager)
@@ -20,8 +20,8 @@ namespace ui
 
     }
 
-    void window::on_mouse_axis_changed(int position_x, int position_y, int position_z)
+    void window::mouse_axis_changed(int position_x, int position_y, int position_z)
     {
-        PLOG_DEBUG << "Window mouse move event magic";
+
     }
 } /// namespace ui

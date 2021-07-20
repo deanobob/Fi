@@ -36,8 +36,15 @@ namespace ui
         auto game_window = std::make_unique<window>();
         mp_root_node->add_child(std::move(game_window), true);
 
+        // TODO: configure screen width and height somewhere
+        mp_root_node->set_width(1080);
+        mp_root_node->set_height(720);
+
         // Register root node with input event listener to allow UI to respond to input
         mp_input_controller->add_event_listener(mp_root_node.get());
+
+        // Initialise UI
+        mp_root_node->initialise();
 
         return true;
     }
@@ -46,6 +53,7 @@ namespace ui
     {
         if (mp_root_node)
         {
+            mp_root_node->measure();
             mp_root_node->layout();
         }
     }
