@@ -8,6 +8,12 @@
 
 namespace ui
 {
+    node::node(core::message_bus* p_message_bus)
+        : mp_message_bus{p_message_bus}
+    {
+
+    }
+
     void node::initialise()
     {
         on_initialise();

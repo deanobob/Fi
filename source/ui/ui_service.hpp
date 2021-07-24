@@ -33,7 +33,7 @@ namespace ui
 
         void shutdown() override;
 
-        void on_publish(core::message* p_message) override {};
+        void on_publish(core::message* p_message) override;
 
         private:
         /// @brief Reference to input system

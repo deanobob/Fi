@@ -4,7 +4,6 @@
 #ifndef RENDER_SUBSYSTEM_HPP
 #define RENDER_SUBSYSTEM_HPP
 
-#include "camera.hpp"
 #include "component_subsystem.hpp"
 #include "component_type.hpp"
 #include "entity_manager.hpp"
@@ -32,7 +31,7 @@ namespace core
 
         void update(const utilities::gametime& gametime) override;
 
-        void draw() override;
+        void draw(camera* p_camera) override;
 
         void shutdown() override;
 
@@ -45,8 +44,6 @@ namespace core
         private:
         /// @brief Quadtree object containing the locations of all entities
         utilities::quadtree m_quadtree;
-        /// @brief List of simulation cameras
-        std::list<camera> m_cameras{};
     };
 } /// namespace core
 

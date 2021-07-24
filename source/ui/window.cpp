@@ -5,6 +5,12 @@
 
 namespace ui
 {
+    window::window(core::message_bus* p_message_bus)
+        : node{p_message_bus}
+    {
+
+    }
+
     void window::on_initialise()
     {
 
@@ -12,7 +18,7 @@ namespace ui
 
     void window::on_layout()
     {
-        PLOG_DEBUG << "ARGH";
+
     }
 
     void window::on_draw(core::draw_manager* p_draw_manager)

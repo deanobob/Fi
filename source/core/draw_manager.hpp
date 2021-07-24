@@ -31,6 +31,9 @@ namespace core
         /// @brief Processes window events etc.
         void process_events();
 
+        /// @brief Clear the draw buffers
+        void clear();
+
         /// @brief Draw line to the display from p1 to p2
         /// @param p1 The start point
         /// @param p2 The end point
@@ -41,9 +44,8 @@ namespace core
         /// @param position The position of the text
         void draw_text(const std::string text, const utilities::vector2& position);
 
-        /// @brief Update entity positions and render game
-        /// @param delta The remaining duration of this frame
-        void draw(double delta);
+        /// @brief Flips the buffers
+        void flip();
 
         /// @brief Destroy the window and tidy up
         void shutdown();

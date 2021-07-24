@@ -3,6 +3,7 @@
 #ifndef MEASURE_MODE_HPP
 #define MEASURE_MODE_HPP
 
+/// @brief ui namespace
 namespace ui
 {
     enum class measure_mode

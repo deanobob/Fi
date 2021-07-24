@@ -5,13 +5,18 @@
 
 #include "node.hpp"
 
+/// @brief ui namespace
 namespace ui
 {
+    /// @brief The root of a basic window UI element
+    /// @details Contains and manages child elements
     class window
         : public node
     {
         public:
-        window() = default;
+        /// @brief Construct a new window object
+        window(core::message_bus* p_message_bus);
+        /// @brief Destroy the window object
         virtual ~window() = default;
 
         protected:

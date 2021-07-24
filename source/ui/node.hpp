@@ -26,7 +26,7 @@ namespace ui
         static constexpr int MAX_HEIGHT = -1;
 
         /// @brief Construct a new node object
-        node() = default;
+        node(core::message_bus* p_message_bus);
 
         /// @brief Destroy the node object
         virtual ~node() = default;
@@ -164,6 +164,8 @@ namespace ui
         virtual void mouse_axis_changed(int position_x, int position_y, int position_z) {};
 
         protected:
+        /// @brief The message bus
+        core::message_bus* mp_message_bus{nullptr};
         /// @brief The node x position
         float m_x{0};
         /// @brief The node y position

@@ -4,6 +4,8 @@
 #ifndef SIMULATION_HPP
 #define SIMULATION_HPP
 
+#include <map>
+#include "camera.hpp"
 #include "entity_manager.hpp"
 #include "gametime.hpp"
 #include "subsystem.hpp"
@@ -29,13 +31,20 @@ namespace core
         /// @param gametime The gametime
         void update(const utilities::gametime& gametime);
 
+        void draw();
+
         /// @brief Shutdown the simulation
         void shutdown();
 
         /// @brief Add subsystem to simulation
         /// @param subsystem The subsystem to add
         void add_subsystem(std::unique_ptr<subsystem> subsystem);
-        
+
+        /// @brief Get a camera by tag
+        /// @param camera_tag The camera tag
+        /// @return Pointer to the camera or nullptr if not found
+        core::camera* get_camera(const std::string& camera_tag);
+
         void on_publish(core::message* p_message) override;
 
         private:
@@ -45,6 +54,8 @@ namespace core
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
         /// @brief The entity manager
         std::unique_ptr<core::entity_manager> mp_entity_manager{nullptr};
+        /// @brief The simulation cameras, stored by tag name
+        std::map<const std::string, std::unique_ptr<core::camera> > m_cameras{};
     };
 } /// namespace core
 

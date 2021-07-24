@@ -78,11 +78,11 @@ namespace core
                     accumulator -= dt;
                 }
 
-                draw();
-
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
-                mp_draw_manager->draw(accumulator / dt);
+                mp_draw_manager->clear();
+                draw();
+                mp_draw_manager->flip(); //accumulator / dt);
             }
 
             shutdown();

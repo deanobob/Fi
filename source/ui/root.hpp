@@ -18,7 +18,7 @@ namespace ui
     {
         public:
         /// @brief Construct a new root object
-        root();
+        root(core::message_bus* p_message_bus);
         /// @brief Destroy the root object
         virtual ~root() = default;
 
@@ -28,12 +28,6 @@ namespace ui
         void add_child(std::unique_ptr<node> p_node, bool focused);
 
         protected:
-        void on_initialise() override;
-
-        void on_layout() override;
-
-        void on_draw(core::draw_manager* p_draw_manager) override;
-
         void on_key_state_changed(const input::key key_code, bool pressed) override;
 
         void on_joystick_axis_changed(int joypad_id, int joystick, int axis, float position) override;

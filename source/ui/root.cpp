@@ -5,7 +5,8 @@
 
 namespace ui
 {
-    root::root()
+    root::root(core::message_bus* p_message_bus)
+        : node{p_message_bus}
     {
         mp_focused = this;
     }
@@ -23,21 +24,6 @@ namespace ui
     void root::set_focus(node* p_node)
     {
         mp_focused = p_node;
-    }
-
-    void root::on_initialise()
-    {
-
-    }
-
-    void root::on_layout()
-    {
-
-    }
-
-    void root::on_draw(core::draw_manager* p_draw_manager)
-    {
-
     }
 
     void root::on_key_state_changed(const input::key key_code, bool pressed)

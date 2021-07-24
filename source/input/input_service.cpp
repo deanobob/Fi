@@ -98,8 +98,6 @@ namespace input
 
     void input_service::on_mouse_axis_changed(int position_x, int position_y, int position_z)
     {
-        PLOG_DEBUG << "mouse axis changed: " << position_x << " " << position_y << " " << position_z;
-
         m_mouse_state.set_position_x(position_x);
         m_mouse_state.set_position_y(position_y);
         m_mouse_state.set_wheel_position(position_z);

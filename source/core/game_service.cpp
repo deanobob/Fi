@@ -2,6 +2,7 @@
 
 #include "plog/Log.h"
 #include "game_service.hpp"
+#include "message_game_created.hpp"
 #include "message_new_game.hpp"
 
 namespace core
@@ -29,7 +30,7 @@ namespace core
 
     void game_service::update(const utilities::gametime& gametime)
     {
-        if (mp_simulation) 
+        if (mp_simulation)
         {
             mp_simulation->update(gametime);
         }
@@ -37,25 +38,18 @@ namespace core
 
     void game_service::draw(core::draw_manager* p_draw_manager)
     {
-        //  TODO : This is going to be replaced with game views that have a pointer to a camera, obtained via a 
-        // create game view message from the simulation. The camera contains all the render data from the game
-        // from within the camera viewport.
-        
-        // const auto& renderables = mp_simulation->get_renderables();
-        // for (auto renderable : renderables)
-        // {
-        //     float x = std::get<0>(renderable);
-        //     float y = std::get<1>(renderable);
-        //     p_draw_manager->draw_line({x, y}, {x+1, y+1}); 
-        // }   
+        if (mp_simulation)
+        {
+            mp_simulation->draw();
+        }
     }
 
     void game_service::shutdown()
     {
         destroy_simulation();
     }
-    
-    void game_service::on_publish(core::message* p_message) 
+
+    void game_service::on_publish(core::message* p_message)
     {
         if (p_message->get_type() == messages::message_new_game::TYPE)
         {
@@ -72,6 +66,10 @@ namespace core
     {
         mp_simulation = std::make_unique<simulation>();
         mp_simulation->initialise();
+
+        auto camera = mp_simulation->get_camera("main");
+        auto message = std::make_unique<messages::message_game_created>(camera);
+        mp_message_bus->send(message.get());
     }
 
     void game_service::destroy_simulation()

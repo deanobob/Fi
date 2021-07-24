@@ -1,8 +1,9 @@
 /// @file ui_service.cpp
 
 #include "plog/Log.h"
+#include "game_window.hpp"
+#include "message_game_created.hpp"
 #include "ui_service.hpp"
-#include "window.hpp"
 
 // TODO: remove when hack removed
 #include "message_new_game.hpp"
@@ -16,7 +17,7 @@ namespace ui
         mp_message_bus->subscribe(
             this,
             {
-                messages::message_new_game::TYPE,
+                messages::message_game_created::TYPE,
             }
         );
     }
@@ -31,17 +32,6 @@ namespace ui
         /// @todo HACK simulating the user clicking a NEW GAME button
         auto message = messages::message_new_game{};
         mp_message_bus->send(&message);
-
-        mp_root_node = std::make_unique<ui::root>();
-        auto game_window = std::make_unique<window>();
-        mp_root_node->add_child(std::move(game_window), true);
-
-        // TODO: configure screen width and height somewhere
-        mp_root_node->set_width(1080);
-        mp_root_node->set_height(720);
-
-        // Register root node with input event listener to allow UI to respond to input
-        mp_input_controller->add_event_listener(mp_root_node.get());
 
         // Initialise UI
         mp_root_node->initialise();
@@ -69,5 +59,23 @@ namespace ui
     void ui_service::shutdown()
     {
         mp_root_node.reset(nullptr);
+    }
+
+    void ui_service::on_publish(core::message* p_message)
+    {
+        if (p_message->get_type() == messages::message_game_created::TYPE)
+        {
+            auto p_game_created_message = static_cast<messages::message_game_created*>(p_message);
+
+            // Add game window to root
+            mp_root_node = std::make_unique<game_window>(mp_message_bus, p_game_created_message->get_camera());
+
+            // TODO: configure screen width and height somewhere
+            mp_root_node->set_width(1080);
+            mp_root_node->set_height(720);
+
+            // Register root node with input event listener to allow UI to respond to input
+            mp_input_controller->add_event_listener(mp_root_node.get());
+        }
     }
 }

@@ -3,6 +3,7 @@
 #ifndef ALIGNMENT_HPP
 #define ALIGNMENT_HPP
 
+/// @brief ui namespace
 namespace ui
 {
     enum class horizontal_alignment : unsigned int
