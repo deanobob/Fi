@@ -13,11 +13,11 @@ namespace ui
     /// @brief A UI element that renders a simulation camera elements
     class simulation_view
         : public node
-        , public core::subscriber
     {
         public:
         /// @brief Construct a new simulation view object
-        simulation_view(core::message_bus* p_message_bus, core::camera* p_camera);
+        /// @param p_camera The simulation view camera
+        simulation_view(core::camera* p_camera);
         /// @brief Destroy the simulation view object
         virtual ~simulation_view() = default;
 
@@ -28,13 +28,21 @@ namespace ui
 
         void on_draw(core::draw_manager* p_draw_manager) override;
 
-        void mouse_axis_changed(int position_x, int position_y, int position_z) override;
+        void mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position) override;
 
-        void on_publish(core::message* p_message) override;
+        void mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position) override;
+
+        void mouse_axis_changed(int position_x, int position_y, int position_z) override;
 
         private:
         /// @brief The simulation camera that this simulation view renders
         core::camera* mp_camera{nullptr};
+
+        /// @brief Flag indicating if the left mouse is pressed
+        bool m_is_left_button_pressed{false};
+
+        /// @brief Last mouse position
+        utilities::vector2 m_last_mouse_position{};
     };
 } /// namespace ui
 

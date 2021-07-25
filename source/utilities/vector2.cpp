@@ -65,6 +65,12 @@ namespace utilities
         this->y = value.y;
     }
 
+    vector2::vector2(const int x, const int y)
+    {
+        this->x = static_cast<float>(x);
+        this->y = static_cast<float>(y);
+    }
+
     vector2::vector2(const float x, const float y)
     {
         this->x = x;

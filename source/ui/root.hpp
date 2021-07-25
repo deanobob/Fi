@@ -18,7 +18,7 @@ namespace ui
     {
         public:
         /// @brief Construct a new root object
-        root(core::message_bus* p_message_bus);
+        root();
         /// @brief Destroy the root object
         virtual ~root() = default;
 

@@ -6,10 +6,10 @@
 
 namespace ui
 {
-    game_window::game_window(core::message_bus* p_message_bus, core::camera* p_camera)
-        : root{p_message_bus}
+    game_window::game_window(core::camera* p_camera)
+        : root{}
     {
-        auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
+        auto sim_view = std::make_unique<simulation_view>(p_camera);
         this->add_child(std::move(sim_view), true);
     }
 

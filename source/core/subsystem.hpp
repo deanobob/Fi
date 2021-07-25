@@ -35,6 +35,7 @@ namespace core
         virtual void update(const utilities::gametime& gametime) = 0;
 
         /// @brief Called on every frame to obtain all renderable items
+        /// @param p_camera The camera to render
         virtual void draw(camera* p_camera) = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.

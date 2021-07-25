@@ -16,7 +16,8 @@ namespace ui
     {
         public:
         /// @brief Construct a new game window object
-        game_window(core::message_bus* p_message_bus, core::camera* p_camera);
+        /// @param p_camera The game camera
+        game_window(core::camera* p_camera);
         /// @brief Destroy the game window object
         virtual ~game_window() = default;
 

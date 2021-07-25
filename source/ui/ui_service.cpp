@@ -68,7 +68,7 @@ namespace ui
             auto p_game_created_message = static_cast<messages::message_game_created*>(p_message);
 
             // Add game window to root
-            mp_root_node = std::make_unique<game_window>(mp_message_bus, p_game_created_message->get_camera());
+            mp_root_node = std::make_unique<game_window>(p_game_created_message->get_camera());
 
             // TODO: configure screen width and height somewhere
             mp_root_node->set_width(1080);

@@ -15,7 +15,7 @@ namespace ui
     {
         public:
         /// @brief Construct a new window object
-        window(core::message_bus* p_message_bus);
+        window() = default;
         /// @brief Destroy the window object
         virtual ~window() = default;
 

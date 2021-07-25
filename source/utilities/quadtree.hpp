@@ -20,7 +20,7 @@ namespace utilities
         const unsigned int m_id;
         /// @brief The boundary of the leaf node
         const rectangle m_boundary;
-        
+
         /// @brief Construct a new leaf object
         /// @param id The leaf identifier
         /// @param boundary The boundary of the leaf node
@@ -29,34 +29,35 @@ namespace utilities
         {}
     };
 
-    /// @brief implementation of a quadtree data structure 
+    /// @brief implementation of a quadtree data structure
     class quadtree
     {
         public:
         /// @brief Construct a new quadtree object
-        /// @param boundary The boundary of the quadtree 
+        /// @param boundary The boundary of the quadtree
         /// @param p_parent Pointer to the parent quadtree object
         quadtree(rectangle boundary, quadtree* p_parent = nullptr);
 
-        /// @brief Insert an entity location into the quadtree, keyed by entity ID 
+        /// @brief Insert an entity location into the quadtree, keyed by entity ID
         /// @param entity_id The entity identifier
         /// @param rectangle The boundary of the entity body
         /// @return True if successfully inserted, false if failed to insert
         bool insert(unsigned int entity_id, const rectangle& rectangle);
 
-        /// @brief Query the quadtree for all elements within a given region 
-        /// 
+        /// @brief Query the quadtree for all elements within a given region
+        ///
         /// @param region The region to query
         /// @return The entity IDs of all entities within the given region
         std::list<unsigned int> query(const rectangle& region);
 
         /// @brief Remove the entity from the quadtree
         /// @param entity_id The entity identifier
+        /// @return True on success, false on failure to remove
         bool remove(unsigned int entity_id);
 
         /// @brief Convert the quadtree state into a human readable string
-        /// @details For debugging 
-        /// @param indent The indent string appended to the beginning of each line 
+        /// @details For debugging
+        /// @param indent The indent string appended to the beginning of each line
         void to_string(const std::string& indent) const;
 
         private:
@@ -77,7 +78,7 @@ namespace utilities
         /// @brief The quadtree boundary
         const rectangle m_boundary;
 
-        /// @brief Divide the quadtree into four child nodes and distribute the objects contained within the node 
+        /// @brief Divide the quadtree into four child nodes and distribute the objects contained within the node
         void subdivide();
 
         /// @brief Get the quadtree that contains the given entity ID
@@ -90,7 +91,7 @@ namespace utilities
         /// @param p_quadtree Pointer to the quadtree object
         void set_location(unsigned int entity_id, quadtree* p_quadtree);
 
-        /// @brief Erase an entity from the quadtree object 
+        /// @brief Erase an entity from the quadtree object
         /// @param entityId The identifier of the entity to remove
         /// @return True on success, else false
         bool erase(unsigned int entity_id);

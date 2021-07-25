@@ -25,12 +25,14 @@ namespace core
         virtual ~simulation();
 
         /// @brief Initialise the simulation
+        /// @return True on success, false on failure
         bool initialise();
 
         /// @brief Called on every tick to update the simulation
         /// @param gametime The gametime
         void update(const utilities::gametime& gametime);
 
+        /// @brief Called on every frame render
         void draw();
 
         /// @brief Shutdown the simulation

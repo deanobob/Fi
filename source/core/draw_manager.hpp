@@ -31,6 +31,14 @@ namespace core
         /// @brief Processes window events etc.
         void process_events();
 
+        /// @brief Define the transform position, scale, and rotation for the upcoming renderables
+        /// @param viewport The viewport of the transform
+        /// @param scale The scale to apply to all renderables
+        /// @param rotation The rotation to apply to all renderables
+        void begin(const utilities::rectangle& viewport,
+                   const utilities::vector2& scale = utilities::vector2::ONE,
+                   const float rotation = 0.0f);
+
         /// @brief Clear the draw buffers
         void clear();
 
@@ -43,6 +51,9 @@ namespace core
         /// @param text The text to draw
         /// @param position The position of the text
         void draw_text(const std::string text, const utilities::vector2& position);
+
+        /// @brief Pops the last transform
+        void end();
 
         /// @brief Flips the buffers
         void flip();
@@ -63,6 +74,8 @@ namespace core
         /// @brief Pointer to render controller
         render::render_controller* mp_render_controller{nullptr};
 
+        /// @brief Queue of all transforms applied to the draw manager
+        std::list<render::transform> m_transforms{};
     };
 } /// namespace core
 

@@ -35,6 +35,31 @@ namespace core
         mp_render_controller->process_events();
     }
 
+    void draw_manager::begin(
+        const utilities::rectangle& viewport,
+        const utilities::vector2& scale,
+        const float rotation)
+    {
+        auto current_scale{utilities::vector2::ONE};
+        auto current_rotation{0.0f};
+
+        if (m_transforms.size() > 0)
+        {
+            // Inherit properties from parent
+            const auto& current_tranform{m_transforms.front()};
+            current_scale = current_tranform.scale;
+            current_rotation = current_tranform.rotation;
+        }
+
+        render::transform transform{};
+        transform.viewport = viewport;
+        transform.scale = scale * current_scale;
+        transform.rotation = rotation + current_rotation;
+        m_transforms.push_back(transform);
+
+        mp_render_controller->set_transform(transform);
+    }
+
     void draw_manager::clear()
     {
         mp_render_controller->clear();
@@ -48,6 +73,17 @@ namespace core
     void draw_manager::draw_text(const std::string text, const utilities::vector2& position)
     {
         // TODO
+    }
+
+    void draw_manager::end()
+    {
+        m_transforms.pop_front();
+
+        if (m_transforms.size() > 0)
+        {
+            const auto& transform = m_transforms.front();
+            mp_render_controller->set_transform(transform);
+        }
     }
 
     void draw_manager::flip()

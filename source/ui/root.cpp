@@ -5,8 +5,8 @@
 
 namespace ui
 {
-    root::root(core::message_bus* p_message_bus)
-        : node{p_message_bus}
+    root::root()
+        : node{}
     {
         mp_focused = this;
     }

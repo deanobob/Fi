@@ -26,7 +26,7 @@ namespace ui
         static constexpr int MAX_HEIGHT = -1;
 
         /// @brief Construct a new node object
-        node(core::message_bus* p_message_bus);
+        node() = default;
 
         /// @brief Destroy the node object
         virtual ~node() = default;
@@ -164,12 +164,12 @@ namespace ui
         virtual void mouse_axis_changed(int position_x, int position_y, int position_z) {};
 
         protected:
-        /// @brief The message bus
-        core::message_bus* mp_message_bus{nullptr};
         /// @brief The node x position
         float m_x{0};
+
         /// @brief The node y position
         float m_y{0};
+
         /// @brief The parent node
         node* mp_parent{nullptr};
 
@@ -196,38 +196,55 @@ namespace ui
         private:
         /// @brief Flag indicating if the node needs to be realigned / measured
         bool m_invalid{true};
+
         /// @brief The minimum width of the node
         float m_min_width{0.0f};
+
         /// @brief The minimum height of the node
         float m_min_height{0.0f};
+
         /// @brief The maximum width of the node
         float m_max_width{static_cast<float>(INT_MAX)};
+
         /// @brief The maximum height of the node
         float m_max_height{static_cast<float>(INT_MAX)};
+
         /// @brief The width of the node
         float m_width{MAX_WIDTH};
+
         /// @brief The height of the node
         float m_height{MAX_HEIGHT};
+
         /// @brief The distance to offset child elements by on the X axis
         float m_padding_x{0};
+
         /// @brief The distance to offset child elements by on the Y axis
         float m_padding_y{0};
+
         /// @brief The distance to offset this element by from its parent on the X axis
         float m_margin_x{0};
+
         /// @brief The distance to offset this element by from its parent on the Y axis
         float m_margin_y{0};
+
         /// @brief The horizontal alignment
         horizontal_alignment m_h_align{horizontal_alignment::left};
+
         /// @brief The vertical alignment
         vertical_alignment m_v_align{vertical_alignment::top};
+
         /// @brief The mode used to position the node horizontally
         layout_mode m_h_layout_mode{layout_mode::align};
+
         /// @brief The mode used to position the node vertically
         layout_mode m_v_layout_mode{layout_mode::align};
+
         /// @brief The horizontal measure mode - defines how the required width is measured
         measure_mode m_h_measure_mode{measure_mode::inflate};
+
         /// @brief The vertical measure mode - defines how the required height is measured
         measure_mode m_v_measure_mode{measure_mode::inflate};
+
         /// @brief List of child nodes
         std::list<std::unique_ptr<node> > m_children{};
 

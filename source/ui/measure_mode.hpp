@@ -6,6 +6,8 @@
 /// @brief ui namespace
 namespace ui
 {
+    /// @brief The measure mode enum type
+    /// @details Determines how a UI element is measured
     enum class measure_mode
     {
         fixed,

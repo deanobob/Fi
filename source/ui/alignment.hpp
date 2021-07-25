@@ -6,6 +6,8 @@
 /// @brief ui namespace
 namespace ui
 {
+    /// @brief The horizontal alignment enum type
+    /// @details Determines how a UI element is aligned horizontally
     enum class horizontal_alignment : unsigned int
     {
         left = 0,
@@ -13,6 +15,8 @@ namespace ui
         centre = 2
     };
 
+    /// @brief The vertical alignment enum type
+    /// @details Determines how a UI element is aligned vertically
     enum class vertical_alignment : unsigned int
     {
         top = 0,

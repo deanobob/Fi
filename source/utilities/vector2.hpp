@@ -75,6 +75,11 @@ namespace utilities
         /// @param y The y value
         vector2(const float x, const float y);
 
+        /// @brief Constructor that takes an x and y value
+        /// @param x The x value
+        /// @param y The y value
+        vector2(const int x, const int y);
+
         /// @brief The overloaded assignment operator
         /// @param other The vector whose properties will be copied
         /// @return Reference to itself

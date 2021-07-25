@@ -17,6 +17,7 @@ namespace messages
     {
         public:
         /// @brief Construct a message new game object
+        /// @param p_camera The game amera
         message_game_created(core::camera* p_camera)
             : mp_camera{p_camera}
         {
