@@ -4,12 +4,18 @@
 
 namespace core
 {
-    camera::camera(const utilities::rectangle& viewport) 
+    camera::camera(const utilities::rectangle& viewport)
         : m_viewport{viewport}
     {
 
     }
-    
+
+    void camera::move(utilities::vector2 offset)
+    {
+        m_viewport.x += offset.x;
+        m_viewport.y += offset.y;
+    }
+
     const utilities::rectangle& camera::get_viewport() const
     {
         return m_viewport;

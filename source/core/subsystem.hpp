@@ -4,6 +4,7 @@
 #ifndef SUBSYSTEM_HPP
 #define SUBSYSTEM_HPP
 
+#include "camera.hpp"
 #include "draw_manager.hpp"
 #include "gametime.hpp"
 #include "subscriber.hpp"
@@ -16,7 +17,7 @@ namespace core
         public subscriber
     {
         public:
-        /// @brief Constructor 
+        /// @brief Constructor
         /// @param p_message_bus Pointer to the message bus instance
         subsystem(message_bus* p_message_bus)
             : mp_message_bus{p_message_bus}
@@ -34,7 +35,8 @@ namespace core
         virtual void update(const utilities::gametime& gametime) = 0;
 
         /// @brief Called on every frame to obtain all renderable items
-        virtual void draw() = 0;
+        /// @param p_camera The camera to render
+        virtual void draw(camera* p_camera) = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.
         virtual void shutdown() = 0;
@@ -44,7 +46,7 @@ namespace core
         virtual bool pauseable() const { return true; }
 
         protected:
-        /// @brief Pointer to the game message bus 
+        /// @brief Pointer to the game message bus
         message_bus* mp_message_bus{nullptr};
     };
 } /// namespace core

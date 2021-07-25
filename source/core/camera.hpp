@@ -13,7 +13,7 @@
 namespace core
 {
     /// @brief Renderable type - temporary until a real renderable is defined
-    using renderable = std::tuple<float, float>;
+    using renderable = std::tuple<float, float, float, float>;
 
     /// @brief The camera class
     class camera
@@ -22,6 +22,10 @@ namespace core
         /// @brief Construct a new camera object
         /// @param viewport The camera viewport
         camera(const utilities::rectangle& viewport);
+
+        /// @brief Move the camera
+        /// @param offset The value added to the current position to move the camera
+        void move(utilities::vector2 offset);
 
         /// @brief Get the viewport
         /// @return The viewport
@@ -44,7 +48,7 @@ namespace core
         /// @brief List of renderables within the camera viewport
         /// @details On draw the game simulation will fill this structure with the renderable items within the camera
         /// viewport, which is then retrieved by the gameview that is attached to the camera.
-        std::list<renderable> m_renderables{}; 
+        std::list<renderable> m_renderables{};
     };
 } /// namespace core
 

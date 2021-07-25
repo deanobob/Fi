@@ -15,6 +15,9 @@ namespace messages
         : public core::message
     {
         public:
+        /// @brief Construct a new message new game object
+        message_new_game() = default;
+
         /// @brief Default destructor
         virtual ~message_new_game() = default;
 
