@@ -1,6 +1,7 @@
 /// @file game_window.cpp
 
 #include "plog/Log.h"
+#include "button_open_window.hpp"
 #include "game_window.hpp"
 #include "simulation_view.hpp"
 
@@ -10,6 +11,14 @@ namespace ui
         : root{}
     {
         auto sim_view = std::make_unique<simulation_view>(p_camera);
+
+        auto test_button = std::make_unique<button_open_window>();
+        test_button->set_width(200);
+        test_button->set_height(30);
+        test_button->set_horizontal_alignment(horizontal_alignment::centre);
+        test_button->set_vertical_alignment(vertical_alignment::bottom);
+        sim_view->add_child(std::move(test_button));
+
         this->add_child(std::move(sim_view), true);
     }
 
