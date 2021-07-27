@@ -135,6 +135,16 @@ namespace ui
         /// @param alignment The vertical alignment
         void set_vertical_alignment(vertical_alignment alignment);
 
+        /// @brief Called when the node is focused
+        void focused();
+
+        /// @brief Called when the node is unfocused
+        void unfocused();
+
+        /// @brief Get the focused state of the node
+        /// @return True on success, else false
+        bool is_focused() const;
+
         /// @brief Called on the event a key is pressed
         /// @param key_code The key that was pressed
         virtual void key_pressed(const input::key key_code) {};
@@ -183,6 +193,12 @@ namespace ui
         /// @param p_manager The draw manager
         virtual void on_draw(core::draw_manager* p_manager) = 0;
 
+        /// @brief Called when the node is focused
+        virtual void on_focus() {};
+
+        /// @brief Called when the node is unfocused
+        virtual void on_focus_lost() {};
+
         /// @brief Set the parent object
         /// @param p_node The parent node
         virtual void set_parent(node* p_node);
@@ -196,6 +212,9 @@ namespace ui
         private:
         /// @brief Flag indicating if the node needs to be realigned / measured
         bool m_invalid{true};
+
+        /// @brief Flag indicating if node has focus
+        bool m_focused{false};
 
         /// @brief The minimum width of the node
         float m_min_width{0.0f};

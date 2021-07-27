@@ -46,6 +46,11 @@ namespace ui
         }
     }
 
+    void simulation_view::on_focus_lost()
+    {
+        m_is_left_button_pressed = false;
+    }
+
     void simulation_view::mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position)
     {
         m_last_mouse_position = {x_position, y_position};

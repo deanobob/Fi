@@ -231,45 +231,22 @@ namespace ui
         m_v_align = alignment;
     }
 
-    // void node::onMouseMove(input::MouseAxesEventArgs* pEventArgs)
-    // {
-    //     if (p_parent != nullptr)
-    //     {
-    //         p_parent->onMouseMove(pEventArgs);
-    //     }
-    // }
+    void node::focused()
+    {
+        m_focused = true;
+        on_focus();
+    }
 
-    // void node::onMousePress(input::MouseButtonEventArgs* pEventArgs)
-    // {
-    //     if (p_parent != nullptr)
-    //     {
-    //         p_parent->onMousePress(pEventArgs);
-    //     }
-    // }
+    void node::unfocused()
+    {
+        m_focused = false;
+        on_focus_lost();
+    }
 
-    // void node::onMouseRelease(input::MouseButtonEventArgs* pEventArgs)
-    // {
-    //     if (p_parent != nullptr)
-    //     {
-    //         p_parent->onMouseRelease(pEventArgs);
-    //     }
-    // }
-
-    // void node::onKeyPressed(input::KeyboardEventArgs* pEventArgs)
-    // {
-    //     if (p_parent != nullptr)
-    //     {
-    //         p_parent->onKeyPressed(pEventArgs);
-    //     }
-    // }
-
-    // void node::onKeyReleased(input::KeyboardEventArgs* pEventArgs)
-    // {
-    //     if (p_parent != nullptr)
-    //     {
-    //         p_parent->onKeyReleased(pEventArgs);
-    //     }
-    // }
+    bool node::is_focused() const
+    {
+        return m_focused;
+    }
 
     void node::set_parent(node* p_node)
     {
@@ -298,8 +275,10 @@ namespace ui
 
     node* node::get_node_at(float x, float y)
     {
-        if (x > m_x && x < m_x + m_width &&
-            y > m_y && y < m_y + m_height)
+        const auto world_pos_x = get_world_x();
+        const auto world_pos_y = get_world_y();
+        if (x > world_pos_x && x < world_pos_x + m_width &&
+            y > world_pos_y && y < world_pos_y + m_height)
         {
             for (auto& it : m_children)
             {
