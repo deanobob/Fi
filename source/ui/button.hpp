@@ -29,8 +29,10 @@ namespace ui
 
         void mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position) override;
 
+        /// @brief Called when button is pressed
         virtual void on_press() = 0;
 
+        /// @brief Called when button is released
         virtual void on_release() = 0;
     };
 } /// namespace ui

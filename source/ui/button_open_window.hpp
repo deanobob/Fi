@@ -4,6 +4,7 @@
 #define BUTTON_OPEN_WINDOW_HPP
 
 #include "button.hpp"
+#include "message_open_window.hpp"
 
 /// @brief ui namespace
 namespace ui
@@ -14,7 +15,8 @@ namespace ui
     {
         public:
         /// @brief Construct a new button_open_window object
-        button_open_window() = default;
+        /// @param p_message_bus The message bus instance
+        button_open_window(core::message_bus* p_message_bus);
         /// @brief Destroy the button_open_window object
         virtual ~button_open_window() = default;
 
@@ -22,6 +24,10 @@ namespace ui
         void on_press() override;
 
         void on_release() override;
+
+        private:
+        /// @brief The message bus
+        core::message_bus* mp_message_bus{nullptr};
     };
 } /// namespace ui
 
