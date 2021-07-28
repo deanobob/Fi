@@ -47,6 +47,11 @@ namespace core
         /// @param p2 The end point
         void draw_line(const utilities::vector2& p1, const utilities::vector2& p2);
 
+        /// @brief Draw filled rectangle
+        /// @param rect The rectangle to draw
+        /// @param color The fill colour
+        void draw_filled_rectangle(const utilities::rectangle& rect, const utilities::color& color);
+
         /// @brief Draws text to the display at the given position
         /// @param text The text to draw
         /// @param position The position of the text

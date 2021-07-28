@@ -70,6 +70,11 @@ namespace core
         mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, utilities::color(255, 255, 0));
     }
 
+    void draw_manager::draw_filled_rectangle(const utilities::rectangle& rect, const utilities::color& color)
+    {
+        mp_render_controller->render_fill_rect(rect, color);
+    }
+
     void draw_manager::draw_text(const std::string text, const utilities::vector2& position)
     {
         // TODO
