@@ -3,6 +3,7 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
+#include "color.hpp"
 #include "node.hpp"
 
 /// @brief ui namespace
@@ -26,7 +27,21 @@ namespace ui
 
         void on_draw(core::draw_manager* p_draw_manager) override;
 
+        void mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position) override;
+
+        void mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position) override;
+
         void mouse_axis_changed(int position_x, int position_y, int position_z) override;
+
+        private:
+        /// @brief Flag indicating if the left mouse is pressed
+        bool m_is_left_button_pressed{false};
+
+        /// @brief Last mouse position
+        utilities::vector2 m_last_mouse_position{};
+
+        /// @brief The window fill colour
+        const utilities::color m_fill_color{0, 0, 0};
     };
 } /// namespace ui
 
