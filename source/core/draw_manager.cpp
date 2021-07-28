@@ -9,7 +9,8 @@
 namespace core
 {
     draw_manager::draw_manager(core::message_bus* p_message_bus, render::render_controller* p_render_controller)
-        : mp_message_bus{p_message_bus}, mp_render_controller{p_render_controller}
+        : mp_message_bus{p_message_bus}
+        , mp_render_controller{p_render_controller}
     {
         assert(mp_message_bus != nullptr);
         assert(mp_render_controller != nullptr);
@@ -68,6 +69,18 @@ namespace core
     void draw_manager::draw_line(const utilities::vector2& p1, const utilities::vector2& p2)
     {
         mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, utilities::color(255, 255, 0));
+    }
+
+    void draw_manager::draw_rectangle(const utilities::rectangle& rect, const utilities::color& color)
+    {
+        const auto left{rect.get_left()};
+        const auto right{rect.get_right()};
+        const auto top{rect.get_top()};
+        const auto bottom{rect.get_bottom()};
+        mp_render_controller->render_draw_line(left, top, right, top, color);       // top left to top right
+        mp_render_controller->render_draw_line(right, top, right, bottom, color);   // top right to bottom right
+        mp_render_controller->render_draw_line(left, bottom, right, bottom, color); // bottom left to bottom right
+        mp_render_controller->render_draw_line(left, top, left, bottom, color);     // top left to bottom left
     }
 
     void draw_manager::draw_filled_rectangle(const utilities::rectangle& rect, const utilities::color& color)

@@ -47,6 +47,11 @@ namespace core
         /// @param p2 The end point
         void draw_line(const utilities::vector2& p1, const utilities::vector2& p2);
 
+        /// @brief Draw rectangle
+        /// @param rect The rectangle to draw
+        /// @param color The line colour
+        void draw_rectangle(const utilities::rectangle& rect, const utilities::color& color = {255, 255, 0});
+
         /// @brief Draw filled rectangle
         /// @param rect The rectangle to draw
         /// @param color The fill colour

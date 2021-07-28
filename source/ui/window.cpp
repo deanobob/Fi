@@ -22,10 +22,7 @@ namespace ui
         float w = get_width();
         float h = get_height();
         p_draw_manager->draw_filled_rectangle({x, y, w, h}, m_fill_color);
-        p_draw_manager->draw_line({x, y}, {x + w, y});         // top left to top right
-        p_draw_manager->draw_line({x + w, y}, {x + w, y + h}); // top right to bottom right
-        p_draw_manager->draw_line({x, y + h}, {x + w, y + h}); // bottom left to bottom right
-        p_draw_manager->draw_line({x, y}, {x, y + h});         // top left to bottom left
+        p_draw_manager->draw_rectangle({x, y, w, h});
     }
 
     void window::mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position)
