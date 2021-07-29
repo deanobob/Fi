@@ -21,13 +21,13 @@ TEST_CASE("utilities/configuration.hpp - Add and get", "[utilities]")
    SECTION("3 Add configuration and get as float")
    {
       config.add("Key3", "7.4");
-      REQUIRE(config.get_int("Key3") == 7.4);
+      REQUIRE(config.get_float("Key3") == 7.4);
    }
 
    SECTION("4 Add configuration and get as double")
    {
       config.add("Key4", "7.1");
-      REQUIRE(config.get_int("Key4") == 7.1);
+      REQUIRE(config.get_double("Key4") == 7.1);
    }
 
    SECTION("5 Add configuration and get as boolean")
