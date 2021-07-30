@@ -77,6 +77,12 @@ namespace render
                     break;
                 case ALLEGRO_EVENT_DISPLAY_RESIZE:
                     al_acknowledge_resize(mp_display);
+
+                    for (auto& listener_iter : mp_event_listeners)
+                    {
+                        listener_iter->on_display_resize(event.display.width, event.display.height);
+                    }
+
                     break;
                 default:
                     PLOG_DEBUG << "Unknown event" << event.type;
@@ -129,6 +135,12 @@ namespace render
             if (mp_display)
             {
                 al_register_event_source(mp_event_queue, al_get_display_event_source(mp_display));
+
+                for (auto& listener_iter : mp_event_listeners)
+                {
+                        PLOG_DEBUG << "BOB" << properties.width << " " << properties.height;
+                    listener_iter->on_display_resize(properties.width, properties.height);
+                }
             }
         }
 

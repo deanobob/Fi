@@ -17,7 +17,7 @@ namespace ui
 
     void button::on_draw(core::draw_manager* p_draw_manager)
     {
-        if (is_focused())
+        if (!is_focused())
         {
             float x = get_world_x();
             float y = get_world_y();

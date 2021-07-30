@@ -73,7 +73,7 @@ namespace render
         private:
         /// @brief The allegro event queue
         ALLEGRO_EVENT_QUEUE* mp_event_queue{nullptr};
-        /// @brief Teh allegro display instance
+        /// @brief The allegro display instance
         ALLEGRO_DISPLAY* mp_display{nullptr};
         /// @brief The bitmap instance that the window draws
         ALLEGRO_BITMAP* mp_target{nullptr};

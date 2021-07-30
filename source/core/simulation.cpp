@@ -36,7 +36,7 @@ namespace core
         }
 
         // Initialise main camera
-        m_cameras.emplace("main", std::make_unique<core::camera>(utilities::rectangle{0, 0, 1024, 720}));
+        m_cameras.emplace("main", std::make_unique<core::camera>(utilities::rectangle{0, 0, 1920, 1080}));
 
         // Initialise test entities
         {

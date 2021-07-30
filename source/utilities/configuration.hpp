@@ -15,37 +15,39 @@ namespace utilities
     {
         public:
         /// @brief Add configuration key pair
+        /// @param key The configuration key
+        /// @param value The configuration value
         void add(const std::string& key, const std::string& value);
 
         /// @brief Get a configuration value
         /// @param key The configuration key
         /// @param default_value The default value if the property isn't defined
         /// @return The value as a string
-        const std::string& get_string(const std::string& key, const std::string& default_value = "");
+        const std::string& get_string(const std::string& key, const std::string& default_value = "") const;
 
         /// @brief Get a configuration value
         /// @param key The configuration key
         /// @param default_value The default value if the property isn't defined
         /// @return The value as an integer
-        int get_int(const std::string& key, int default_value = 0);
+        int get_int(const std::string& key, int default_value = 0) const;
 
         /// @brief Get a configuration value
         /// @param key The configuration key
         /// @param default_value The default value if the property isn't defined
         /// @return The value as a float
-        float get_float(const std::string& key, float default_value = 0.0f);
+        float get_float(const std::string& key, float default_value = 0.0f) const;
 
         /// @brief Get a configuration value
         /// @param key The configuration key
         /// @param default_value The default value if the property isn't defined
         /// @return The value as a double
-        double get_double(const std::string& key, double default_value = 0.0);
+        double get_double(const std::string& key, double default_value = 0.0) const;
 
         /// @brief Get a configuration value
         /// @param key The configuration key
         /// @param default_value The default value if the property isn't defined
         /// @return The value as a bool
-        bool get_bool(const std::string& key, bool default_value = false);
+        bool get_bool(const std::string& key, bool default_value = false) const;
 
         private:
         /// @brief Configuration storage

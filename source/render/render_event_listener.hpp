@@ -12,6 +12,10 @@ namespace render
     class render_event_listener
     {
         public:
+        /// @brief Display resize event handler
+        /// @param width The display width
+        /// @param height The display height
+        virtual void on_display_resize(int width, int height) = 0;
         /// @brief Display close event handler
         virtual void on_display_close() = 0;
         /// @brief Display gained focused

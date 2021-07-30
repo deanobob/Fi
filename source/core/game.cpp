@@ -1,6 +1,7 @@
 /// @file game.cpp
 
 #include "plog/Log.h"
+#include "configuration_loader.hpp"
 #include "console_service.hpp"
 #include "entity_manager.hpp"
 #include "game.hpp"
@@ -127,13 +128,20 @@ namespace core
     {
         bool success = true;
 
+        const auto config = configuration_loader::load();
+
+        render::window_properties window_properties{};
+        window_properties.width = config.get_int("display_width", render::window_properties::DEFAULT_WINDOW_WIDTH);
+        window_properties.height = config.get_int("display_height", render::window_properties::DEFAULT_WINDOW_HEIGHT);
+        window_properties.vsync = config.get_bool("vsync", true);
+        window_properties.fullscreen = config.get_bool("fullscreen", false);
+        mp_draw_manager->initialise(window_properties);
+
         for (auto& service_iter : m_services)
         {
             const auto& service = service_iter.get();
             success &= service->initialise();
         }
-
-        mp_draw_manager->initialise();
 
         return success;
     }

@@ -3,6 +3,7 @@
 #include "plog/Log.h"
 #include "game_window.hpp"
 #include "message_game_created.hpp"
+#include "message_window_resized.hpp"
 #include "ui_service.hpp"
 
 // TODO: remove when hack removed
@@ -18,6 +19,7 @@ namespace ui
             this,
             {
                 messages::message_game_created::TYPE,
+                messages::message_window_resize::TYPE,
             }
         );
     }
@@ -71,11 +73,17 @@ namespace ui
             mp_root_node = std::make_unique<game_window>(mp_message_bus, p_game_created_message->get_camera());
 
             // TODO: configure screen width and height somewhere
-            mp_root_node->set_width(1080);
-            mp_root_node->set_height(720);
+            mp_root_node->set_width(m_ui_width);
+            mp_root_node->set_height(m_ui_height);
 
             // Register root node with input event listener to allow UI to respond to input
             mp_input_controller->add_event_listener(mp_root_node.get());
+        }
+        else if (p_message->get_type() == messages::message_window_resize::TYPE)
+        {
+            auto p_window_resize_message = static_cast<messages::message_window_resize*>(p_message);
+            m_ui_width = p_window_resize_message->get_width();
+            m_ui_height = p_window_resize_message->get_height();
         }
     }
 }
