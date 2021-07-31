@@ -81,7 +81,6 @@ namespace ui
         }
         else if (p_message->get_type() == messages::message_window_resize::TYPE)
         {
-            PLOG_DEBUG << "RESIZE";
             auto p_window_resize_message = static_cast<messages::message_window_resize*>(p_message);
             m_ui_width = p_window_resize_message->get_width();
             m_ui_height = p_window_resize_message->get_height();
