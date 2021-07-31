@@ -26,12 +26,12 @@ namespace ui
     {
         if (mp_camera)
         {
-            const auto viewport = mp_camera->get_viewport();
-            // TODO: consider how to restrict transform region to ui node size
-            p_draw_manager->begin({get_world_x(), get_world_y(), viewport.width, viewport.height});
+            p_draw_manager->begin({get_world_x(), get_world_y(), get_width(), get_height()});
+            p_draw_manager->clear();
 
             for (const auto& renderable : mp_camera->get_renderables())
             {
+                const auto viewport = mp_camera->get_viewport();
                 float x = std::get<0>(renderable) - viewport.x;
                 float y = std::get<1>(renderable) - viewport.y;
                 float w = std::get<2>(renderable);
