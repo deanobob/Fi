@@ -138,7 +138,6 @@ namespace render
 
                 for (auto& listener_iter : mp_event_listeners)
                 {
-                        PLOG_DEBUG << "BOB" << properties.width << " " << properties.height;
                     listener_iter->on_display_resize(properties.width, properties.height);
                 }
             }
