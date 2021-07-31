@@ -135,6 +135,10 @@ namespace ui
         /// @param alignment The vertical alignment
         void set_vertical_alignment(vertical_alignment alignment);
 
+        /// @brief Set whether the node can have focus  
+        /// @param focusable True if focusable, else False
+        void set_focusable(bool focusable = true);
+
         /// @brief Called when the node is focused
         void focused();
 
@@ -203,15 +207,24 @@ namespace ui
         /// @param p_node The parent node
         virtual void set_parent(node* p_node);
 
-        /// @brief Get the node at object
+        /// @brief Get the node at given coordinates
         /// @param x The x coordinate
         /// @param y The y coordinate
         /// @return node* The node at the given coordinates
         node* get_node_at(float x, float y);
+        
+        /// @brief Get the focusable node at given coordinates
+        /// @param x The x coordinate
+        /// @param y The y coordinate
+        /// @return node* The node at the given coordinates
+        node* get_focusable_node_at(float x, float y);
 
         private:
         /// @brief Flag indicating if the node needs to be realigned / measured
         bool m_invalid{true};
+
+        /// @brief Flag indicating if the node is focusable
+        bool m_focusable{true};
 
         /// @brief Flag indicating if node has focus
         bool m_focused{false};

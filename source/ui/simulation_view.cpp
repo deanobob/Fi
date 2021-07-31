@@ -1,7 +1,6 @@
 /// @file simulation_view.cpp
 
 #include "plog/Log.h"
-#include "message_game_created.hpp"
 #include "simulation_view.hpp"
 
 namespace ui
