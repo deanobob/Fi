@@ -4,6 +4,7 @@
 #include "plog/Log.h"
 #include "draw_manager.hpp"
 #include "message_exit.hpp"
+#include "message_window_resized.hpp"
 #include "time.hpp"
 
 namespace core
@@ -23,10 +24,8 @@ namespace core
         mp_render_controller->remove_event_listener(this);
     }
 
-    bool draw_manager::initialise()
+    bool draw_manager::initialise(const render::window_properties& window_properties)
     {
-        render::window_properties window_properties{};
-
         return mp_render_controller->initialise()
             && mp_render_controller->create_window(window_properties);
     }
@@ -113,6 +112,12 @@ namespace core
     {
         mp_render_controller->destroy_window();
         mp_render_controller->shutdown();
+    }
+
+    void draw_manager::on_display_resize(int width, int height)
+    {
+        auto message = messages::message_window_resize{width, height};
+        mp_message_bus->send(&message);
     }
 
     void draw_manager::on_display_close()

@@ -40,8 +40,8 @@ namespace ui
     {
         if (m_is_left_button_pressed)
         {
-            set_x(m_x + (position_x - m_last_mouse_position.x));
-            set_y(m_y + (position_y - m_last_mouse_position.y));
+            set_x(m_x + (static_cast<float>(position_x) - m_last_mouse_position.x));
+            set_y(m_y + (static_cast<float>(position_y) - m_last_mouse_position.y));
 
             m_last_mouse_position = {position_x, position_y};
         }

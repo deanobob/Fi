@@ -95,9 +95,9 @@ namespace ui
     {
         m_invalid = true;
 
-        if (mp_parent != nullptr)
+        for (auto& p_child : m_children)
         {
-            mp_parent->invalidate();
+            p_child->invalidate();
         }
     }
 

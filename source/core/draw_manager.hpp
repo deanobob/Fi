@@ -25,8 +25,9 @@ namespace core
         virtual ~draw_manager();
 
         /// @brief Creates the game window and loads resources
+        /// @param window_properties The properties that define how the window will be configured on creation
         /// @return True if initialised successfully
-        bool initialise();
+        bool initialise(const render::window_properties& window_properties);
 
         /// @brief Processes window events etc.
         void process_events();
@@ -70,6 +71,8 @@ namespace core
 
         /// @brief Destroy the window and tidy up
         void shutdown();
+
+        void on_display_resize(int width, int height) override;
 
         void on_display_close() override;
 

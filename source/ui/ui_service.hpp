@@ -40,6 +40,10 @@ namespace ui
         input::input_controller* mp_input_controller{nullptr};
         /// @brief The root UI node
         std::unique_ptr<ui::root> mp_root_node{nullptr};
+        /// @brief The UI width
+        float m_ui_width{0.0f};
+        /// @brief The UI height
+        float m_ui_height{0.0f};
     };
 } /// namespace ui
 
