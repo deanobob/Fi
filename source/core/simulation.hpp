@@ -20,7 +20,8 @@ namespace core
     {
         public:
         /// @brief Constructor
-        simulation();
+        /// @param p_message_bus The game message bus
+        simulation(core::message_bus* p_message_bus);
         /// @brief Default destructor
         virtual ~simulation();
 
@@ -48,6 +49,8 @@ namespace core
         core::camera* get_camera(const std::string& camera_tag);
 
         void on_publish(core::message* p_message) override;
+
+        void on_mouse_down();
 
         private:
         /// @brief Container for subsystem

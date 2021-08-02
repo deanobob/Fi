@@ -14,7 +14,7 @@ namespace ui
         , mp_message_bus{p_message_bus}
     {
         mp_camera = p_camera;
-        auto sim_view = std::make_unique<simulation_view>(p_camera);
+        auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
 
         auto test_button = std::make_unique<button_open_window>(mp_message_bus);
         test_button->set_width(200);
@@ -53,7 +53,8 @@ namespace ui
     {
         if (p_message->get_type() == messages::message_open_window::TYPE)
         {
-            auto info_window = std::make_unique<spy_window>(mp_message_bus, mp_camera);
+            auto p_open_window_message = dynamic_cast<messages::message_open_window*>(p_message);
+            auto info_window = std::make_unique<spy_window>(mp_message_bus, p_open_window_message->get_camera());
             info_window->set_x(10);
             info_window->set_y(10);
             info_window->set_width(400);

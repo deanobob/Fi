@@ -3,6 +3,7 @@
 #include "plog/Log.h"
 #include "entity.hpp"
 #include "body_component.hpp"
+#include "message_open_window.hpp"
 #include "rectangle.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
@@ -11,8 +12,8 @@
 
 namespace core
 {
-    simulation::simulation()
-        : mp_message_bus{std::make_unique<message_bus>()}
+    simulation::simulation(core::message_bus* p_message_bus)
+        : mp_message_bus{p_message_bus}
         , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus.get())}
     {
         add_subsystem(std::make_unique<render_subsystem>(mp_message_bus.get(), mp_entity_manager.get()));
@@ -106,5 +107,13 @@ namespace core
     void simulation::on_publish(core::message* p_message)
     {
 
+    }
+
+    void simulation::on_mouse_down()
+    {
+        auto p_new_camera = std::make_unique<core::camera>(utilities::rectangle{0, 0, 500, 300});
+        m_cameras.emplace("dave", std::move(p_new_camera));
+        auto message = messages::message_open_window{m_cameras["dave"].get()};
+        mp_message_bus->send(&message);
     }
 }

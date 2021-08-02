@@ -4,6 +4,7 @@
 #define SIMULATION_VIEW_HPP
 
 #include "camera.hpp"
+#include "message_bus.hpp"
 #include "node.hpp"
 #include "subscriber.hpp"
 
@@ -16,8 +17,9 @@ namespace ui
     {
         public:
         /// @brief Construct a new simulation view object
+        /// @param p_message_bus The message bus
         /// @param p_camera The simulation view camera
-        simulation_view(core::camera* p_camera);
+        simulation_view(core::message_bus* p_message_bus, core::camera* p_camera);
         /// @brief Destroy the simulation view object
         virtual ~simulation_view() = default;
 
@@ -37,6 +39,9 @@ namespace ui
         void mouse_axis_changed(int position_x, int position_y, int position_z) override;
 
         private:
+        /// @brief The message bus
+        core::message_bus* mp_message_bus{nullptr};
+
         /// @brief The simulation camera that this simulation view renders
         core::camera* mp_camera{nullptr};
 

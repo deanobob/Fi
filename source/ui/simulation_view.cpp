@@ -2,11 +2,13 @@
 
 #include "plog/Log.h"
 #include "simulation_view.hpp"
+#include "message_sim_mouse_event.hpp"
 
 namespace ui
 {
-    simulation_view::simulation_view(core::camera* p_camera)
-        : mp_camera{p_camera}
+    simulation_view::simulation_view(core::message_bus* p_message_bus, core::camera* p_camera)
+        : mp_message_bus{p_message_bus}
+        , mp_camera{p_camera}
     {
         assert(mp_camera != nullptr);
     }
@@ -54,6 +56,9 @@ namespace ui
     {
         m_last_mouse_position = {x_position, y_position};
         m_is_left_button_pressed = true;
+
+        auto message = messages::message_sim_mouse_event{};
+        mp_message_bus->send(&message);
     }
 
     void simulation_view::mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position)

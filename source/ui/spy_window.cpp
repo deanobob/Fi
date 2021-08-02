@@ -15,7 +15,7 @@ namespace ui
         set_padding_x(5);
         set_padding_y(5);
 
-        auto sim_view = std::make_unique<simulation_view>(p_camera);
+        auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
         mp_simulation_view = sim_view.get();
         add_child(std::move(sim_view), true);
     }
@@ -47,6 +47,6 @@ namespace ui
 
     void spy_window::on_publish(core::message* p_message)
     {
-        
+
     }
 } /// namespace ui
