@@ -8,12 +8,10 @@
 
 namespace ui
 {
-    core::camera* mp_camera{nullptr};
     game_window::game_window(core::message_bus* p_message_bus, core::camera* p_camera)
         : root{}
         , mp_message_bus{p_message_bus}
     {
-        mp_camera = p_camera;
         auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
 
         auto test_button = std::make_unique<button_open_window>(mp_message_bus);

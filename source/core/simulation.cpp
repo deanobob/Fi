@@ -37,7 +37,9 @@ namespace core
         }
 
         // Initialise main camera
-        m_cameras.emplace("main", std::make_unique<core::camera>(utilities::rectangle{0, 0, 1920, 1080}));
+        auto p_camera = std::make_unique<core::camera>();
+        m_cameras_by_tag.emplace("main", p_camera.get());
+        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
 
         // Initialise test entities
         {
@@ -93,12 +95,23 @@ namespace core
         m_subsystems.push_back(std::move(subsystem));
     }
 
-    core::camera* simulation::get_camera(const std::string& camera_tag)
+    core::camera* simulation::get_camera(const uint32_t camera_id) const
     {
-        const auto camera_iter = m_cameras.find(camera_tag);
+        const auto camera_iter = m_cameras.find(camera_id);
         if (camera_iter != m_cameras.end())
         {
             return camera_iter->second.get();
+        }
+
+        return nullptr;
+    }
+
+    core::camera* simulation::get_camera(const std::string& camera_tag) const
+    {
+        const auto camera_iter = m_cameras_by_tag.find(camera_tag);
+        if (camera_iter != m_cameras_by_tag.end())
+        {
+            return camera_iter->second;
         }
 
         return nullptr;
@@ -109,11 +122,13 @@ namespace core
 
     }
 
-    void simulation::on_mouse_down()
+    void simulation::on_mouse_down(int position_x, int position_y)
     {
-        auto p_new_camera = std::make_unique<core::camera>(utilities::rectangle{0, 0, 500, 300});
-        m_cameras.emplace("dave", std::move(p_new_camera));
-        auto message = messages::message_open_window{m_cameras["dave"].get()};
+        auto p_camera = std::make_unique<core::camera>();
+        p_camera->set_position({position_x, position_y});
+
+        auto message = messages::message_open_window{p_camera.get()};
+        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
         mp_message_bus->send(&message);
     }
 }

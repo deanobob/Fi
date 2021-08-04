@@ -17,7 +17,35 @@ namespace messages
         /// @brief The message type
         static constexpr auto TYPE { "SIM_MOUSE_EVENT" };
 
+        /// @brief Construct a new message sim mouse event object
+        /// @param x The mouse x position
+        /// @param y The mouse y position
+        message_sim_mouse_event(const int x, const int y)
+            : m_x{x}
+            , m_y{y}
+        {}
+
         const std::string get_type() const override { return TYPE; };
+
+        /// @brief Get the mouse x position
+        /// @return The mouse x position
+        int get_x() const
+        {
+            return m_x;
+        }
+
+        /// @brief Get the mouse y position
+        /// @return The mouse y position
+        int get_y() const
+        {
+            return m_y;
+        }
+
+        private:
+        /// @brief The mouse x position
+        const int m_x;
+        /// @brief The mouse y position
+        const int m_y;
     };
 } /// namespace messages
 

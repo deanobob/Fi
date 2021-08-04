@@ -66,7 +66,8 @@ namespace core
         {
             if (mp_simulation)
             {
-                mp_simulation->on_mouse_down();
+                const auto p_sim_message = dynamic_cast<messages::message_sim_mouse_event*>(p_message);
+                mp_simulation->on_mouse_down(p_sim_message->get_x(), p_sim_message->get_y());
             }
         }
     }

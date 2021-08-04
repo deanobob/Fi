@@ -20,7 +20,7 @@ namespace ui
 
     void simulation_view::on_layout()
     {
-
+        mp_camera->set_dimensions({get_width(), get_height()});
     }
 
     void simulation_view::on_draw(core::draw_manager* p_draw_manager)
@@ -57,7 +57,9 @@ namespace ui
         m_last_mouse_position = {x_position, y_position};
         m_is_left_button_pressed = true;
 
-        auto message = messages::message_sim_mouse_event{};
+        auto message = messages::message_sim_mouse_event{
+            x_position + mp_camera->get_viewport().x,
+            y_position + mp_camera->get_viewport().y};
         mp_message_bus->send(&message);
     }
 

@@ -58,7 +58,7 @@ namespace ui
         {
             mp_root_node->draw(p_draw_manager);
         }
-        
+
         p_draw_manager->end();
     }
 
