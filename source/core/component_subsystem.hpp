@@ -48,7 +48,7 @@ namespace core
         /// @brief Method called when an entity is removed from the subsystem
         /// @param p_entity The entity
         virtual void on_entity_removed(entity* p_entity) {};
-        
+
         /// @brief Method called when all entities have been cleared
         virtual void on_entities_cleared() {};
 

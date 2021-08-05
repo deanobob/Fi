@@ -9,8 +9,7 @@
 namespace ui
 {
     spy_window::spy_window(core::message_bus* p_message_bus, core::camera* p_camera)
-        : root{}
-        , mp_message_bus{p_message_bus}
+        : mp_message_bus{p_message_bus}
     {
         set_width(400);
         set_height(200);
@@ -19,7 +18,7 @@ namespace ui
 
         auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
         mp_simulation_view = sim_view.get();
-        add_child(std::move(sim_view), true);
+        add_child(std::move(sim_view));
     }
 
     void spy_window::on_initialise()

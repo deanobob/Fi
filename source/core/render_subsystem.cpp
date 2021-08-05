@@ -7,9 +7,7 @@
 
 namespace core
 {
-    render_subsystem::render_subsystem(
-        core::message_bus* p_message_bus,
-        core::entity_manager* p_entity_manager)
+    render_subsystem::render_subsystem(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
         : component_subsystem{p_message_bus, p_entity_manager, {component_type::body | component_type::render}}
         , m_quadtree{utilities::rectangle{0, 0, 1000, 1000}} //TODO: determine world size
     {

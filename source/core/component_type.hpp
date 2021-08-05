@@ -17,9 +17,7 @@ namespace core
         none = 0 << 0,
         body = 1 << 0,
         render = 1 << 1,
-        placeholder = 1 << 2,
-        
-        // TODO: define more
+        clickable = 1 << 2,
     };
 
     /// @brief Defines an OR operator for component type enum
