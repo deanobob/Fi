@@ -8,8 +8,8 @@ namespace core
     uint32_t camera::m_next_id = 0;
 
     camera::camera(const utilities::rectangle& viewport)
-        : m_viewport{viewport}
-        , m_id{m_next_id++}
+        : m_id{m_next_id++}
+        , m_viewport{viewport}
     {
 
     }

@@ -70,7 +70,11 @@ namespace core
         if (p_message->get_type() == messages::message_sim_mouse_event::TYPE)
         {
             const auto p_sim_message = dynamic_cast<messages::message_sim_mouse_event*>(p_message);
-            for (auto& entity_id : m_quadtree.query({p_sim_message->get_x(), p_sim_message->get_y(), 1, 1}))
+            for (auto& entity_id : m_quadtree.query({
+                static_cast<float>(p_sim_message->get_x()),
+                static_cast<float>(p_sim_message->get_y()),
+                1.0f,
+                1.0f}))
             {
                 auto p_camera = std::make_unique<core::camera>();
                 p_camera->set_position({p_sim_message->get_x(), p_sim_message->get_y()});

@@ -22,6 +22,8 @@ namespace core
         {
             return camera_iter->second.get();
         }
+
+        return nullptr;
     }
 
     core::camera* camera_controller::get_camera_by_tag(const std::string& camera_tag) const
