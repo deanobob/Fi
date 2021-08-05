@@ -52,18 +52,18 @@ namespace ui
         m_is_left_button_pressed = false;
     }
 
-    void simulation_view::mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position)
+    void simulation_view::mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y)
     {
-        m_last_mouse_position = {x_position, y_position};
+        m_last_mouse_position = {position_x, position_y};
         m_is_left_button_pressed = true;
 
         auto message = messages::message_sim_mouse_event{
-            x_position + mp_camera->get_viewport().x,
-            y_position + mp_camera->get_viewport().y};
+            position_x + mp_camera->get_viewport().x - get_world_x(),
+            position_y + mp_camera->get_viewport().y - get_world_y()};
         mp_message_bus->send(&message);
     }
 
-    void simulation_view::mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position)
+    void simulation_view::mouse_button_released(const input::mouse_button mouse_button, int position_x, int position_y)
     {
         m_is_left_button_pressed = false;
     }

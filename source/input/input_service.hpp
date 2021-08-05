@@ -36,7 +36,7 @@ namespace input
         void draw(core::draw_manager* p_draw_manager) override;
 
         void shutdown() override;
-        
+
         void on_publish(core::message* p_message) override {};
 
         /// @brief Get the state of a joypad by id
@@ -59,8 +59,8 @@ namespace input
         void on_joystick_button_state_changed(int joypad_id, int button_id, bool pressed) override;
 
         void on_mouse_button_state_changed(const mouse_button mouse_button,
-                                           int x_position,
-                                           int y_position,
+                                           int position_x,
+                                           int position_y,
                                            bool pressed) override;
 
         void on_mouse_axis_changed(int position_x, int position_y, int position_z) override;

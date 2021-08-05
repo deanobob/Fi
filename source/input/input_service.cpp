@@ -81,16 +81,16 @@ namespace input
     }
 
     void input_service::on_mouse_button_state_changed(const mouse_button mouse_button,
-                                                      int x_position,
-                                                      int y_position,
+                                                      int position_x,
+                                                      int position_y,
                                                       bool pressed)
     {
         PLOG_DEBUG << "mouse button changed: "
                    << static_cast<int>(mouse_button)
                    << " "
-                   << x_position
+                   << position_x
                    << " "
-                   << y_position
+                   << position_y
                    << " " << pressed;
 
         m_mouse_state.set_button_state(mouse_button, pressed);

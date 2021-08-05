@@ -27,9 +27,9 @@ namespace ui
 
         void on_draw(core::draw_manager* p_draw_manager) override;
 
-        void mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position) override;
+        void mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y) override;
 
-        void mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position) override;
+        void mouse_button_released(const input::mouse_button mouse_button, int position_x, int position_y) override;
 
         void mouse_axis_changed(int position_x, int position_y, int position_z) override;
 

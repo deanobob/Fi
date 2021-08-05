@@ -62,19 +62,19 @@ namespace ui
     }
 
     void root::on_mouse_button_state_changed(const input::mouse_button mouse_button,
-                                             int x_position,
-                                             int y_position,
+                                             int position_x,
+                                             int position_y,
                                              bool pressed)
     {
         if (mp_focused)
         {
             if (pressed)
             {
-                mp_focused->mouse_button_pressed(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_pressed(mouse_button, position_x, position_y);
             }
             else
             {
-                mp_focused->mouse_button_released(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_released(mouse_button, position_x, position_y);
             }
         }
     }

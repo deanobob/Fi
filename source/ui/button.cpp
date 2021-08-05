@@ -30,7 +30,7 @@ namespace ui
         }
     }
 
-    void button::mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position)
+    void button::mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y)
     {
         if (mouse_button == input::mouse_button::left)
         {
@@ -38,7 +38,7 @@ namespace ui
         }
     }
 
-    void button::mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position)
+    void button::mouse_button_released(const input::mouse_button mouse_button, int position_x, int position_y)
     {
         if (mouse_button == input::mouse_button::left)
         {

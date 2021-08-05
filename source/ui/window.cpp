@@ -25,13 +25,13 @@ namespace ui
         p_draw_manager->draw_rectangle({x, y, w, h});
     }
 
-    void window::mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position)
+    void window::mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y)
     {
-        m_last_mouse_position = {x_position, y_position};
+        m_last_mouse_position = {position_x, position_y};
         m_is_left_button_pressed = true;
     }
 
-    void window::mouse_button_released(const input::mouse_button mouse_button, int x_position, int y_position)
+    void window::mouse_button_released(const input::mouse_button mouse_button, int position_x, int position_y)
     {
         m_is_left_button_pressed = false;
     }
