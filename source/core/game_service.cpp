@@ -4,7 +4,6 @@
 #include "game_service.hpp"
 #include "message_game_created.hpp"
 #include "message_new_game.hpp"
-#include "message_sim_mouse_event.hpp"
 
 namespace core
 {
@@ -15,7 +14,6 @@ namespace core
             this,
             {
                 messages::message_new_game::TYPE,
-                messages::message_sim_mouse_event::TYPE
             }
         );
     }
@@ -61,14 +59,6 @@ namespace core
             }
 
             create_simulation();
-        }
-        else if (p_message->get_type() == messages::message_sim_mouse_event::TYPE)
-        {
-            if (mp_simulation)
-            {
-                const auto p_sim_message = dynamic_cast<messages::message_sim_mouse_event*>(p_message);
-                mp_simulation->on_mouse_down(p_sim_message->get_x(), p_sim_message->get_y());
-            }
         }
     }
 

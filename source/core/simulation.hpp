@@ -6,6 +6,7 @@
 
 #include <map>
 #include "camera.hpp"
+#include "camera_controller.hpp"
 #include "entity_manager.hpp"
 #include "gametime.hpp"
 #include "subsystem.hpp"
@@ -55,11 +56,6 @@ namespace core
 
         void on_publish(core::message* p_message) override;
 
-        /// @brief A mouse down event has been received
-        /// @param position_x The mouse X position
-        /// @param position_y The mouse Y position
-        void on_mouse_down(int position_x, int position_y);
-
         private:
         /// @brief Container for subsystem
         std::list<std::unique_ptr<subsystem> > m_subsystems{};
@@ -67,10 +63,8 @@ namespace core
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
         /// @brief The entity manager
         std::unique_ptr<core::entity_manager> mp_entity_manager{nullptr};
-        /// @brief The simulation cameras
-        std::map<const uint32_t, std::unique_ptr<core::camera> > m_cameras{};
-        /// @brief Lookup map of cameras stored by tag name
-        std::map<const std::string, core::camera*> m_cameras_by_tag{};
+        /// @brief The camera controller
+        camera_controller m_camera_controller{};
     };
 } /// namespace core
 

@@ -4,7 +4,7 @@
 #define SPY_WINDOW_HPP
 
 #include "camera.hpp"
-#include "root.hpp"
+#include "node.hpp"
 #include "simulation_view.hpp"
 #include "subscriber.hpp"
 
@@ -14,7 +14,7 @@ namespace ui
     /// @brief The root of a basic spy_window UI element
     /// @details Contains and manages child elements
     class spy_window
-        : public root
+        : public node
         , public core::subscriber
     {
         public:

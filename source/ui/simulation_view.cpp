@@ -58,8 +58,8 @@ namespace ui
         m_is_left_button_pressed = true;
 
         auto message = messages::message_sim_mouse_event{
-            position_x + mp_camera->get_viewport().x - get_world_x(),
-            position_y + mp_camera->get_viewport().y - get_world_y()};
+            static_cast<int>(static_cast<float>(position_x) + mp_camera->get_viewport().x - get_world_x()),
+            static_cast<int>(static_cast<float>(position_y) + mp_camera->get_viewport().y - get_world_y())};
         mp_message_bus->send(&message);
     }
 

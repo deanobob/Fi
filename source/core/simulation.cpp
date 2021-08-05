@@ -3,7 +3,8 @@
 #include "plog/Log.h"
 #include "entity.hpp"
 #include "body_component.hpp"
-#include "message_open_window.hpp"
+#include "clickable_component.hpp"
+#include "clickable_subsystem.hpp"
 #include "rectangle.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
@@ -16,7 +17,15 @@ namespace core
         : mp_message_bus{p_message_bus}
         , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus.get())}
     {
-        add_subsystem(std::make_unique<render_subsystem>(mp_message_bus.get(), mp_entity_manager.get()));
+        add_subsystem(
+            std::make_unique<clickable_subsystem>(
+                mp_message_bus.get(),
+                mp_entity_manager.get(),
+                &m_camera_controller));
+        add_subsystem(
+            std::make_unique<render_subsystem>(
+                mp_message_bus.get(),
+                mp_entity_manager.get()));
     }
 
     simulation::~simulation()
@@ -37,20 +46,20 @@ namespace core
         }
 
         // Initialise main camera
-        auto p_camera = std::make_unique<core::camera>();
-        m_cameras_by_tag.emplace("main", p_camera.get());
-        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
+        m_camera_controller.add_camera(std::make_unique<core::camera>(), "main");
 
         // Initialise test entities
         {
             auto entity{std::make_unique<core::entity>()};
-            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{10, 10}, utilities::vector2{5, 5}));
+            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{10, 10}, utilities::vector2{50, 50}));
+            entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
         }
         {
             auto entity{std::make_unique<core::entity>()};
-            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{90, 10}, utilities::vector2{5, 5}));
+            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{90, 10}, utilities::vector2{50, 50}));
+            entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
         }
@@ -70,11 +79,11 @@ namespace core
 
     void simulation::draw()
     {
-        for (const auto& camera_iter : m_cameras)
+        for (const auto& p_camera : m_camera_controller.get_cameras())
         {
             for (auto& subsystem : m_subsystems)
             {
-                subsystem->draw(camera_iter.second.get());
+                subsystem->draw(p_camera);
             }
         }
     }
@@ -97,38 +106,16 @@ namespace core
 
     core::camera* simulation::get_camera(const uint32_t camera_id) const
     {
-        const auto camera_iter = m_cameras.find(camera_id);
-        if (camera_iter != m_cameras.end())
-        {
-            return camera_iter->second.get();
-        }
-
-        return nullptr;
+        return m_camera_controller.get_camera_by_id(camera_id);
     }
 
     core::camera* simulation::get_camera(const std::string& camera_tag) const
     {
-        const auto camera_iter = m_cameras_by_tag.find(camera_tag);
-        if (camera_iter != m_cameras_by_tag.end())
-        {
-            return camera_iter->second;
-        }
-
-        return nullptr;
+        return m_camera_controller.get_camera_by_tag(camera_tag);
     }
 
     void simulation::on_publish(core::message* p_message)
     {
 
-    }
-
-    void simulation::on_mouse_down(int position_x, int position_y)
-    {
-        auto p_camera = std::make_unique<core::camera>();
-        p_camera->set_position({position_x, position_y});
-
-        auto message = messages::message_open_window{p_camera.get()};
-        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
-        mp_message_bus->send(&message);
     }
 }
