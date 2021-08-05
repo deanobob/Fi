@@ -53,11 +53,6 @@ namespace ui
         {
             auto p_open_window_message = dynamic_cast<messages::message_open_window*>(p_message);
             auto info_window = std::make_unique<spy_window>(mp_message_bus, p_open_window_message->get_camera());
-            info_window->set_x(10);
-            info_window->set_y(10);
-            info_window->set_width(400);
-            info_window->set_height(200);
-
             mp_simulation_view->add_child(std::move(info_window));
         }
     }

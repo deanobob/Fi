@@ -12,6 +12,8 @@ namespace ui
         : root{}
         , mp_message_bus{p_message_bus}
     {
+        set_width(400);
+        set_height(200);
         set_padding_x(5);
         set_padding_y(5);
 
