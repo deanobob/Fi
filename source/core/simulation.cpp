@@ -3,6 +3,7 @@
 #include "plog/Log.h"
 #include "entity.hpp"
 #include "body_component.hpp"
+#include "message_open_window.hpp"
 #include "rectangle.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
@@ -11,8 +12,8 @@
 
 namespace core
 {
-    simulation::simulation()
-        : mp_message_bus{std::make_unique<message_bus>()}
+    simulation::simulation(core::message_bus* p_message_bus)
+        : mp_message_bus{p_message_bus}
         , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus.get())}
     {
         add_subsystem(std::make_unique<render_subsystem>(mp_message_bus.get(), mp_entity_manager.get()));
@@ -36,7 +37,9 @@ namespace core
         }
 
         // Initialise main camera
-        m_cameras.emplace("main", std::make_unique<core::camera>(utilities::rectangle{0, 0, 1920, 1080}));
+        auto p_camera = std::make_unique<core::camera>();
+        m_cameras_by_tag.emplace("main", p_camera.get());
+        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
 
         // Initialise test entities
         {
@@ -92,9 +95,9 @@ namespace core
         m_subsystems.push_back(std::move(subsystem));
     }
 
-    core::camera* simulation::get_camera(const std::string& camera_tag)
+    core::camera* simulation::get_camera(const uint32_t camera_id) const
     {
-        const auto camera_iter = m_cameras.find(camera_tag);
+        const auto camera_iter = m_cameras.find(camera_id);
         if (camera_iter != m_cameras.end())
         {
             return camera_iter->second.get();
@@ -103,8 +106,29 @@ namespace core
         return nullptr;
     }
 
+    core::camera* simulation::get_camera(const std::string& camera_tag) const
+    {
+        const auto camera_iter = m_cameras_by_tag.find(camera_tag);
+        if (camera_iter != m_cameras_by_tag.end())
+        {
+            return camera_iter->second;
+        }
+
+        return nullptr;
+    }
+
     void simulation::on_publish(core::message* p_message)
     {
 
+    }
+
+    void simulation::on_mouse_down(int position_x, int position_y)
+    {
+        auto p_camera = std::make_unique<core::camera>();
+        p_camera->set_position({position_x, position_y});
+
+        auto message = messages::message_open_window{p_camera.get()};
+        m_cameras.emplace(p_camera->get_id(), std::move(p_camera));
+        mp_message_bus->send(&message);
     }
 }

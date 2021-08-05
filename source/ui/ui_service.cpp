@@ -52,10 +52,14 @@ namespace ui
 
     void ui_service::draw(core::draw_manager* p_draw_manager)
     {
+        p_draw_manager->begin({0, 0, m_ui_width, m_ui_height});
+
         if (mp_root_node)
         {
             mp_root_node->draw(p_draw_manager);
         }
+
+        p_draw_manager->end();
     }
 
     void ui_service::shutdown()

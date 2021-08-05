@@ -231,6 +231,11 @@ namespace ui
         m_v_align = alignment;
     }
 
+    void node::set_focusable(bool focusable)
+    {
+        m_focusable = focusable;
+    }
+
     void node::focused()
     {
         m_focused = true;
@@ -290,6 +295,31 @@ namespace ui
             }
 
             return this;
+        }
+
+        return nullptr;
+    }
+
+    node* node::get_focusable_node_at(float x, float y)
+    {
+        if (m_focusable)
+        {
+            const auto world_pos_x = get_world_x();
+            const auto world_pos_y = get_world_y();
+            if (x > world_pos_x && x < world_pos_x + m_width &&
+                y > world_pos_y && y < world_pos_y + m_height)
+            {
+                for (auto& it : m_children)
+                {
+                    node* p_node = it->get_focusable_node_at(x, y);
+                    if (p_node != nullptr)
+                    {
+                        return p_node;
+                    }
+                }
+
+                return this;
+            }
         }
 
         return nullptr;

@@ -46,7 +46,7 @@ namespace core
         if (m_transforms.size() > 0)
         {
             // Inherit properties from parent
-            const auto& current_tranform{m_transforms.front()};
+            const auto& current_tranform{m_transforms.back()};
             current_scale = current_tranform.scale;
             current_rotation = current_tranform.rotation;
         }
@@ -94,11 +94,11 @@ namespace core
 
     void draw_manager::end()
     {
-        m_transforms.pop_front();
+        m_transforms.pop_back();
 
         if (m_transforms.size() > 0)
         {
-            const auto& transform = m_transforms.front();
+            const auto& transform = m_transforms.back();
             mp_render_controller->set_transform(transform);
         }
     }

@@ -62,26 +62,26 @@ namespace ui
     }
 
     void root::on_mouse_button_state_changed(const input::mouse_button mouse_button,
-                                             int x_position,
-                                             int y_position,
+                                             int position_x,
+                                             int position_y,
                                              bool pressed)
     {
         if (mp_focused)
         {
             if (pressed)
             {
-                mp_focused->mouse_button_pressed(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_pressed(mouse_button, position_x, position_y);
             }
             else
             {
-                mp_focused->mouse_button_released(mouse_button, x_position, y_position);
+                mp_focused->mouse_button_released(mouse_button, position_x, position_y);
             }
         }
     }
 
     void root::on_mouse_axis_changed(int position_x, int position_y, int position_z)
     {
-        const auto p_focused = get_node_at(static_cast<float>(position_x), static_cast<float>(position_y));
+        const auto p_focused = get_focusable_node_at(static_cast<float>(position_x), static_cast<float>(position_y));
         if (p_focused != mp_focused)
         {
             // New element is focused

@@ -14,8 +14,7 @@ namespace ui
 
     void button_open_window::on_press()
     {
-        auto message = messages::message_open_window();
-        mp_message_bus->send(&message);
+
     }
 
     void button_open_window::on_release()

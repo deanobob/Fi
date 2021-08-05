@@ -33,12 +33,12 @@ namespace input
 
         /// @brief Mouse button state changed
         /// @param mouse_button The mouse button whose state changed
-        /// @param x_position The mouse x position
-        /// @param y_position The mouse y position
+        /// @param position_x The mouse x position
+        /// @param position_y The mouse y position
         /// @param pressed The mouse button state
         virtual void on_mouse_button_state_changed(const input::mouse_button mouse_button,
-                                                   int x_position,
-                                                   int y_position,
+                                                   int position_x,
+                                                   int position_y,
                                                    bool pressed) = 0;
 
         /// @brief Mouse axis changed

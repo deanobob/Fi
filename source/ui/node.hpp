@@ -135,6 +135,10 @@ namespace ui
         /// @param alignment The vertical alignment
         void set_vertical_alignment(vertical_alignment alignment);
 
+        /// @brief Set whether the node can have focus
+        /// @param focusable True if focusable, else False
+        void set_focusable(bool focusable = true);
+
         /// @brief Called when the node is focused
         void focused();
 
@@ -155,17 +159,17 @@ namespace ui
 
         /// @brief Called on the event a mouse button is pressed
         /// @param mouse_button The mouse button
-        /// @param x_position The x coordinate
-        /// @param y_position The y coordinate
-        virtual void mouse_button_pressed(const input::mouse_button mouse_button, int x_position, int y_position) {};
+        /// @param position_x The x coordinate
+        /// @param position_y The y coordinate
+        virtual void mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y) {};
 
         /// @brief Called on the event a mouse button is released
         /// @param mouse_button The mouse button
-        /// @param x_position The x coordinate
-        /// @param y_position The y coordinate
+        /// @param position_x The x coordinate
+        /// @param position_y The y coordinate
         virtual void mouse_button_released(const input::mouse_button mouse_button,
-                                           int x_position,
-                                           int y_position) {};
+                                           int position_x,
+                                           int position_y) {};
 
         /// @brief Called on the event the mouse is moved
         /// @param position_x The mouse x coordinate
@@ -203,15 +207,24 @@ namespace ui
         /// @param p_node The parent node
         virtual void set_parent(node* p_node);
 
-        /// @brief Get the node at object
+        /// @brief Get the node at given coordinates
         /// @param x The x coordinate
         /// @param y The y coordinate
         /// @return node* The node at the given coordinates
         node* get_node_at(float x, float y);
 
+        /// @brief Get the focusable node at given coordinates
+        /// @param x The x coordinate
+        /// @param y The y coordinate
+        /// @return node* The node at the given coordinates
+        node* get_focusable_node_at(float x, float y);
+
         private:
         /// @brief Flag indicating if the node needs to be realigned / measured
         bool m_invalid{true};
+
+        /// @brief Flag indicating if the node is focusable
+        bool m_focusable{true};
 
         /// @brief Flag indicating if node has focus
         bool m_focused{false};

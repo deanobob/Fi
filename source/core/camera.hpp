@@ -6,6 +6,7 @@
 #define CAMERA_HPP
 
 #include <list>
+#include <stdlib.h>
 #include <tuple>
 #include "rectangle.hpp"
 
@@ -21,7 +22,19 @@ namespace core
         public:
         /// @brief Construct a new camera object
         /// @param viewport The camera viewport
-        camera(const utilities::rectangle& viewport);
+        camera(const utilities::rectangle& viewport = utilities::rectangle::EMPTY);
+
+        /// @brief Get the camera unique identifier
+        /// @return The unique camera identifier
+        uint32_t get_id() const;
+
+        /// @brief Set the position of the camera
+        /// @param position The new position of the camera
+        void set_position(utilities::vector2 position);
+
+        /// @brief Set the dimensions of the camera
+        /// @param size The dimensions of the camera
+        void set_dimensions(utilities::vector2 size);
 
         /// @brief Move the camera
         /// @param offset The value added to the current position to move the camera
@@ -43,6 +56,11 @@ namespace core
         void clear();
 
         private:
+        /// @brief Stores the next unique ID for a camera
+        static uint32_t m_next_id;
+
+        /// @brief The unique ID of the camera
+        const unsigned int m_id;
         /// @brief The camera viewport
         utilities::rectangle m_viewport{};
         /// @brief List of renderables within the camera viewport

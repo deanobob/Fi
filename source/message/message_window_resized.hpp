@@ -1,4 +1,4 @@
-/// @file message_window_resize.hpp
+/// @file message_window_resized.hpp
 /// @brief Message that notifies the game that the window has been resized
 
 #ifndef MESSAGE_RESUME_HPP

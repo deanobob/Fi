@@ -20,7 +20,8 @@ namespace core
     {
         public:
         /// @brief Constructor
-        simulation();
+        /// @param p_message_bus The game message bus
+        simulation(core::message_bus* p_message_bus);
         /// @brief Default destructor
         virtual ~simulation();
 
@@ -42,12 +43,22 @@ namespace core
         /// @param subsystem The subsystem to add
         void add_subsystem(std::unique_ptr<subsystem> subsystem);
 
+        /// @brief Get a camera by id
+        /// @param camera_id The camera ID
+        /// @return Pointer to the camera or nullptr if not found
+        core::camera* get_camera(const uint32_t camera_id) const;
+
         /// @brief Get a camera by tag
         /// @param camera_tag The camera tag
         /// @return Pointer to the camera or nullptr if not found
-        core::camera* get_camera(const std::string& camera_tag);
+        core::camera* get_camera(const std::string& camera_tag) const;
 
         void on_publish(core::message* p_message) override;
+
+        /// @brief A mouse down event has been received
+        /// @param position_x The mouse X position
+        /// @param position_y The mouse Y position
+        void on_mouse_down(int position_x, int position_y);
 
         private:
         /// @brief Container for subsystem
@@ -56,8 +67,10 @@ namespace core
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
         /// @brief The entity manager
         std::unique_ptr<core::entity_manager> mp_entity_manager{nullptr};
-        /// @brief The simulation cameras, stored by tag name
-        std::map<const std::string, std::unique_ptr<core::camera> > m_cameras{};
+        /// @brief The simulation cameras
+        std::map<const uint32_t, std::unique_ptr<core::camera> > m_cameras{};
+        /// @brief Lookup map of cameras stored by tag name
+        std::map<const std::string, core::camera*> m_cameras_by_tag{};
     };
 } /// namespace core
 

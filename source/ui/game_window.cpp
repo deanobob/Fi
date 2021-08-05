@@ -4,7 +4,7 @@
 #include "button_open_window.hpp"
 #include "game_window.hpp"
 #include "simulation_view.hpp"
-#include "window.hpp"
+#include "spy_window.hpp"
 
 namespace ui
 {
@@ -12,7 +12,7 @@ namespace ui
         : root{}
         , mp_message_bus{p_message_bus}
     {
-        auto sim_view = std::make_unique<simulation_view>(p_camera);
+        auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
 
         auto test_button = std::make_unique<button_open_window>(mp_message_bus);
         test_button->set_width(200);
@@ -51,12 +51,8 @@ namespace ui
     {
         if (p_message->get_type() == messages::message_open_window::TYPE)
         {
-            auto info_window = std::make_unique<window>();
-            info_window->set_x(10);
-            info_window->set_y(10);
-            info_window->set_width(500);
-            info_window->set_height(300);
-
+            auto p_open_window_message = dynamic_cast<messages::message_open_window*>(p_message);
+            auto info_window = std::make_unique<spy_window>(mp_message_bus, p_open_window_message->get_camera());
             mp_simulation_view->add_child(std::move(info_window));
         }
     }
