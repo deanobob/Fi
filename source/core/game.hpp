@@ -65,7 +65,7 @@ namespace core
         void update();
 
         /// @brief Draw called on every frame to update drawables
-        void draw();
+        void draw(double delta);
 
         /// @brief Shutdown the game
         void shutdown();

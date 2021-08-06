@@ -32,6 +32,8 @@ namespace core
         /// @return The body location coordinates as a vector
         const utilities::vector2& get_position() const;
 
+        const utilities::vector2 get_interpolated_position(double delta) const;
+
         /// @brief Move the body by a given step
         /// @param step The step as a vector
         void move(const utilities::vector2& step);
@@ -42,7 +44,9 @@ namespace core
 
         private:
         /// @brief The body location coordinates (x and y)
-        utilities::vector2 m_position;
+        utilities::vector2 m_current_position;
+        /// @brief The body location coordinates (x and y)
+        utilities::vector2 m_previous_position;
         /// @brief The body size dimensions (width and height)
         utilities::vector2 m_size;
     };

@@ -44,6 +44,8 @@ namespace core
     game::~game()
     {
         m_services.clear();
+
+        mp_message_bus.reset(nullptr);
     }
 
     void game::run()
@@ -82,7 +84,7 @@ namespace core
                 // Pass remainder of frame time to draw manager to allow interpolation of
                 // entity positions between previous and current state
                 mp_draw_manager->clear();
-                draw();
+                draw(accumulator / dt);
                 mp_draw_manager->flip(); //accumulator / dt);
             }
 
@@ -160,12 +162,13 @@ namespace core
         }
     }
 
-    void game::draw()
+    void game::draw(double delta)
     {
+        PLOG_DEBUG << delta;
         for (auto& service_iter : m_services)
         {
             const auto& service = service_iter.get();
-            service->draw(mp_draw_manager.get());
+            service->draw(mp_draw_manager.get(), delta);
         }
     }
 

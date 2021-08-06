@@ -5,6 +5,8 @@
 #include "body_component.hpp"
 #include "clickable_component.hpp"
 #include "clickable_subsystem.hpp"
+#include "physics_component.hpp"
+#include "physics_subsystem.hpp"
 #include "rectangle.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
@@ -22,6 +24,10 @@ namespace core
                 mp_message_bus.get(),
                 mp_entity_manager.get(),
                 &m_camera_controller));
+        add_subsystem(
+            std::make_unique<physics_subsystem>(
+                mp_message_bus.get(),
+                mp_entity_manager.get()));
         add_subsystem(
             std::make_unique<render_subsystem>(
                 mp_message_bus.get(),
@@ -52,6 +58,7 @@ namespace core
         {
             auto entity{std::make_unique<core::entity>()};
             entity->add_component(std::make_unique<core::body_component>(utilities::vector2{10, 10}, utilities::vector2{50, 50}));
+            entity->add_component(std::make_unique<core::physics_component>(utilities::vector2{50, 0}));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
@@ -59,6 +66,7 @@ namespace core
         {
             auto entity{std::make_unique<core::entity>()};
             entity->add_component(std::make_unique<core::body_component>(utilities::vector2{90, 10}, utilities::vector2{50, 50}));
+            entity->add_component(std::make_unique<core::physics_component>(utilities::vector2{50, 50}));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
@@ -77,13 +85,13 @@ namespace core
         }
     }
 
-    void simulation::draw()
+    void simulation::draw(double delta)
     {
         for (const auto& p_camera : m_camera_controller.get_cameras())
         {
             for (auto& subsystem : m_subsystems)
             {
-                subsystem->draw(p_camera);
+                subsystem->draw(p_camera, delta);
             }
         }
     }

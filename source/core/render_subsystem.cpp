@@ -29,7 +29,7 @@ namespace core
 
     }
 
-    void render_subsystem::draw(camera* p_camera)
+    void render_subsystem::draw(camera* p_camera, double delta)
     {
         // Clear last frame renderables as they should have been rendered.
         p_camera->clear();
@@ -41,9 +41,12 @@ namespace core
             if (p_entity)
             {
                 const auto& p_body = p_entity->get_component<body_component>(component_type::body);
-                const auto& position = p_body->get_position();
+                const auto& position = p_body->get_interpolated_position(delta);
                 const auto& size = p_body->get_size();
                 p_camera->add_renderable({position.x, position.y, size.x, size.y});
+                
+                const auto& position2 = p_body->get_interpolated_position(delta);
+                p_camera->add_renderable({position2.x, position2.y - 100, size.x, size.y});
             }
         }
     }

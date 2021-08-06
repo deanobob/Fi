@@ -41,7 +41,7 @@ namespace core
 
     }
 
-    void clickable_subsystem::draw(camera* p_camera)
+    void clickable_subsystem::draw(camera* p_camera, double delta)
     {
 
     }

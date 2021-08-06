@@ -1,8 +1,8 @@
-/// @file clickable_subsystem.hpp
-/// @brief The component service base class
+/// @file physics_subsystem.hpp
+/// @brief The physics subsystem class
 
-#ifndef CLICKABLE_SUBSYSTEM_HPP
-#define CLICKABLE_SUBSYSTEM_HPP
+#ifndef PHYSICS_SUBSYSTEM_HPP
+#define PHYSICS_SUBSYSTEM_HPP
 
 #include "camera_controller.hpp"
 #include "component_subsystem.hpp"
@@ -14,21 +14,19 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Base class for component subsystems
-    class clickable_subsystem
+    /// @brief Physics subsystem managing movement of physics components
+    class physics_subsystem
         : public core::component_subsystem
     {
         public:
         /// @brief Constructor
         /// @param p_message_bus The game message bus
         /// @param p_entity_manager The game entity manager
-        /// @param p_camera_controller The camera controller
-        clickable_subsystem(
+        physics_subsystem(
             core::message_bus* p_message_bus,
-            core::entity_manager* p_entity_manager,
-            core::camera_controller* p_camera_controller);
+            core::entity_manager* p_entity_manager);
         /// @brief Default destructor
-        virtual ~clickable_subsystem();
+        virtual ~physics_subsystem();
 
         bool initialise() override;
 
@@ -44,14 +42,10 @@ namespace core
 
         void on_entity_removed(entity* p_entity) override;
 
-        void on_publish(message* p_message) override;
-
         private:
-        /// @brief Pointer to the camera controller instance
-        core::camera_controller* mp_camera_controller{nullptr};
         /// @brief Quadtree object containing the locations of all entities
         utilities::quadtree m_quadtree;
     };
 } /// namespace core
 
-#endif /// CLICKABLE_SUBSYSTEM_HPP
+#endif /// PHYSICS_SUBSYSTEM_HPP

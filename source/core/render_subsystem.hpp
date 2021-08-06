@@ -31,7 +31,7 @@ namespace core
 
         void update(const utilities::gametime& gametime) override;
 
-        void draw(camera* p_camera) override;
+        void draw(camera* p_camera, double delta) override;
 
         void shutdown() override;
 
