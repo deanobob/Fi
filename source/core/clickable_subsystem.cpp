@@ -1,10 +1,10 @@
 /// @file clickable_subsystem.cpp
 
 #include "plog/Log.h"
-#include "camera.hpp"
 #include "body_component.hpp"
 #include "component_type.hpp"
 #include "clickable_subsystem.hpp"
+#include "follow_camera.hpp"
 #include "message_open_window.hpp"
 #include "message_sim_mouse_event.hpp"
 
@@ -62,12 +62,16 @@ namespace core
                 1.0f};
             for (auto& entity_id : get_entities_in_region(mouse_point))
             {
-                auto p_camera = std::make_unique<core::camera>();
-                p_camera->set_position({p_sim_message->get_x(), p_sim_message->get_y()});
+                auto p_entity = get_entity_manager()->get(entity_id);
+                if (p_entity)
+                {
+                    auto p_camera = std::make_unique<core::follow_camera>(p_entity);
+                    p_camera->set_position({p_sim_message->get_x(), p_sim_message->get_y()});
 
-                auto message = messages::message_open_window{p_camera.get()};
-                mp_camera_controller->add_camera(std::move(p_camera));
-                mp_message_bus->send(&message);
+                    auto message = messages::message_open_window{p_camera.get()};
+                    mp_camera_controller->add_camera(std::move(p_camera));
+                    mp_message_bus->send(&message);
+                }
             }
         }
         else

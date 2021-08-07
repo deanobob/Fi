@@ -1,5 +1,5 @@
 /// @file clickable_subsystem.hpp
-/// @brief The component service base class
+/// @brief Subsystem that manages user interaction with clickable entities within the simulation 
 
 #ifndef CLICKABLE_SUBSYSTEM_HPP
 #define CLICKABLE_SUBSYSTEM_HPP

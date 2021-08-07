@@ -1,5 +1,5 @@
 /// @file render_subsystem.hpp
-/// @brief The component service base class
+/// @brief Subsystem that manages rendering of renderable entities
 
 #ifndef RENDER_SUBSYSTEM_HPP
 #define RENDER_SUBSYSTEM_HPP

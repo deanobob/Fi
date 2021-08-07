@@ -34,10 +34,13 @@ namespace core
         // Register for position changed events from the entity
         p_entity->position_changed_event.register_handler(this);
         
-        const auto& p_body = p_entity->get_component<body_component>(component_type::body);
-        const auto& position = p_body->get_position();
-        const auto& size = p_body->get_size();
-        m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+        const auto p_body = p_entity->get_component<body_component>(component_type::body);
+        if (p_body != nullptr)
+        {
+            const auto& position = p_body->get_position();
+            const auto& size = p_body->get_size();
+            m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+        }
     }
 
     void quadtree_subsystem::on_entity_removed(entity* p_entity)
@@ -55,11 +58,14 @@ namespace core
             const auto entity_args = dynamic_cast<entity_event_args*>(p_event_args);
             auto p_entity = entity_args->get_entity();
 
-            const auto& p_body = p_entity->get_component<body_component>(component_type::body);
-            const auto& position = p_body->get_position();
-            const auto& size = p_body->get_size();
-            m_quadtree.remove(p_entity->get_id());
-            m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+            const auto p_body = p_entity->get_component<body_component>(component_type::body);
+            if (p_body != nullptr)
+            {
+                const auto& position = p_body->get_position();
+                const auto& size = p_body->get_size();
+                m_quadtree.remove(p_entity->get_id());
+                m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+            }
         }
     }
 }

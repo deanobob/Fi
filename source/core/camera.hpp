@@ -8,6 +8,7 @@
 #include <list>
 #include <stdlib.h>
 #include <tuple>
+#include "gametime.hpp"
 #include "rectangle.hpp"
 
 /// @namespace core namespace
@@ -51,6 +52,9 @@ namespace core
         /// @brief Get renderables
         /// @return The renderable list
         const std::list<renderable>& get_renderables() const;
+
+        /// @brief Called on every update tick allowing the camera to update
+        virtual void update(const utilities::gametime& p_gametime);
 
         /// @brief Clear renderables
         void clear();

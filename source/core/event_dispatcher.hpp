@@ -1,5 +1,5 @@
 /// @file event_dispatcher.hpp
-/// @brief Event args base class
+/// @brief Event dispatcher base class
 
 #ifndef EVENT_DISPATCHER_HPP
 #define EVENT_DISPATCHER_HPP
@@ -19,9 +19,7 @@ namespace core
         public:
         event_dispatcher(const event_type& event_type)
             : mp_event_type{event_type}
-        {
-            
-        }
+        {}
 
         /// @brief Destroy the event dispatcher object
         virtual ~event_dispatcher() {};

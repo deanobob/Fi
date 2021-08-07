@@ -83,6 +83,11 @@ namespace core
         {
             subsystem->update(gametime);
         }
+
+        for (auto& p_camera : m_camera_controller.get_cameras())
+        {
+            p_camera->update(gametime);
+        }
     }
 
     void simulation::draw(double delta)

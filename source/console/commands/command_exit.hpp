@@ -1,5 +1,5 @@
 /// @file command_exit.hpp
-/// @brief The command_exit base class
+/// @brief The command_exit class
 
 #ifndef COMMAND_EXIT_HPP
 #define COMMAND_EXIT_HPP

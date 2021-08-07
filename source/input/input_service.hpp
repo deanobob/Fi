@@ -1,5 +1,5 @@
 /// @file input_service.hpp
-/// @brief The input_service base class
+/// @brief The input_service class
 
 #ifndef INPUT_MANAGER_HPP
 #define INPUT_MANAGER_HPP

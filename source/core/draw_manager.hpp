@@ -1,5 +1,5 @@
 /// @file draw_manager.hpp
-/// @brief The draw_manager base class
+/// @brief The draw_manager class
 
 #ifndef DRAW_MANAGER_HPP
 #define DRAW_MANAGER_HPP

@@ -39,13 +39,10 @@ namespace core
             auto p_entity = get_entity_manager()->get(entity_id);
             if (p_entity)
             {
-                const auto& p_body = p_entity->get_component<body_component>(component_type::body);
+                const auto p_body = p_entity->get_component<body_component>(component_type::body);
                 const auto& position = p_body->get_interpolated_position(delta);
                 const auto& size = p_body->get_size();
                 p_camera->add_renderable({position.x, position.y, size.x, size.y});
-                
-                const auto& position2 = p_body->get_interpolated_position(delta);
-                p_camera->add_renderable({position2.x, position2.y - 100, size.x, size.y});
             }
         }
     }

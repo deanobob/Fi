@@ -9,7 +9,7 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @brief The event handler base class
+    /// @brief The event args base class
     class event_args
     {
         public:
