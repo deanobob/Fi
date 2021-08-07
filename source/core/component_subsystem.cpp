@@ -41,7 +41,7 @@ namespace core
             {
                 m_entities.push_back(p_entity);
                 on_entity_added(p_entity);
-                PLOG_DEBUG << "Entity added";
+                PLOG_DEBUG << "Entity added: " << p_entity->get_id();
             }
         }
         else if (p_message->get_type() == messages::message_entity_removed::TYPE)
@@ -51,7 +51,7 @@ namespace core
             {
                 on_entity_removed(p_entity);
                 m_entities.remove(p_entity);
-                PLOG_DEBUG << "Entity removed";
+                PLOG_DEBUG << "Entity removed: " << p_entity->get_id();
             }
         }
         else if (p_message->get_type() == messages::message_entities_cleared::TYPE)

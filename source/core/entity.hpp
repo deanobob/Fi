@@ -11,6 +11,7 @@
 #include <string>
 #include "component.hpp"
 #include "component_type.hpp"
+#include "event_dispatcher.hpp"
 #include "gametime.hpp"
 
 /// @namespace core namespace
@@ -23,6 +24,9 @@ namespace core
     class entity
     {
         public:
+        /// @brief Event dispatcher that notifies registered event handlers the entity position has changed
+        event_dispatcher position_changed_event{"ENTITY_POSITION_CHANGED"};
+
         /// @brief Constructor
         /// @param tag The entity tag
         entity(std::string tag = "");
