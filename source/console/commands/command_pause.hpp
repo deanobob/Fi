@@ -1,5 +1,5 @@
 /// @file command_pause.hpp
-/// @brief The command_pause base class
+/// @brief The command_pause class
 
 #ifndef COMMAND_PAUSE_HPP
 #define COMMAND_PAUSE_HPP

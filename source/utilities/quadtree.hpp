@@ -48,7 +48,7 @@ namespace utilities
         ///
         /// @param region The region to query
         /// @return The entity IDs of all entities within the given region
-        std::list<unsigned int> query(const rectangle& region);
+        std::list<unsigned int> query(const rectangle& region) const;
 
         /// @brief Remove the entity from the quadtree
         /// @param entity_id The entity identifier

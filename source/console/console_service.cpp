@@ -47,7 +47,7 @@ namespace console
         }
     }
 
-    void console_service::draw(core::draw_manager* p_draw_manager)
+    void console_service::draw(core::draw_manager* p_draw_manager, double delta)
     {
         
     }

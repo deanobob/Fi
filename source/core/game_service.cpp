@@ -36,11 +36,11 @@ namespace core
         }
     }
 
-    void game_service::draw(core::draw_manager* p_draw_manager)
+    void game_service::draw(core::draw_manager* p_draw_manager, double delta)
     {
         if (mp_simulation)
         {
-            mp_simulation->draw();
+            mp_simulation->draw(delta);
         }
     }
 

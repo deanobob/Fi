@@ -35,7 +35,7 @@ namespace core
         void update(const utilities::gametime& gametime);
 
         /// @brief Called on every frame render
-        void draw();
+        void draw(double delta);
 
         /// @brief Shutdown the simulation
         void shutdown();

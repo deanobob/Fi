@@ -1,5 +1,5 @@
 /// @file command_resume.hpp
-/// @brief The command_resume base class
+/// @brief The command_resume class
 
 #ifndef COMMAND_RESUME_HPP
 #define COMMAND_RESUME_HPP

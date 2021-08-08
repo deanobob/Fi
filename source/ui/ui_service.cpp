@@ -50,7 +50,7 @@ namespace ui
         }
     }
 
-    void ui_service::draw(core::draw_manager* p_draw_manager)
+    void ui_service::draw(core::draw_manager* p_draw_manager, double delta)
     {
         p_draw_manager->begin({0, 0, m_ui_width, m_ui_height});
 

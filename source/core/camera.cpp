@@ -59,6 +59,11 @@ namespace core
         return m_renderables;
     }
 
+    void camera::update(const utilities::gametime& p_gametime)
+    {
+        
+    }
+
     void camera::clear()
     {
         m_renderables.clear();

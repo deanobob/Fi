@@ -29,7 +29,7 @@ namespace ui
 
         void update(const utilities::gametime& gametime) override;
 
-        void draw(core::draw_manager* p_draw_manager) override;
+        void draw(core::draw_manager* p_draw_manager, double delta) override;
 
         void shutdown() override;
 

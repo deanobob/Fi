@@ -45,30 +45,30 @@ namespace utilities
         return rc;
     }
 
-    std::list<unsigned int> quadtree::query(const rectangle& rectangle)
+    std::list<unsigned int> quadtree::query(const rectangle& rectangle) const
     {
-    std::list<unsigned int> result{};
+        std::list<unsigned int> result{};
 
-    if (m_boundary.intersects(rectangle))
-    {
-        for (const auto& leaf : m_leaf_list)
+        if (m_boundary.intersects(rectangle))
         {
-            if (leaf.m_boundary.intersects(rectangle))
+            for (const auto& leaf : m_leaf_list)
             {
-                result.push_back(leaf.m_id);
+                if (leaf.m_boundary.intersects(rectangle))
+                {
+                    result.push_back(leaf.m_id);
+                }
+            }
+
+            if (mp_north_east != nullptr)
+            {
+                result.splice(result.end(), mp_north_east->query(rectangle));
+                result.splice(result.end(), mp_north_west->query(rectangle));
+                result.splice(result.end(), mp_south_east->query(rectangle));
+                result.splice(result.end(), mp_south_west->query(rectangle));
             }
         }
 
-        if (mp_north_east != nullptr)
-        {
-            result.splice(result.end(), mp_north_east->query(rectangle));
-            result.splice(result.end(), mp_north_west->query(rectangle));
-            result.splice(result.end(), mp_south_east->query(rectangle));
-            result.splice(result.end(), mp_south_west->query(rectangle));
-        }
-    }
-
-    return result;
+        return result;
     }
 
     bool quadtree::remove(unsigned int entity_id)

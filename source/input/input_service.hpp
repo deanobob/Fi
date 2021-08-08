@@ -1,5 +1,5 @@
 /// @file input_service.hpp
-/// @brief The input_service base class
+/// @brief The input_service class
 
 #ifndef INPUT_MANAGER_HPP
 #define INPUT_MANAGER_HPP
@@ -33,7 +33,7 @@ namespace input
 
         void update(const utilities::gametime& gametime) override;
 
-        void draw(core::draw_manager* p_draw_manager) override;
+        void draw(core::draw_manager* p_draw_manager, double delta) override;
 
         void shutdown() override;
 
