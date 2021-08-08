@@ -5,8 +5,8 @@
 #include "body_component.hpp"
 #include "clickable_component.hpp"
 #include "clickable_subsystem.hpp"
-#include "physics_component.hpp"
-#include "physics_subsystem.hpp"
+#include "movement_component.hpp"
+#include "movement_subsystem.hpp"
 #include "rectangle.hpp"
 #include "render_component.hpp"
 #include "render_subsystem.hpp"
@@ -25,7 +25,7 @@ namespace core
                 mp_entity_manager.get(),
                 &m_camera_controller));
         add_subsystem(
-            std::make_unique<physics_subsystem>(
+            std::make_unique<movement_subsystem>(
                 mp_message_bus,
                 mp_entity_manager.get()));
         add_subsystem(
@@ -42,7 +42,6 @@ namespace core
 
     bool simulation::initialise()
     {
-        PLOG_DEBUG << "Initialised simulation";
         mp_entity_manager->initialise();
 
         for (auto& subsystem : m_subsystems)
@@ -51,26 +50,23 @@ namespace core
         }
 
         // Initialise main camera
-        m_camera_controller.add_camera(std::make_unique<core::camera>(), "main");
+        m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{5000, 5000}), "main");
 
         // Initialise test entities
+        for (int i = 0; i < 10; i++)
         {
             auto entity{std::make_unique<core::entity>()};
-            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{10, 10}, utilities::vector2{50, 50}));
-            entity->add_component(std::make_unique<core::physics_component>(utilities::vector2{50, 0}));
-            entity->add_component(std::make_unique<core::clickable_component>());
-            entity->add_component(std::make_unique<core::render_component>());
-            mp_entity_manager->put(std::move(entity));
-        }
-        {
-            auto entity{std::make_unique<core::entity>()};
-            entity->add_component(std::make_unique<core::body_component>(utilities::vector2{90, 10}, utilities::vector2{50, 50}));
-            entity->add_component(std::make_unique<core::physics_component>(utilities::vector2{50, 50}));
+            entity->add_component(std::make_unique<core::body_component>(
+                utilities::vector2{5000, 5000},
+                utilities::vector2{50, 50},
+                rand() % 360));
+            entity->add_component(std::make_unique<core::movement_component>((rand() % 300) - 150));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));
         }
 
+        PLOG_DEBUG << "Initialised simulation";
         return true;
     }
 

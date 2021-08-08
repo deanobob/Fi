@@ -18,7 +18,7 @@ namespace core
         body = 1 << 0,
         render = 1 << 1,
         clickable = 1 << 2,
-        physics = 1 << 3,
+        movement = 1 << 3,
     };
 
     /// @brief Defines an OR operator for component type enum

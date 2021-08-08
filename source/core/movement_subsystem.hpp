@@ -1,8 +1,8 @@
-/// @file physics_subsystem.hpp
-/// @brief The physics subsystem class
+/// @file movement_subsystem.hpp
+/// @brief The movement subsystem class
 
-#ifndef PHYSICS_SUBSYSTEM_HPP
-#define PHYSICS_SUBSYSTEM_HPP
+#ifndef MOVEMENT_SUBSYSTEM_HPP
+#define MOVEMENT_SUBSYSTEM_HPP
 
 #include "camera_controller.hpp"
 #include "component_subsystem.hpp"
@@ -13,19 +13,19 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Physics subsystem managing movement of physics components
-    class physics_subsystem
+    /// @brief Physics subsystem managing movement of movement components
+    class movement_subsystem
         : public core::component_subsystem
     {
         public:
         /// @brief Constructor
         /// @param p_message_bus The game message bus
         /// @param p_entity_manager The game entity manager
-        physics_subsystem(
+        movement_subsystem(
             core::message_bus* p_message_bus,
             core::entity_manager* p_entity_manager);
         /// @brief Default destructor
-        virtual ~physics_subsystem();
+        virtual ~movement_subsystem();
 
         bool initialise() override;
 
@@ -39,4 +39,4 @@ namespace core
     };
 } /// namespace core
 
-#endif /// PHYSICS_SUBSYSTEM_HPP
+#endif /// MOVEMENT_SUBSYSTEM_HPP

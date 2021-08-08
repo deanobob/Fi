@@ -4,7 +4,6 @@
 #include "body_component.hpp"
 #include "component_type.hpp"
 #include "entity_event_args.hpp"
-#include "physics_component.hpp"
 #include "quadtree_subsystem.hpp"
 
 namespace core
@@ -16,7 +15,7 @@ namespace core
         : component_subsystem{p_message_bus, p_entity_manager, component_mask}
         , m_quadtree{utilities::rectangle{0, 0, 10000, 10000}} //TODO: determine world size
     {
-        
+
     }
 
     quadtree_subsystem::~quadtree_subsystem()
@@ -33,7 +32,7 @@ namespace core
     {
         // Register for position changed events from the entity
         p_entity->position_changed_event.register_handler(this);
-        
+
         const auto p_body = p_entity->get_component<body_component>(component_type::body);
         if (p_body != nullptr)
         {
@@ -47,7 +46,7 @@ namespace core
     {
         // Remove registration for position events
         p_entity->position_changed_event.unregister_handler(this);
-        
+
         m_quadtree.remove(p_entity);
     }
 

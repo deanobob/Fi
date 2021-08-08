@@ -7,9 +7,9 @@ namespace core
 {
     uint32_t camera::m_next_id = 0;
 
-    camera::camera(const utilities::rectangle& viewport)
+    camera::camera(const utilities::vector2& position)
         : m_id{m_next_id++}
-        , m_viewport{viewport}
+        , m_viewport{utilities::rectangle{position.x, position.y, 0, 0}}
     {
 
     }
@@ -19,13 +19,13 @@ namespace core
         return m_id;
     }
 
-    void camera::set_position(utilities::vector2 position)
+    void camera::set_position(const utilities::vector2& position)
     {
         m_viewport.x = position.x - (m_viewport.width / 2.0f);
         m_viewport.y = position.y - (m_viewport.height / 2.0f);
     }
 
-    void camera::set_dimensions(utilities::vector2 size)
+    void camera::set_dimensions(const utilities::vector2& size)
     {
         // Adjust viewport position based on difference between previous and new dimensions
         auto x_diff = m_viewport.width - size.x;
@@ -38,7 +38,7 @@ namespace core
         m_viewport.height = size.y;
     }
 
-    void camera::move(utilities::vector2 offset)
+    void camera::move(const utilities::vector2& offset)
     {
         m_viewport.x += offset.x;
         m_viewport.y += offset.y;
@@ -61,7 +61,7 @@ namespace core
 
     void camera::update(const utilities::gametime& p_gametime)
     {
-        
+
     }
 
     void camera::clear()

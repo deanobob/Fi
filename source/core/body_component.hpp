@@ -6,6 +6,7 @@
 
 #include "component.hpp"
 #include "component_type.hpp"
+#include "math.hpp"
 #include "vector2.hpp"
 
 /// @namespace core namespace
@@ -19,7 +20,8 @@ namespace core
         /// @brief Construct a new body component object
         /// @param position The body location coordinates (x, y)
         /// @param size The body component dimensions (width, height)
-        body_component(const utilities::vector2& position, const utilities::vector2& size);
+        /// @param rotation The rotation of the body in degrees
+        body_component(const utilities::vector2& position, const utilities::vector2& size, double rotation = 0.0);
 
         /// @brief Get the body component type
         /// @return The body component type
@@ -28,14 +30,29 @@ namespace core
             return component_type::body;
         }
 
-        /// @brief Get the body coordinates //TODO: Probably should move to a different structure
+        /// @brief Get the body coordinates
         /// @return The body location coordinates as a vector
         const utilities::vector2& get_position() const;
 
-        /// @brief Get the body coordinates adjusted by delta fast-forwarding to allow for fraction of a frame 
+        /// @brief Get the body coordinates adjusted by delta fast-forwarding to allow for fraction of a frame
         /// @param delta The fraction of a frame value
         /// @return The body location coordinates as a vector
         const utilities::vector2 get_interpolated_position(double delta) const;
+
+        /// @brief Hard set of the position of the entity, also overwriting the previous position value to avoid
+        /// interpolating large distances. Use 'move' to incrementally adjust location, allowing interpolation
+        /// of position between frames.
+        /// @param position The new position
+        void set_position(const utilities::vector2& position);
+
+        /// @brief Rotate the body the given value
+        /// @param value The amount to rotate by
+        /// @param unit The unit type (degrees / radians), defaults to degrees
+        void rotate(double value, utilities::math::unit_type unit = utilities::math::unit_type::degrees);
+
+        /// @brief Get the forward direction of the body
+        /// @return The forward value
+        utilities::vector2 forward() const;
 
         /// @brief Move the body by a given step
         /// @param step The step as a vector
@@ -47,11 +64,13 @@ namespace core
 
         private:
         /// @brief The body location coordinates (x and y)
-        utilities::vector2 m_current_position;
+        utilities::vector2 m_current_position{};
         /// @brief The body location coordinates (x and y)
-        utilities::vector2 m_previous_position;
+        utilities::vector2 m_previous_position{};
         /// @brief The body size dimensions (width and height)
-        utilities::vector2 m_size;
+        utilities::vector2 m_size{};
+        /// @brief The body rotation
+        float m_rotation{0.0f};
     };
 } /// namespace core
 

@@ -7,8 +7,8 @@
 
 namespace core
 {
-    follow_camera::follow_camera(core::entity* p_entity, const utilities::rectangle& viewport)
-        : camera{viewport}
+    follow_camera::follow_camera(core::entity* p_entity, const utilities::vector2& position)
+        : camera{position}
         , mp_entity{p_entity}
     {
         assert(p_entity != nullptr);
