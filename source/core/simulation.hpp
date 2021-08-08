@@ -60,7 +60,7 @@ namespace core
         /// @brief Container for subsystem
         std::list<std::unique_ptr<subsystem> > m_subsystems{};
         /// @brief The simulation message bus
-        std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
+        core::message_bus* mp_message_bus{nullptr};
         /// @brief The entity manager
         std::unique_ptr<core::entity_manager> mp_entity_manager{nullptr};
         /// @brief The camera controller

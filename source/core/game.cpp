@@ -44,7 +44,8 @@ namespace core
     game::~game()
     {
         m_services.clear();
-
+        
+        mp_message_bus->unsubscribe(this);
         mp_message_bus.reset(nullptr);
     }
 
@@ -141,8 +142,8 @@ namespace core
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.get();
-            success &= service->initialise();
+            const auto& p_service = service_iter.get();
+            success &= p_service->initialise();
         }
 
         return success;
@@ -154,21 +155,20 @@ namespace core
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.get();
-            if (!m_paused || !service->pauseable())
+            const auto& p_service = service_iter.get();
+            if (!m_paused || !p_service->pauseable())
             {
-                service->update(m_gametime);
+                p_service->update(m_gametime);
             }
         }
     }
 
     void game::draw(double delta)
     {
-        PLOG_DEBUG << delta;
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.get();
-            service->draw(mp_draw_manager.get(), delta);
+            const auto& p_service = service_iter.get();
+            p_service->draw(mp_draw_manager.get(), delta);
         }
     }
 
@@ -178,8 +178,8 @@ namespace core
 
         for (auto& service_iter : m_services)
         {
-            const auto& service = service_iter.get();
-            service->shutdown();
+            const auto& p_service = service_iter.get();
+            p_service->shutdown();
         }
     }
 

@@ -32,6 +32,11 @@ namespace ui
         );
     }
 
+    game_window::~game_window()
+    {
+        mp_message_bus->unsubscribe(this);
+    }
+
     void game_window::on_initialise()
     {
 
