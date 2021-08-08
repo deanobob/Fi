@@ -19,7 +19,7 @@ namespace core
         public:
         /// @brief Called when an event is raised
         /// @param event_type The type of event that has been raised
-        /// @param event_args The event arguments
+        /// @param p_event_args The event arguments
         virtual void on_event_raised(const event_type& event_type, event_args* p_event_args) = 0;
     };
 } /// namespace core

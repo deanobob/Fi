@@ -36,6 +36,7 @@ namespace core
 
         /// @brief Called on every frame to obtain all renderable items
         /// @param p_camera The camera to render
+        /// @param delta The fraction of a frame duration remaining, used to interpolate position of renderables
         virtual void draw(camera* p_camera, double delta) = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.

@@ -54,7 +54,8 @@ namespace core
         const std::list<renderable>& get_renderables() const;
 
         /// @brief Called on every update tick allowing the camera to update
-        virtual void update(const utilities::gametime& p_gametime);
+        /// @param gametime The gametime maintaining instance
+        virtual void update(const utilities::gametime& gametime);
 
         /// @brief Clear renderables
         void clear();

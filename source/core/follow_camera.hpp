@@ -17,10 +17,10 @@ namespace core
     {
         public:
         /// @brief Construct a new follow_camera object
+        /// @param p_entity The entity to follow
         /// @param viewport The follow_camera viewport
         follow_camera(entity* p_entity, const utilities::rectangle& viewport = utilities::rectangle::EMPTY);
 
-        /// @brief Called on every update tick allowing the follow_camera to update
         void update(const utilities::gametime& p_gametime) override;
 
         private:

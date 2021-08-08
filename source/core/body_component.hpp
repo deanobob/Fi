@@ -32,6 +32,9 @@ namespace core
         /// @return The body location coordinates as a vector
         const utilities::vector2& get_position() const;
 
+        /// @brief Get the body coordinates adjusted by delta fast-forwarding to allow for fraction of a frame 
+        /// @param delta The fraction of a frame value
+        /// @return The body location coordinates as a vector
         const utilities::vector2 get_interpolated_position(double delta) const;
 
         /// @brief Move the body by a given step

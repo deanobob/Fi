@@ -15,6 +15,8 @@ namespace core
         : public component
     {
         public:
+        /// @brief Construct a new physics component object
+        /// @param velocity The initial velocity
         physics_component(const utilities::vector2& velocity = utilities::vector2::ZERO)
             : m_velocity{velocity}
         {

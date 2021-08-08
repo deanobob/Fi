@@ -35,6 +35,7 @@ namespace core
 
         /// @brief Called on every frame allowing service to queue drawables
         /// @param p_draw_manager The draw manager instance
+        /// @param delta The fraction of a frame duration remaining, used to interpolate position of renderables
         virtual void draw(draw_manager* p_draw_manager, double delta) = 0;
 
         /// @brief Called when the application is shutting down. Tidy up and clear down.
