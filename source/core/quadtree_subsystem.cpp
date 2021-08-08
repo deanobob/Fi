@@ -24,7 +24,7 @@ namespace core
 
     }
 
-    std::list<unsigned int> quadtree_subsystem::get_entities_in_region(const utilities::rectangle& region) const
+    std::list<entity*> quadtree_subsystem::get_entities_in_region(const utilities::rectangle& region) const
     {
         return m_quadtree.query(region);
     }
@@ -39,7 +39,7 @@ namespace core
         {
             const auto& position = p_body->get_position();
             const auto& size = p_body->get_size();
-            m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+            m_quadtree.insert(p_entity, {position.x, position.y, size.x, size.y});
         }
     }
 
@@ -48,7 +48,7 @@ namespace core
         // Remove registration for position events
         p_entity->position_changed_event.unregister_handler(this);
         
-        m_quadtree.remove(p_entity->get_id());
+        m_quadtree.remove(p_entity);
     }
 
     void quadtree_subsystem::on_event_raised(const event_type& event_type, event_args* p_event_args)
@@ -63,8 +63,8 @@ namespace core
             {
                 const auto& position = p_body->get_position();
                 const auto& size = p_body->get_size();
-                m_quadtree.remove(p_entity->get_id());
-                m_quadtree.insert(p_entity->get_id(), {position.x, position.y, size.x, size.y});
+                m_quadtree.remove(p_entity);
+                m_quadtree.insert(p_entity, {position.x, position.y, size.x, size.y});
             }
         }
     }

@@ -34,9 +34,8 @@ namespace core
         p_camera->clear();
 
         // Get all renderable elements from wthin the camera viewport and add it to the camera renderable list
-        for (auto& entity_id : get_entities_in_region(p_camera->get_viewport()))
+        for (auto& p_entity : get_entities_in_region(p_camera->get_viewport()))
         {
-            auto p_entity = get_entity_manager()->get(entity_id);
             if (p_entity)
             {
                 const auto p_body = p_entity->get_component<body_component>(component_type::body);

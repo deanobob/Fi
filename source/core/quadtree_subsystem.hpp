@@ -36,7 +36,7 @@ namespace core
         /// @brief Query the quadtree for entities within a given region
         /// @param region The region to search for entities
         /// @return A list of entities resulting from querying the quadtree 
-        std::list<unsigned int> get_entities_in_region(const utilities::rectangle& region) const;
+        std::list<entity*> get_entities_in_region(const utilities::rectangle& region) const;
 
         void on_entity_added(entity* p_entity) override;
 
@@ -46,7 +46,7 @@ namespace core
 
         private:
         /// @brief Quadtree object containing the locations of all entities
-        utilities::quadtree m_quadtree;
+        utilities::quadtree<entity*> m_quadtree;
     };
 } /// namespace core
 

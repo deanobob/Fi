@@ -17,6 +17,8 @@ namespace core
     class event_dispatcher
     {
         public:
+        /// @brief Construct a new event dispatcher object
+        /// @param event_type The event type
         event_dispatcher(const event_type& event_type)
             : mp_event_type{event_type}
         {}

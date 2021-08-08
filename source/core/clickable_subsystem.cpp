@@ -60,18 +60,14 @@ namespace core
                 static_cast<float>(p_sim_message->get_y()),
                 1.0f,
                 1.0f};
-            for (auto& entity_id : get_entities_in_region(mouse_point))
+            for (auto& p_entity : get_entities_in_region(mouse_point))
             {
-                auto p_entity = get_entity_manager()->get(entity_id);
-                if (p_entity)
-                {
-                    auto p_camera = std::make_unique<core::follow_camera>(p_entity);
-                    p_camera->set_position({p_sim_message->get_x(), p_sim_message->get_y()});
+                auto p_camera = std::make_unique<core::follow_camera>(p_entity);
+                p_camera->set_position({p_sim_message->get_x(), p_sim_message->get_y()});
 
-                    auto message = messages::message_open_window{p_camera.get()};
-                    mp_camera_controller->add_camera(std::move(p_camera));
-                    mp_message_bus->send(&message);
-                }
+                auto message = messages::message_open_window{p_camera.get()};
+                mp_camera_controller->add_camera(std::move(p_camera));
+                mp_message_bus->send(&message);
             }
         }
         else
