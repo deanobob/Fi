@@ -291,7 +291,7 @@ namespace render
         al_color.b = color.b;
         al_color.a = color.a;
 
-        al_draw_line(x1, y1, x2, y2, al_color, 1);
+        al_draw_line(x1, y1, x2, y2, al_color, 2);
     }
 
     void allegro_render_controller::render_text(

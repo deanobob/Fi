@@ -164,7 +164,6 @@ namespace core
 
     void game::draw(double delta)
     {
-        PLOG_DEBUG << delta;
         for (auto& service_iter : m_services)
         {
             const auto& service = service_iter.get();

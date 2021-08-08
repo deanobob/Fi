@@ -27,7 +27,7 @@ namespace core
 
     clickable_subsystem::~clickable_subsystem()
     {
-
+        mp_message_bus->unsubscribe(this);
     }
 
     bool clickable_subsystem::initialise()

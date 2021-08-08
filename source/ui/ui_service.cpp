@@ -26,7 +26,7 @@ namespace ui
 
     ui_service::~ui_service()
     {
-
+        mp_message_bus->unsubscribe(this);
     }
 
     bool ui_service::initialise()

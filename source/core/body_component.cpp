@@ -16,12 +16,12 @@ namespace core
     {
         return m_current_position;
     }
-    
+
     const utilities::vector2 body_component::get_interpolated_position(double delta) const
     {
-        return m_current_position * delta + m_previous_position * (1.0 - delta); 
+        return m_current_position * delta + m_previous_position * (1.0 - delta);
     }
-    
+
     void body_component::move(const utilities::vector2& step)
     {
         m_previous_position = m_current_position;

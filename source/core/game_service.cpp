@@ -10,7 +10,7 @@ namespace core
     game_service::game_service(core::message_bus* p_message_bus)
         : service{p_message_bus}
     {
-        p_message_bus->subscribe(
+        mp_message_bus->subscribe(
             this,
             {
                 messages::message_new_game::TYPE,
@@ -20,7 +20,7 @@ namespace core
 
     game_service::~game_service()
     {
-
+        mp_message_bus->unsubscribe(this);
     }
 
     bool game_service::initialise()
