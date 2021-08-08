@@ -19,7 +19,7 @@ namespace core
         public:
         /// @brief Subscribe for messages from this message_bus
         /// @param p_subscriber The subscriber instance
-        /// @param message_types THe message types the subscriber is interested in
+        /// @param message_types The message types the subscriber is interested in
         void subscribe(subscriber* p_subscriber, const std::list<std::string>& message_types);
 
         /// @brief Unsubscribe all messages from this message_bus
@@ -37,7 +37,7 @@ namespace core
 
         private:
         /// @brief Container that stores subscribers against the message types they are subscribed to
-        std::map<std::string, std::list<subscriber*> > m_subscribers{};
+        std::map<const std::string, std::list<subscriber*> > m_subscribers{};
     };
 } /// namespace core
 

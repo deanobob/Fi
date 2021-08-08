@@ -17,20 +17,20 @@ namespace core
 {
     simulation::simulation(core::message_bus* p_message_bus)
         : mp_message_bus{p_message_bus}
-        , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus.get())}
+        , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus)}
     {
         add_subsystem(
             std::make_unique<clickable_subsystem>(
-                mp_message_bus.get(),
+                mp_message_bus,
                 mp_entity_manager.get(),
                 &m_camera_controller));
         add_subsystem(
             std::make_unique<physics_subsystem>(
-                mp_message_bus.get(),
+                mp_message_bus,
                 mp_entity_manager.get()));
         add_subsystem(
             std::make_unique<render_subsystem>(
-                mp_message_bus.get(),
+                mp_message_bus,
                 mp_entity_manager.get()));
     }
 
@@ -38,7 +38,6 @@ namespace core
     {
         m_subsystems.clear();
         mp_entity_manager.reset(nullptr);
-        mp_message_bus.reset(nullptr);
     }
 
     bool simulation::initialise()
