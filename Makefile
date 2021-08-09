@@ -8,6 +8,8 @@ INC_PATH := -Isource/ \
 			-Isource/console/ \
 			-Isource/console/commands/ \
 			-Isource/core/ \
+			-Isource/core/components \
+			-Isource/core/subsystems \
 			-Isource/framework/ \
 			-Isource/input/ \
 		    -Isource/message/ \
@@ -18,12 +20,16 @@ INC_PATH := -Isource/ \
 			-I/usr/local/include/
 LIB_PATH := -Llib/ \
             -L/usr/local/lib
-LIBS     := -lpthread # -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+LIBS     := -lpthread #-lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 
 # Define compiler
 CXX := g++-10
+
+# Localise for OS
 ifeq ($(IS_LINUX), 1)
 	CXX := g++
+else
+	LIBS := $(LIBS) -lallegro_main
 endif
 
 # Compiler options

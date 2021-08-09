@@ -51,9 +51,22 @@ namespace core
         }
     }
 
+    void body_component::set_rotation(double rotation, utilities::math::unit_type unit)
+    {
+        switch (unit)
+        {
+            case utilities::math::unit_type::degrees:
+                m_rotation = utilities::math::to_radians(rotation);
+                break;
+            case utilities::math::unit_type::radians:
+                m_rotation = rotation;
+                break;
+        }
+    }
+
     utilities::vector2 body_component::forward() const
     {
-        return utilities::vector2{cos(m_rotation), sin(m_rotation)};
+        return utilities::vector2{static_cast<float>(cos(m_rotation)), static_cast<float>(sin(m_rotation))};
     }
 
     const utilities::vector2& body_component::get_size() const

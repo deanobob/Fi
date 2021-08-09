@@ -50,6 +50,11 @@ namespace core
         /// @param unit The unit type (degrees / radians), defaults to degrees
         void rotate(double value, utilities::math::unit_type unit = utilities::math::unit_type::degrees);
 
+        /// @brief Set the body rotation
+        /// @param rotation The rotation value
+        /// @param unit The unit type (degrees / radians), defaults to degrees
+        void set_rotation(double rotation, utilities::math::unit_type unit = utilities::math::unit_type::degrees);
+
         /// @brief Get the forward direction of the body
         /// @return The forward value
         utilities::vector2 forward() const;
@@ -70,7 +75,7 @@ namespace core
         /// @brief The body size dimensions (width and height)
         utilities::vector2 m_size{};
         /// @brief The body rotation
-        float m_rotation{0.0f};
+        double m_rotation{0.0};
     };
 } /// namespace core
 

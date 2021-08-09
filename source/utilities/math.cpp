@@ -17,6 +17,6 @@ namespace utilities
 
     float math::to_radians(float value)
     {
-        return value * M_PI / 180.0f;
+        return value * static_cast<float>(M_PI) / 180.0f;
     }
 }
