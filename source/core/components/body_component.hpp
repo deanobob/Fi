@@ -59,6 +59,12 @@ namespace core
         /// @return The forward value
         utilities::vector2 forward() const;
 
+        void travel(float distance);
+        
+        void set_travelled(float distance);
+
+        float get_travelled() const;
+        
         /// @brief Move the body by a given step
         /// @param step The step as a vector
         void move(const utilities::vector2& step);
@@ -66,6 +72,10 @@ namespace core
         /// @brief Get the body width and height
         /// @return The width and height as a vector
         const utilities::vector2& get_size() const;
+
+        void reverse_direction();
+
+        bool is_direction_forward() const;
 
         private:
         /// @brief The body location coordinates (x and y)
@@ -76,6 +86,10 @@ namespace core
         utilities::vector2 m_size{};
         /// @brief The body rotation
         double m_rotation{0.0};
+        /// @brief 
+        float m_travelled{0.0}; 
+
+        float m_direction_forward{true};
     };
 } /// namespace core
 

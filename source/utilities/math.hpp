@@ -37,6 +37,8 @@ namespace utilities
         /// @return The value of degrees in radians
         static float to_radians(float degrees);
 
+        static float lerp(float a, float b, float t);
+
         private:
         /// @brief Default constructor
         math() = default;

@@ -52,15 +52,20 @@ namespace core
         // Initialise main camera
         m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{5000, 5000}), "main");
 
+        auto x_offset {250};
         // Initialise test entities
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             auto entity{std::make_unique<core::entity>()};
-            entity->add_component(std::make_unique<core::body_component>(
+            auto body_component { std::make_unique<core::body_component>(
                 utilities::vector2{5000, 5000},
-                utilities::vector2{50, 50},
-                rand() % 360));
-            entity->add_component(std::make_unique<core::movement_component>((rand() % 300) - 150));
+                utilities::vector2{40, 15},
+                rand() % 360) };
+            body_component->travel(x_offset);
+            x_offset -= 50;
+            entity->add_component(std::move(body_component));
+            auto movement_component { std::make_unique<core::movement_component>((rand() % 300) - 150) };
+            entity->add_component(std::move(movement_component));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
             mp_entity_manager->put(std::move(entity));

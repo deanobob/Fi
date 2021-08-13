@@ -1,5 +1,6 @@
 /// @file movement_subsystem.cpp
 
+#include <math.h>
 #include "plog/Log.h"
 #include "body_component.hpp"
 #include "component_type.hpp"
@@ -38,11 +39,39 @@ namespace core
                 continue;
             }
 
-            const auto velocity = p_body_component->forward() * p_movement_component->get_velocity();
-            if (velocity != utilities::vector2::ZERO)
-            {
-                p_body_component->move(velocity * gametime.get_elapsed_time_in_seconds());
+            p_body_component->travel((p_body_component->is_direction_forward() ? 500.f : -500.f) * gametime.get_elapsed_time_in_seconds());
 
+            core::path* p_current_path{nullptr};
+
+            const auto& route = p_movement_component->get_path();
+            auto total_distance{0.0};
+            for (const auto& route_segment : route)
+            {
+                total_distance += route_segment->get_distance();
+            }
+
+            auto distance_travelled = p_body_component->get_travelled();
+            if (distance_travelled < 0.f || distance_travelled > total_distance)
+            {
+                p_body_component->set_travelled(p_body_component->is_direction_forward() ? total_distance : 0.f);
+                distance_travelled = p_body_component->is_direction_forward() ? total_distance : 0.f;
+                p_body_component->reverse_direction();
+            }
+
+            for (const auto& route_segment : route)
+            {
+                if (distance_travelled > route_segment->get_distance())
+                {
+                    distance_travelled -= route_segment->get_distance();
+                    continue;
+                }
+                p_current_path = route_segment.get();
+                break;
+            }
+
+            if (p_current_path)
+            {
+                p_body_component->set_position(p_current_path->get_position(distance_travelled));
                 auto event_args{entity_event_args{p_entity}};
                 p_entity->position_changed_event.dispatch(&event_args);
             }

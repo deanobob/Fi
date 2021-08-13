@@ -19,4 +19,9 @@ namespace utilities
     {
         return value * static_cast<float>(M_PI) / 180.0f;
     }
+
+    float math::lerp(float a, float b, float t)
+    {
+        return a + (b - a) * t;
+    }
 }
