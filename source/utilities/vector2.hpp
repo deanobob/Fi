@@ -46,6 +46,13 @@ namespace utilities
         /// @return The clamped value
         static vector2 clamp(const vector2& value, const vector2& min, const vector2& max);
 
+        /// @brief Get a vector perpendicular to the given vector
+        /// @param vector The vector perpendicular to the result
+        /// @return A vector perpendicular to the given vector
+        static vector2 perp(const vector2& vector);
+
+        static vector2 lerp(const vector2& a, const vector2& b, float t);
+
         /// @brief Get the minimum vector
         /// @param lhs The left-hand side of the operator
         /// @param rhs The right-hand side of the operator
@@ -58,10 +65,10 @@ namespace utilities
         /// @return The maximum vector
         static vector2 max(const vector2& lhs, const vector2& rhs);
 
-        /// @brief Get a vector perpendicular to the given vector
-        /// @param vector The vector perpendicular to the result
-        /// @return A vector perpendicular to the given vector
-        static vector2 perp(const vector2& vector);
+        /// @brief Get a vector that can be multiplied by a distance to calculate forward movement at a given angle
+        /// @param angle The angle in radians
+        /// @return A forward vector
+        static vector2 forward(float angle);
 
         /// @brief The default constructor
         vector2();
