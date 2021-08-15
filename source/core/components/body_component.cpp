@@ -27,7 +27,6 @@ namespace core
 
     void body_component::set_position(const utilities::vector2& position)
     {
-        // Sets both previous and current position to
         m_previous_position = m_current_position;
         m_current_position = position;
     }
@@ -81,7 +80,7 @@ namespace core
 
     utilities::vector2 body_component::forward() const
     {
-        return {static_cast<float>(cos(m_rotation)), static_cast<float>(sin(m_rotation))};
+        return utilities::vector2::forward(static_cast<float>(m_rotation));
     }
 
     const utilities::vector2& body_component::get_size() const

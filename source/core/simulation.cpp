@@ -52,9 +52,9 @@ namespace core
         // Initialise main camera
         m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{5000, 5000}), "main");
 
-        auto x_offset {250};
+        auto x_offset {250.0f};
         // Initialise test entities
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 25; i++)
         {
             auto entity{std::make_unique<core::entity>()};
             auto body_component { std::make_unique<core::body_component>(

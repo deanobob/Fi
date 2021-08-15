@@ -41,13 +41,11 @@ namespace core
 
             p_body_component->travel((p_body_component->is_direction_forward() ? 500.f : -500.f) * gametime.get_elapsed_time_in_seconds());
 
-            core::path* p_current_path{nullptr};
-
             const auto& route = p_movement_component->get_path();
             auto total_distance{0.0};
             for (const auto& route_segment : route)
             {
-                total_distance += route_segment->get_distance();
+                total_distance += route_segment->length();
             }
 
             auto distance_travelled = p_body_component->get_travelled();
@@ -58,11 +56,12 @@ namespace core
                 p_body_component->reverse_direction();
             }
 
+            core::path_segment* p_current_path{nullptr};
             for (const auto& route_segment : route)
             {
-                if (distance_travelled > route_segment->get_distance())
+                if (distance_travelled > route_segment->length())
                 {
-                    distance_travelled -= route_segment->get_distance();
+                    distance_travelled -= route_segment->length();
                     continue;
                 }
                 p_current_path = route_segment.get();
@@ -71,7 +70,7 @@ namespace core
 
             if (p_current_path)
             {
-                p_body_component->set_position(p_current_path->get_position(distance_travelled));
+                p_body_component->set_position(p_current_path->get_position_at(distance_travelled));
                 auto event_args{entity_event_args{p_entity}};
                 p_entity->position_changed_event.dispatch(&event_args);
             }
