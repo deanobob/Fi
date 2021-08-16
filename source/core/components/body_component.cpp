@@ -78,6 +78,11 @@ namespace core
         }
     }
 
+    double body_component::get_rotation() const
+    {
+        return m_rotation;
+    }
+
     utilities::vector2 body_component::forward() const
     {
         return utilities::vector2::forward(static_cast<float>(m_rotation));
@@ -86,15 +91,5 @@ namespace core
     const utilities::vector2& body_component::get_size() const
     {
         return m_size;
-    }
-
-    void body_component::reverse_direction()
-    {
-        m_direction_forward = !m_direction_forward;
-    }
-
-    bool body_component::is_direction_forward() const
-    {
-        return m_direction_forward;
     }
 }

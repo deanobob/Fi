@@ -10,14 +10,24 @@ namespace utilities
         return (value > min) ? (value < max) ? value : max : min;
     }
 
-    double math::to_radians(double value)
+    double math::to_radians(double degrees)
     {
-        return value * M_PI / 180.0;
+        return degrees * M_PI / 180.0;
     }
 
-    float math::to_radians(float value)
+    float math::to_radians(float degrees)
     {
-        return value * static_cast<float>(M_PI) / 180.0f;
+        return degrees * static_cast<float>(M_PI) / 180.0f;
+    }
+
+    double math::to_degrees(double radians)
+    {
+        return radians * (180.0 / M_PI);
+    }
+
+    float math::to_degrees(float radians)
+    {
+        return radians * (180.0f / static_cast<float>(M_PI));
     }
 
     float math::lerp(float a, float b, float t)

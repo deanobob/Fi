@@ -15,7 +15,7 @@
 namespace core
 {
     /// @brief Renderable type - temporary until a real renderable is defined
-    using renderable = std::tuple<float, float, float, float>;
+    using renderable = std::tuple<float, float, float, float, double>;
 
     /// @brief The camera class
     class camera

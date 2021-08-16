@@ -1,11 +1,32 @@
 /// @file simulation_view.cpp
 
+#include <math.h>
 #include "plog/Log.h"
 #include "simulation_view.hpp"
 #include "message_sim_mouse_event.hpp"
 
 namespace ui
 {
+    utilities::vector2 rotate_point(float cx, float cy, float angle, float px, float py)
+    {
+        float s = sin(angle);
+        float c = cos(angle);
+
+        // translate point back to origin:
+        px -= cx;
+        py -= cy;
+
+        // rotate point
+        float xnew = px * c - py * s;
+        float ynew = px * s + py * c;
+
+        // translate point back:
+        px = xnew + cx;
+        py = ynew + cy;
+
+        return {px, py};
+    }
+
     simulation_view::simulation_view(core::message_bus* p_message_bus, core::camera* p_camera)
         : mp_message_bus{p_message_bus}
         , mp_camera{p_camera}
@@ -33,14 +54,23 @@ namespace ui
             for (const auto& renderable : mp_camera->get_renderables())
             {
                 const auto viewport = mp_camera->get_viewport();
-                float x = std::get<0>(renderable) - viewport.x;
-                float y = std::get<1>(renderable) - viewport.y;
-                float w = std::get<2>(renderable);
-                float h = std::get<3>(renderable);
-                p_draw_manager->draw_line({x, y}, {x + w, y});         // top left to top right
-                p_draw_manager->draw_line({x + w, y}, {x + w, y + h}); // top right to bottom right
-                p_draw_manager->draw_line({x, y + h}, {x + w, y + h}); // bottom left to bottom right
-                p_draw_manager->draw_line({x, y}, {x, y + h});         // top left to bottom left
+                const float x = std::get<0>(renderable) - viewport.x;
+                const float y = std::get<1>(renderable) - viewport.y;
+                const float w = std::get<2>(renderable);
+                const float h = std::get<3>(renderable);
+                const double r = std::get<4>(renderable);
+                const auto cx = x + w / 2.0;
+                const auto cy = y + h / 2.0;
+
+                auto tl = rotate_point(cx, cy, r, x, y);
+                auto tr = rotate_point(cx, cy, r, x + w, y);
+                auto bl = rotate_point(cx, cy, r, x, y + h);
+                auto br = rotate_point(cx, cy, r, x + w, y + h);
+
+                p_draw_manager->draw_line(tl, tr); // top left to top right
+                p_draw_manager->draw_line(tr, br); // top right to bottom right
+                p_draw_manager->draw_line(bl, br); // bottom left to bottom right
+                p_draw_manager->draw_line(tl, bl); // top left to bottom left
             }
 
             p_draw_manager->end();

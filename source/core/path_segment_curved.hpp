@@ -21,15 +21,23 @@ namespace core
         /// @brief Construct a new path segment curved object
         /// @param start The start of the segment 
         /// @param radius The radius of the circle
-        /// @param angle The angle of the segment in degrees
+        /// @param angle_deg The angle of the segment in degrees
         /// @param start_angle The angle offset, defines which angle to begin the path
-        path_segment_curved(const utilities::vector2& start, float radius, float angle, float start_angle = 0.0f)
+        /// @param clockwise Whether to curve clockwise or anti-clockwise from start position
+        path_segment_curved(const utilities::vector2& start, 
+                            float radius, 
+                            float angle_deg, 
+                            float start_angle_deg = 0.0f, 
+                            bool clockwise = true)
             : m_start{start}
+            , m_clockwise{clockwise}
             , m_radius{radius}
-            , m_start_angle{utilities::math::to_radians(start_angle)}
-            , m_angle{angle}
-            , m_centre{m_start + utilities::vector2::forward(m_start_angle) * radius}
-            , m_length{(m_angle / 360.f) * M_PI * (m_radius * 2.0)}
+            , m_start_angle_rad{utilities::math::to_radians(start_angle_deg)}
+            , m_angle_rad{utilities::math::to_radians(angle_deg)}
+            , m_centre{m_clockwise 
+                        ? m_start + utilities::vector2::forward(m_start_angle_rad) * radius
+                        : m_start - utilities::vector2::forward(m_start_angle_rad) * radius}
+            , m_length{(angle_deg / 360.f) * M_PI * (m_radius * 2.0)}
             , m_end{get_position_at(m_length)}
         {
             
@@ -47,13 +55,34 @@ namespace core
 
         const utilities::vector2 get_position_at(double distance) const override
         {
-            // Calculate the total percentage of 
-            const auto angle_travelled {(m_angle / m_length) * distance};
             // Calculate the location on the arc at the given angle plus offset
-            const auto position_angle {m_start_angle + utilities::math::to_radians(angle_travelled - 180.f)};
+            const auto position_angle_rad {m_start_angle_rad + get_rotation_at(distance)};
             return utilities::vector2{
-                static_cast<float>(m_centre.x + m_radius * cos(position_angle)), 
-                static_cast<float>(m_centre.y + m_radius * sin(position_angle))};
+                static_cast<float>(m_centre.x + m_radius * cos(position_angle_rad)), 
+                static_cast<float>(m_centre.y + m_radius * sin(position_angle_rad))};
+        }
+
+        double get_start_rotation() const override
+        {
+            return utilities::math::to_degrees(get_rotation_at(0.0f));
+        }
+
+        double get_end_rotation() const override
+        {
+            return utilities::math::to_degrees(get_rotation_at(m_length));
+        } 
+
+        double get_rotation_at(double distance) const override
+        {
+            // Calculate the total percentage of angle travelled
+            auto angle_travelled_rad {(m_angle_rad / m_length) * distance - M_PI};
+            if (!m_clockwise)
+            {
+                // Invert angle travelled to move counter clockwise
+                angle_travelled_rad = m_angle_rad - angle_travelled_rad + M_PI - m_angle_rad;
+            }
+
+            return angle_travelled_rad;
         }
 
         double length() const override
@@ -64,12 +93,14 @@ namespace core
         private:
         /// @brief The path start point
         const utilities::vector2 m_start;
+        /// @brief The direction from start the curve will move in
+        const bool m_clockwise;
         /// @brief The angle of the path
         const float m_radius;
-        /// @brief The angle offset
-        const float m_start_angle;
-        /// @brief The angle that defines the length of the arc
-        const float m_angle;
+        /// @brief The angle offset in radians
+        const float m_start_angle_rad;
+        /// @brief The angle that defines the length of the arc in radians
+        const float m_angle_rad;
         /// @brief The centre of the circle that forms the arc
         const utilities::vector2 m_centre;
         /// @brief The length of the path

@@ -66,9 +66,9 @@ namespace utilities
         static vector2 max(const vector2& lhs, const vector2& rhs);
 
         /// @brief Get a vector that can be multiplied by a distance to calculate forward movement at a given angle
-        /// @param angle The angle in radians
+        /// @param angle_rad The angle in radians
         /// @return A forward vector
-        static vector2 forward(float angle);
+        static vector2 forward(float angle_rad);
 
         /// @brief The default constructor
         vector2();

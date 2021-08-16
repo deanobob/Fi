@@ -15,54 +15,6 @@
 /// @namespace core namespace
 namespace core
 {
-
-    class path
-    {
-        public:
-        virtual ~path() = default;
-
-        virtual const utilities::vector2 get_position(double distance_travelled) const = 0;
-
-        virtual double get_distance() const = 0;
-    };
-
-    class curved_path_anti_clockwise : public path
-    {
-        public:
-        curved_path_anti_clockwise(const utilities::vector2& start, float radius, float angle, float start_angle = 0.0f)
-            : m_start{start}
-            , m_radius{radius}
-            , m_start_angle{start_angle}
-            , m_angle{angle}
-            , m_centre{m_start - utilities::vector2::forward(utilities::math::to_radians(start_angle)) * radius}
-            , m_distance{(m_angle / 360.f) * M_PI * (m_radius * 2.0)}
-        {
-            LOG_DEBUG << "Distance: " << m_distance;
-            LOG_DEBUG << "Centre: " << m_centre.x << ", " << m_centre.y;
-        }
-
-        const utilities::vector2 get_position(double distance_travelled) const override
-        {
-            const auto angle_travelled {m_angle - (m_angle / m_distance) * distance_travelled};
-            return utilities::vector2{
-                static_cast<float>(m_centre.x + m_radius * cos(utilities::math::to_radians(m_start_angle + angle_travelled - m_angle))), 
-                static_cast<float>(m_centre.y + m_radius * sin(utilities::math::to_radians(m_start_angle + angle_travelled - m_angle)))};
-        }
-
-        double get_distance() const override
-        {
-            return m_distance;
-        }
-
-        private:
-        const utilities::vector2 m_start;
-        const float m_radius;
-        const float m_start_angle;
-        const float m_angle;
-        const utilities::vector2 m_centre;
-        const double m_distance;
-    };
-
     /// @brief The movement component
     class movement_component
         : public component
@@ -73,28 +25,30 @@ namespace core
         movement_component(float velocity = 0.0f)
             : m_velocity{velocity}
         {
-            m_route.push_back(std::make_unique<path_segment_straight>(utilities::vector2{4500, 5000}, 0.f, 1000));
-            m_route.push_back(std::make_unique<path_segment_curved>(utilities::vector2{5500, 5000}, 200, 180, 90));
-            m_route.push_back(std::make_unique<path_segment_straight>(utilities::vector2{5500, 5400}, 180.f, 1000));
-            m_route.push_back(std::make_unique<path_segment_curved>(utilities::vector2{4500, 5400}, 200, 180, 270));
-            // m_route.push_back(std::make_unique<straight_path>(utilities::vector2{5000, 5000}, utilities::vector2{5000, 5500}));
-            // m_route.push_back(std::make_unique<straight_path>(utilities::vector2{5000, 5500}, utilities::vector2{6500, 5500}));
-            // m_route.push_back(std::make_unique<straight_path>(utilities::vector2{6500, 5500}, utilities::vector2{3000, 3000}));
-            // m_route.push_back(std::make_unique<straight_path>(utilities::vector2{4000, 5000}, utilities::vector2{5000, 5000}));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{5000, 5000}, 200, 180, 90));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{5200, 5200}, 200, 90, 180));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{5000, 5400}, 200, 90, 270));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{4800, 5200}, 200, 90));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{5000, 5000}, 200, 90, 90));
-            // m_route.push_back(std::make_unique<curved_path_clockwise>(utilities::vector2{5200, 5200}, 200, 90, 180));
-            //m_route.push_back(std::make_unique<straight_path>(utilities::vector2{5000, 5400}, utilities::vector2{4000, 5400}));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{5000, 5000}, 200, 180, 90));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{5200, 4800}, 200, 90));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{5000, 4600}, 200, 90, 270));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{4800, 4800}, 200, 90, 180));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{5000, 5000}, 200, 90, 90));
-            // m_route.push_back(std::make_unique<curved_path_anti_clockwise>(utilities::vector2{5200, 4800}, 200, 90));
-            // m_route.push_back(std::make_unique<straight_path>(utilities::vector2{5000, 5000}, utilities::vector2{6000, 5000}));
+            auto seg1 = std::make_unique<path_segment_straight>(utilities::vector2{4500, 5000}, 0.f, 1000);
+            auto seg2 = std::make_unique<path_segment_curved>(seg1->get_end_position(), 200, 180, 90, true);
+            auto seg3 = std::make_unique<path_segment_straight>(seg2->get_end_position(), 180.f, 1000);
+            auto seg4 = std::make_unique<path_segment_curved>(seg3->get_end_position(), 200, 180, 270, true);
+            auto seg5 = std::make_unique<path_segment_straight>(seg4->get_end_position(), 0.f, 200);
+            auto seg6 = std::make_unique<path_segment_curved>(seg5->get_end_position(), 200, 45, 90, true);
+            auto seg7 = std::make_unique<path_segment_straight>(seg6->get_end_position(), 45.f, 200);
+            auto seg8 = std::make_unique<path_segment_curved>(seg7->get_end_position(), 200, 45, 135, false);
+            auto seg9 = std::make_unique<path_segment_straight>(seg8->get_end_position(), 0.f, 1000);
+            auto seg10 = std::make_unique<path_segment_curved>(seg9->get_end_position(), 200, 180, 270, true);
+            m_route.push_back(std::move(seg1));
+            m_route.push_back(std::move(seg2));
+            m_route.push_back(std::move(seg3));
+            m_route.push_back(std::move(seg4));
+            m_route.push_back(std::move(seg5));
+            m_route.push_back(std::move(seg6));
+            m_route.push_back(std::move(seg7));
+            m_route.push_back(std::move(seg8));
+            m_route.push_back(std::move(seg9));
+            m_route.push_back(std::make_unique<path_segment_curved>(utilities::vector2{4500, 5000}, 200, 180, 270, false));
+            m_route.push_back(std::make_unique<path_segment_straight>(utilities::vector2{4500, 5400}, 0.f, 1000));
+            m_route.push_back(std::make_unique<path_segment_curved>(utilities::vector2{5500, 5400}, 200, 180, 90, false));
+            m_route.push_back(std::make_unique<path_segment_straight>(utilities::vector2{5500, 5000}, 180.f, 1000));
+            
         }
 
         /// @brief Get the movement component type

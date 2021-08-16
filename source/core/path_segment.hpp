@@ -29,6 +29,12 @@ namespace core
         /// @return The position at a given distance along the route
         virtual const utilities::vector2 get_position_at(double distance) const = 0;
 
+        virtual double get_start_rotation() const = 0;
+
+        virtual double get_end_rotation() const = 0; 
+
+        virtual double get_rotation_at(double distance) const = 0;
+
         /// @brief Get the total length of the path segment
         /// @return The total length
         virtual double length() const = 0;

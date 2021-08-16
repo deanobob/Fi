@@ -37,6 +37,10 @@ namespace utilities
         /// @return The value of degrees in radians
         static float to_radians(float degrees);
 
+        static double to_degrees(double radians);
+
+        static float to_degrees(float radians);
+
         static float lerp(float a, float b, float t);
 
         private:

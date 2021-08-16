@@ -55,6 +55,8 @@ namespace core
         /// @param unit The unit type (degrees / radians), defaults to degrees
         void set_rotation(double rotation, utilities::math::unit_type unit = utilities::math::unit_type::degrees);
 
+        double get_rotation() const;
+
         /// @brief Get the forward direction of the body
         /// @return The forward value
         utilities::vector2 forward() const;
@@ -73,10 +75,6 @@ namespace core
         /// @return The width and height as a vector
         const utilities::vector2& get_size() const;
 
-        void reverse_direction();
-
-        bool is_direction_forward() const;
-
         private:
         /// @brief The body location coordinates (x and y)
         utilities::vector2 m_current_position{};
@@ -88,8 +86,6 @@ namespace core
         double m_rotation{0.0};
         /// @brief 
         float m_travelled{0.0}; 
-
-        float m_direction_forward{true};
     };
 } /// namespace core
 

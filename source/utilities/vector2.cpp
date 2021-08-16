@@ -60,9 +60,9 @@ namespace utilities
         return vector2(fmax(lhs.x, rhs.x), fmax(lhs.y, rhs.y));
     }
     
-    vector2 vector2::forward(float angle)
+    vector2 vector2::forward(float angle_rad)
     {
-        return vector2(cos(angle), sin(angle));
+        return vector2(cos(angle_rad), sin(angle_rad));
     }
 
     vector2::vector2()

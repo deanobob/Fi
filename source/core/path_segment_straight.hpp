@@ -21,7 +21,7 @@ namespace core
         /// @param length The length of the segment 
         path_segment_straight(const utilities::vector2& start, float angle, float length)
             : m_start{start}
-            , m_angle{utilities::math::to_radians(angle)}
+            , m_angle_rad{utilities::math::to_radians(angle)}
             , m_length{length}
             , m_end{get_position_at(length)}
         {
@@ -40,7 +40,22 @@ namespace core
 
         const utilities::vector2 get_position_at(double distance) const override
         {
-            return m_start + utilities::vector2::forward(m_angle) * distance;
+            return m_start + utilities::vector2::forward(m_angle_rad) * distance;
+        }
+
+        double get_start_rotation() const override
+        {
+            return utilities::math::to_degrees(m_angle_rad);
+        }
+
+        double get_end_rotation() const override
+        {
+            return utilities::math::to_degrees(m_angle_rad);
+        } 
+
+        double get_rotation_at(double distance) const override
+        {
+            return m_angle_rad;
         }
 
         double length() const override
@@ -51,8 +66,8 @@ namespace core
         private:
         /// @brief The origin of the path
         const utilities::vector2 m_start;
-        /// @brief The path angle
-        const float m_angle;
+        /// @brief The path angle in radians
+        const float m_angle_rad;
         /// @brief The length of the path
         const float m_length;
         /// @brief The end of the path

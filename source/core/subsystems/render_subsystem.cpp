@@ -40,8 +40,9 @@ namespace core
             {
                 const auto p_body = p_entity->get_component<body_component>(component_type::body);
                 const auto& position = p_body->get_interpolated_position(delta);
+                const auto& rotation = p_body->get_rotation();
                 const auto& size = p_body->get_size();
-                p_camera->add_renderable({position.x, position.y, size.x, size.y});
+                p_camera->add_renderable({position.x, position.y, size.x, size.y, rotation});
             }
         }
     }

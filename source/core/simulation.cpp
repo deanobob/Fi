@@ -60,11 +60,11 @@ namespace core
             auto body_component { std::make_unique<core::body_component>(
                 utilities::vector2{5000, 5000},
                 utilities::vector2{40, 15},
-                rand() % 360) };
+                0) };
             body_component->travel(x_offset);
             x_offset -= 50;
             entity->add_component(std::move(body_component));
-            auto movement_component { std::make_unique<core::movement_component>((rand() % 300) - 150) };
+            auto movement_component { std::make_unique<core::movement_component>(500) };
             entity->add_component(std::move(movement_component));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());
