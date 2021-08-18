@@ -46,7 +46,11 @@ namespace core
         /// @brief Draw line to the display from p1 to p2
         /// @param p1 The start point
         /// @param p2 The end point
-        void draw_line(const utilities::vector2& p1, const utilities::vector2& p2);
+        /// @param color The colour of the line. Defaults to white.
+        void draw_line(
+            const utilities::vector2& p1, 
+            const utilities::vector2& p2, 
+            const utilities::color& color = utilities::color{255, 255, 255});
 
         /// @brief Draw rectangle
         /// @param rect The rectangle to draw

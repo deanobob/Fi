@@ -59,18 +59,21 @@ namespace ui
                 const float w = std::get<2>(renderable);
                 const float h = std::get<3>(renderable);
                 const double r = std::get<4>(renderable);
+                const int t = std::get<5>(renderable);
+
                 const auto cx = x + w / 2.0;
                 const auto cy = y + h / 2.0;
 
-                auto tl = rotate_point(cx, cy, r, x, y);
-                auto tr = rotate_point(cx, cy, r, x + w, y);
-                auto bl = rotate_point(cx, cy, r, x, y + h);
-                auto br = rotate_point(cx, cy, r, x + w, y + h);
+                const auto tl = rotate_point(cx, cy, r, x, y);
+                const auto tr = rotate_point(cx, cy, r, x + w, y);
+                const auto bl = rotate_point(cx, cy, r, x, y + h);
+                const auto br = rotate_point(cx, cy, r, x + w, y + h);
+                const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
 
-                p_draw_manager->draw_line(tl, tr); // top left to top right
-                p_draw_manager->draw_line(tr, br); // top right to bottom right
-                p_draw_manager->draw_line(bl, br); // bottom left to bottom right
-                p_draw_manager->draw_line(tl, bl); // top left to bottom left
+                p_draw_manager->draw_line(tl, tr, color); // top left to top right
+                p_draw_manager->draw_line(tr, br, color); // top right to bottom right
+                p_draw_manager->draw_line(bl, br, color); // bottom left to bottom right
+                p_draw_manager->draw_line(tl, bl, color); // top left to bottom left
             }
 
             p_draw_manager->end();
