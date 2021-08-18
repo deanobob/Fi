@@ -35,8 +35,8 @@ namespace core
             , m_start_angle_rad{utilities::math::to_radians(start_angle_deg)}
             , m_angle_rad{utilities::math::to_radians(angle_deg)}
             , m_centre{m_clockwise 
-                        ? m_start + utilities::vector2::forward(m_start_angle_rad) * radius
-                        : m_start - utilities::vector2::forward(m_start_angle_rad) * radius}
+                        ? m_start + utilities::vector2::forward((M_PI / 2.0) + m_start_angle_rad) * radius
+                        : m_start - utilities::vector2::forward((M_PI / 2.0) + m_start_angle_rad) * radius}
             , m_length{(angle_deg / 360.f) * M_PI * (m_radius * 2.0)}
             , m_end{get_position_at(m_length)}
         {
@@ -56,7 +56,7 @@ namespace core
         const utilities::vector2 get_position_at(double distance) const override
         {
             // Calculate the location on the arc at the given angle plus offset
-            const auto position_angle_rad {m_start_angle_rad + get_rotation_at(distance)};
+            const auto position_angle_rad {get_rotation_at(distance) - (M_PI / 2.0)};
             return utilities::vector2{
                 static_cast<float>(m_centre.x + m_radius * cos(position_angle_rad)), 
                 static_cast<float>(m_centre.y + m_radius * sin(position_angle_rad))};
@@ -75,14 +75,14 @@ namespace core
         double get_rotation_at(double distance) const override
         {
             // Calculate the total percentage of angle travelled
-            auto angle_travelled_rad {(m_angle_rad / m_length) * distance - M_PI};
+            auto angle_travelled_rad {(m_angle_rad / m_length) * distance};
             if (!m_clockwise)
             {
                 // Invert angle travelled to move counter clockwise
                 angle_travelled_rad = m_angle_rad - angle_travelled_rad + M_PI - m_angle_rad;
             }
 
-            return angle_travelled_rad;
+            return std::fmod(m_start_angle_rad + angle_travelled_rad, M_PI * 2.0);
         }
 
         double length() const override

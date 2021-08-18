@@ -4,6 +4,7 @@
 #ifndef PATH_SEGMENT_STRAIGHT_HPP
 #define PATH_SEGMENT_STRAIGHT_HPP
 
+#include "math.hpp"
 #include "path_segment.hpp"
 #include "vector2.hpp"
 
