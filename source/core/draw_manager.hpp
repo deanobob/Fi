@@ -47,10 +47,12 @@ namespace core
         /// @param p1 The start point
         /// @param p2 The end point
         /// @param color The colour of the line. Defaults to white.
+        /// @param thickness The line thickness
         void draw_line(
             const utilities::vector2& p1, 
             const utilities::vector2& p2, 
-            const utilities::color& color = utilities::color{255, 255, 255});
+            const utilities::color& color = utilities::color{255, 255, 255},
+            float thickness = 1);
 
         /// @brief Draw rectangle
         /// @param rect The rectangle to draw

@@ -55,7 +55,8 @@ namespace render
                               float y1,
                               float x2,
                               float y2,
-                              const utilities::color& color) override;
+                              const utilities::color& color,
+                              float thickness = 1) override;
 
         void render_text(const uint32_t font_id,
                          const std::string& text,

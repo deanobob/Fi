@@ -68,9 +68,10 @@ namespace core
     void draw_manager::draw_line(
         const utilities::vector2& p1,
         const utilities::vector2& p2, 
-        const utilities::color& color)
+        const utilities::color& color,
+        float thickness)
     {
-        mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, color);
+        mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, color, thickness);
     }
 
     void draw_manager::draw_rectangle(const utilities::rectangle& rect, const utilities::color& color)

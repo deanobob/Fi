@@ -69,11 +69,12 @@ namespace ui
                 const auto bl = rotate_point(cx, cy, r, x, y + h);
                 const auto br = rotate_point(cx, cy, r, x + w, y + h);
                 const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
+                const auto thickness = t == 1 ? 2 : .5;
 
-                p_draw_manager->draw_line(tl, tr, color); // top left to top right
-                p_draw_manager->draw_line(tr, br, color); // top right to bottom right
-                p_draw_manager->draw_line(bl, br, color); // bottom left to bottom right
-                p_draw_manager->draw_line(tl, bl, color); // top left to bottom left
+                p_draw_manager->draw_line(tl, tr, color, thickness); // top left to top right
+                p_draw_manager->draw_line(tr, br, color, thickness); // top right to bottom right
+                p_draw_manager->draw_line(bl, br, color, thickness); // bottom left to bottom right
+                p_draw_manager->draw_line(tl, bl, color, thickness); // top left to bottom left
             }
 
             p_draw_manager->end();

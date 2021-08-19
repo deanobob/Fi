@@ -282,8 +282,13 @@ namespace render
           rect.y + rect.height, al_color);
     }
 
-    void allegro_render_controller::render_draw_line(const float x1, const float y1, const float x2,
-        const float y2, const utilities::color& color)
+    void allegro_render_controller::render_draw_line(
+        const float x1, 
+        const float y1, 
+        const float x2,
+        const float y2, 
+        const utilities::color& color,
+        float thickness)
     {
         ALLEGRO_COLOR al_color{};
         al_color.r = color.r;
@@ -291,7 +296,7 @@ namespace render
         al_color.b = color.b;
         al_color.a = color.a;
 
-        al_draw_line(x1, y1, x2, y2, al_color, 2);
+        al_draw_line(x1, y1, x2, y2, al_color, thickness);
     }
 
     void allegro_render_controller::render_text(

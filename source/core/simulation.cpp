@@ -71,7 +71,7 @@ namespace core
             auto entity{std::make_unique<core::entity>()};
             auto body_component { std::make_unique<core::body_component>(
                 utilities::vector2{5000, 5000},
-                utilities::vector2{40, 15},
+                utilities::vector2{40, 10},
                 0) };
             body_component->travel(x_offset);
             x_offset -= 50;
