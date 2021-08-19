@@ -20,7 +20,8 @@ INC_PATH := -Isource/ \
 			-I/usr/local/include/
 LIB_PATH := -Llib/ \
             -L/usr/local/lib
-LIBS     := -lpthread #-lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+LIBS := -lpthread #-lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
+TEST_LIBS := -lpthread #-lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf
 
 # Define compiler
 CXX := g++-10
@@ -35,6 +36,7 @@ endif
 # Compiler options
 CXX_FLAGS := -std=c++17 -ggdb -Wall -Wextra -pedantic -Wconversion -Wno-unused-parameter -DCI $(INC_PATH)
 LD_FLAGS := $(LIB_PATH) $(LIBS)
+TEST_LD_FLAGS := $(LIB_PATH) $(TEST_LIBS)
 
 # Name the executable here
 EXECUTABLE_NAME := Malon
@@ -76,7 +78,7 @@ $(OBJECT_FILES): $(OBJ)/%.o: %.cpp
 	@$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(TEST_EXECUTABLE_FILES): $(TEST_OBJECT_FILES)
-	@$(CXX) -o $@ $^ $(LD_FLAGS)
+	@$(CXX) -o $@ $^ $(TEST_LD_FLAGS)
 	@echo "Build successful!"
 
 $(TEST_OBJECT_FILES): $(TEST_OBJ)/%.o: %.cpp

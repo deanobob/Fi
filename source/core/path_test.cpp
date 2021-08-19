@@ -57,21 +57,21 @@ TEST_CASE("core/path_segment*.hpp", "[path_segment]")
       core::path_segment_curved path_segment_right{{0,0}, 20., 90, 0, false};
       CHECK(path_segment_right.get_end_position().x == Approx(20.).margin(1e-5));
       CHECK(path_segment_right.get_end_position().y == Approx(-20.).margin(1e-5));
-      CHECK(path_segment_right.get_end_rotation() == Approx(90.0).margin(1e-5));
+      CHECK(path_segment_right.get_end_rotation() == Approx(270.0).margin(1e-5));
 
       core::path_segment_curved path_segment_down{{0,0}, 20., 90, 90, false};
       CHECK(path_segment_down.get_end_position().x == Approx(20.).margin(1e-5));
       CHECK(path_segment_down.get_end_position().y == Approx(20.).margin(1e-5));
-      CHECK(path_segment_down.get_end_rotation() == Approx(180.0).margin(1e-5));
+      CHECK(path_segment_down.get_end_rotation() == Approx(0.0).margin(1e-5));
 
       core::path_segment_curved path_segment_left{{0,0}, 20., 90, 180, false};
       CHECK(path_segment_left.get_end_position().x == Approx(-20.).margin(1e-5));
       CHECK(path_segment_left.get_end_position().y == Approx(20.).margin(1e-5));
-      CHECK(path_segment_left.get_end_rotation() == Approx(270.0).margin(1e-5));
+      CHECK(path_segment_left.get_end_rotation() == Approx(90.0).margin(1e-5));
 
       core::path_segment_curved path_segment_up{{0,0}, 20., 90, 270, false};
       CHECK(path_segment_up.get_end_position().x == Approx(-20.).margin(1e-5));
       CHECK(path_segment_up.get_end_position().y == Approx(-20.).margin(1e-5));
-      CHECK(path_segment_up.get_end_rotation() == Approx(0.0).margin(1e-5));
+      CHECK(path_segment_up.get_end_rotation() == Approx(180.0).margin(1e-5));
    }
 }

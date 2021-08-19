@@ -69,7 +69,12 @@ namespace core
 
         double get_end_rotation() const override
         {
-            return utilities::math::to_degrees(get_rotation_at(m_length));
+            auto rotation_rad = get_rotation_at(m_length);
+            if (!m_clockwise)
+            {
+                rotation_rad += M_PI;
+            }
+            return std::fmod(utilities::math::to_degrees(rotation_rad), 360.0);
         } 
 
         double get_rotation_at(double distance) const override
@@ -82,7 +87,7 @@ namespace core
                 angle_travelled_rad = m_angle_rad - angle_travelled_rad + M_PI - m_angle_rad;
             }
 
-            return std::fmod(m_start_angle_rad + angle_travelled_rad, M_PI * 2.0);
+            return m_start_angle_rad + angle_travelled_rad;
         }
 
         double length() const override
