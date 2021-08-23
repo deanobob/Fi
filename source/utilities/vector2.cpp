@@ -65,6 +65,26 @@ namespace utilities
         return vector2(cos(angle_rad), sin(angle_rad));
     }
 
+    utilities::vector2 vector2::rotate_point(float cx, float cy, float angle_rad, float px, float py)
+    {
+        float s = sin(angle_rad);
+        float c = cos(angle_rad);
+
+        // translate point back to origin:
+        px -= cx;
+        py -= cy;
+
+        // rotate point
+        float xnew = px * c - py * s;
+        float ynew = px * s + py * c;
+
+        // translate point back:
+        px = xnew + cx;
+        py = ynew + cy;
+
+        return {px, py};
+    }
+
     vector2::vector2()
         : vector2(0.0f, 0.0f)
     {

@@ -7,26 +7,6 @@
 
 namespace ui
 {
-    utilities::vector2 rotate_point(float cx, float cy, float angle, float px, float py)
-    {
-        float s = sin(angle);
-        float c = cos(angle);
-
-        // translate point back to origin:
-        px -= cx;
-        py -= cy;
-
-        // rotate point
-        float xnew = px * c - py * s;
-        float ynew = px * s + py * c;
-
-        // translate point back:
-        px = xnew + cx;
-        py = ynew + cy;
-
-        return {px, py};
-    }
-
     simulation_view::simulation_view(core::message_bus* p_message_bus, core::camera* p_camera)
         : mp_message_bus{p_message_bus}
         , mp_camera{p_camera}
@@ -64,10 +44,10 @@ namespace ui
                 const auto cx = x + w / 2.0;
                 const auto cy = y + h / 2.0;
 
-                const auto tl = rotate_point(cx, cy, r, x, y);
-                const auto tr = rotate_point(cx, cy, r, x + w, y);
-                const auto bl = rotate_point(cx, cy, r, x, y + h);
-                const auto br = rotate_point(cx, cy, r, x + w, y + h);
+                const auto tl = utilities::vector2::rotate_point(cx, cy, r, x, y);
+                const auto tr = utilities::vector2::rotate_point(cx, cy, r, x + w, y);
+                const auto bl = utilities::vector2::rotate_point(cx, cy, r, x, y + h);
+                const auto br = utilities::vector2::rotate_point(cx, cy, r, x + w, y + h);
                 const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
                 const auto thickness = t == 1 ? 2 : .5;
 

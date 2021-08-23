@@ -21,9 +21,11 @@ namespace core
     {
         public:
         /// @brief Construct a new movement component object
+        /// @param acceleration The initial acceleration value
         /// @param velocity The initial velocity in pixels per second
-        movement_component(float velocity = 0.0f)
-            : m_velocity{velocity}
+        movement_component(float acceleration = 0.0f, float velocity = 0.0f)
+            : m_acceleration{acceleration}
+            , m_velocity{velocity}
         {
             auto seg1 = std::make_unique<path_segment_straight>(utilities::vector2{4500, 5020}, 0.f, 1000);
             auto seg2 = std::make_unique<path_segment_curved>(seg1->get_end_position(), 50, 180, seg1->get_end_rotation(), true);
@@ -43,7 +45,6 @@ namespace core
             m_route.push_back(std::move(seg7));
             m_route.push_back(std::move(seg8));
             m_route.push_back(std::move(seg9));
-            
         }
 
         /// @brief Get the movement component type
@@ -60,6 +61,13 @@ namespace core
             m_velocity = velocity;
         }
 
+        /// @brief Get the acceleration value
+        /// @return The acceleration value
+        float get_acceleration() const
+        {
+            return m_acceleration;
+        }
+
         /// @brief Get the velocity in pixels per second
         /// @return The velocity in pixels per second
         float get_velocity() const
@@ -67,14 +75,29 @@ namespace core
             return m_velocity;
         }
 
+        /// @brief Get the maximum velocity in pixels per second
+        /// @return The maximum velocity in pixels per second
+        float get_max_velocity() const
+        {
+            return m_max_velocity;
+        }
+
+        /// @brief Get the list of path segments defining a path 
+        /// @return The path
         const std::list<std::unique_ptr<core::path_segment> >& get_path() const
         {
             return m_route;
         }
 
         private:
+        /// @brief The acceleration value
+        float m_acceleration{};
+
         /// @brief The velocity in pixels per second
         float m_velocity{};
+
+        /// @brief The velocity in pixels per second
+        float m_max_velocity{500.f};
 
         std::list<std::unique_ptr<core::path_segment> > m_route{};
     };

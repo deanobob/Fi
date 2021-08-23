@@ -37,10 +37,21 @@ namespace utilities
         /// @return The value of degrees in radians
         static float to_radians(float degrees);
 
+        /// @brief Converts a rotation in radians to degrees
+        /// @param radians The rotation in radians
+        /// @return The value of radians in degrees
         static double to_degrees(double radians);
 
+        /// @brief Converts a rotation in radians to degrees
+        /// @param radians The rotation in radians
+        /// @return The value of radians in degrees
         static float to_degrees(float radians);
 
+        /// @brief Linearly interpolate between two values
+        /// @param a The start value
+        /// @param b The end value
+        /// @param t Value between 0 and 1 that defines the value to return
+        /// @return The value between a and b
         static float lerp(float a, float b, float t);
 
         private:

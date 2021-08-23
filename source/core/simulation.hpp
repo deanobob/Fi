@@ -35,6 +35,7 @@ namespace core
         void update(const utilities::gametime& gametime);
 
         /// @brief Called on every frame render
+        /// @param delta The remaining frame fraction
         void draw(double delta);
 
         /// @brief Shutdown the simulation

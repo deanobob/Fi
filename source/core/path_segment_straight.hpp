@@ -11,7 +11,7 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @class The straight path segment
+    /// @brief The path_segment_straight class
     class path_segment_straight :
         public path_segment
     {

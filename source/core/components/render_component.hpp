@@ -33,6 +33,8 @@ namespace core
             return component_type::render;
         }
 
+        /// @brief Get the render type
+        /// @return The render type
         const render_type& get_render_type() const
         {
             return m_render_type;

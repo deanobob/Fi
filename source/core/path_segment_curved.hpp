@@ -13,7 +13,7 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @class The curved path segment
+    /// @brief The path_segment_curved class
     class path_segment_curved :
         public path_segment
     {
@@ -22,7 +22,7 @@ namespace core
         /// @param start The start of the segment 
         /// @param radius The radius of the circle
         /// @param angle_deg The angle of the segment in degrees
-        /// @param start_angle The angle offset, defines which angle to begin the path
+        /// @param start_angle_deg The angle offset, defines which angle to begin the path
         /// @param clockwise Whether to curve clockwise or anti-clockwise from start position
         path_segment_curved(const utilities::vector2& start, 
                             float radius, 

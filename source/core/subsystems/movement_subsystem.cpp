@@ -39,6 +39,11 @@ namespace core
                 continue;
             }
 
+            p_movement_component->set_velocity(
+                std::min(p_movement_component->get_velocity() + 
+                         (p_movement_component->get_acceleration() * 
+                          static_cast<float>(gametime.get_elapsed_time_in_seconds())), 
+                         p_movement_component->get_max_velocity()));
             p_body_component->travel(p_movement_component->get_velocity() * gametime.get_elapsed_time_in_seconds());
 
             const auto& route = p_movement_component->get_path();
@@ -71,7 +76,10 @@ namespace core
             if (p_current_path)
             {
                 p_body_component->set_position(p_current_path->get_position_at(distance_travelled));
-                p_body_component->set_rotation(p_current_path->get_rotation_at(distance_travelled), utilities::math::unit_type::radians);
+                p_body_component->set_rotation(
+                    p_current_path->get_rotation_at(distance_travelled), 
+                    utilities::math::unit_type::radians);
+                    
                 auto event_args{entity_event_args{p_entity}};
                 p_entity->position_changed_event.dispatch(&event_args);
             }

@@ -9,7 +9,7 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @class The base class for path segments
+    /// @brief The base class for path segments
     class path_segment
     {
         public:
@@ -29,10 +29,17 @@ namespace core
         /// @return The position at a given distance along the route
         virtual const utilities::vector2 get_position_at(double distance) const = 0;
 
+        /// @brief Get the start rotation
+        /// @return The start rotation
         virtual double get_start_rotation() const = 0;
 
+        /// @brief Get the end rotation
+        /// @return The end rotation
         virtual double get_end_rotation() const = 0; 
 
+        /// @brief Get the rotation at object
+        /// @param distance The distance travelled along the path
+        /// @return The rotation angle at the given distance
         virtual double get_rotation_at(double distance) const = 0;
 
         /// @brief Get the total length of the path segment

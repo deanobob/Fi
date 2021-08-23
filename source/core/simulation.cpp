@@ -76,7 +76,7 @@ namespace core
             body_component->travel(x_offset);
             x_offset -= 50;
             entity->add_component(std::move(body_component));
-            auto movement_component { std::make_unique<core::movement_component>(400) };
+            auto movement_component { std::make_unique<core::movement_component>(50.f) };
             entity->add_component(std::move(movement_component));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());

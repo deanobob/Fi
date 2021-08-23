@@ -51,6 +51,11 @@ namespace utilities
         /// @return A vector perpendicular to the given vector
         static vector2 perp(const vector2& vector);
 
+        /// @brief Linearly interpolate between two points
+        /// @param a The start point
+        /// @param b The end point
+        /// @param t Value between 0 and 1 that defines the point to return
+        /// @return The point between a and b
         static vector2 lerp(const vector2& a, const vector2& b, float t);
 
         /// @brief Get the minimum vector
@@ -69,6 +74,15 @@ namespace utilities
         /// @param angle_rad The angle in radians
         /// @return A forward vector
         static vector2 forward(float angle_rad);
+
+        /// @brief Rotate a vector around a centre point by a given angle in radians
+        /// @param cx The centre point X coordinate
+        /// @param cy The centre point Y coordinate
+        /// @param angle_rad The angle to rotate by in radians
+        /// @param px The point to rotate X coordinate
+        /// @param py The point to rotate Y coordinate
+        /// @return The value of pX and pY rotated around the cX and cY position
+        static utilities::vector2 rotate_point(float cx, float cy, float angle_rad, float px, float py);
 
         /// @brief The default constructor
         vector2();

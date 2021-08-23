@@ -55,16 +55,24 @@ namespace core
         /// @param unit The unit type (degrees / radians), defaults to degrees
         void set_rotation(double rotation, utilities::math::unit_type unit = utilities::math::unit_type::degrees);
 
+        /// @brief Get the body rotation value
+        /// @return The body rotation value
         double get_rotation() const;
 
         /// @brief Get the forward direction of the body
         /// @return The forward value
         utilities::vector2 forward() const;
 
+        /// @brief Travel a given distance. Adds the distance value to the total distance travelled
+        /// @param distance The distance to add to the total distance
         void travel(float distance);
         
+        /// @brief Set the travelled distance
+        /// @param distance The distance travelled
         void set_travelled(float distance);
 
+        /// @brief Get the travelled distance
+        /// @return The travelled distance
         float get_travelled() const;
         
         /// @brief Move the body by a given step
@@ -84,7 +92,7 @@ namespace core
         utilities::vector2 m_size{};
         /// @brief The body rotation
         double m_rotation{0.0};
-        /// @brief 
+        /// @brief The distance travelled
         float m_travelled{0.0}; 
     };
 } /// namespace core
