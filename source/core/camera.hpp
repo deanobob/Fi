@@ -15,15 +15,15 @@
 namespace core
 {
     /// @brief Renderable type - temporary until a real renderable is defined
-    using renderable = std::tuple<float, float, float, float>;
+    using renderable = std::tuple<float, float, float, float, float, int>;
 
     /// @brief The camera class
     class camera
     {
         public:
         /// @brief Construct a new camera object
-        /// @param viewport The camera viewport
-        camera(const utilities::rectangle& viewport = utilities::rectangle::EMPTY);
+        /// @param position The camera position
+        camera(const utilities::vector2& position = utilities::vector2::ZERO);
 
         /// @brief Get the camera unique identifier
         /// @return The unique camera identifier
@@ -31,15 +31,15 @@ namespace core
 
         /// @brief Set the position of the camera
         /// @param position The new position of the camera
-        void set_position(utilities::vector2 position);
+        void set_position(const utilities::vector2& position);
 
         /// @brief Set the dimensions of the camera
         /// @param size The dimensions of the camera
-        void set_dimensions(utilities::vector2 size);
+        void set_dimensions(const utilities::vector2& size);
 
         /// @brief Move the camera
         /// @param offset The value added to the current position to move the camera
-        void move(utilities::vector2 offset);
+        void move(const utilities::vector2& offset);
 
         /// @brief Get the viewport
         /// @return The viewport

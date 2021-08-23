@@ -43,6 +43,13 @@ namespace utilities
         return vector2(vector.y, -vector.x);
     }
 
+    vector2 vector2::lerp(const vector2& a, const vector2& b, float t)
+    {
+        float ret_x = utilities::math::lerp(a.x, b.x, t);
+        float ret_y = utilities::math::lerp(a.y, b.y, t);
+        return {ret_x, ret_y};
+    }
+
     vector2 vector2::min(const vector2& lhs, const vector2& rhs)
     {
         return vector2(fmin(lhs.x, rhs.x), fmin(lhs.y, rhs.y));
@@ -51,6 +58,31 @@ namespace utilities
     vector2 vector2::max(const vector2& lhs, const vector2& rhs)
     {
         return vector2(fmax(lhs.x, rhs.x), fmax(lhs.y, rhs.y));
+    }
+    
+    vector2 vector2::forward(float angle_rad)
+    {
+        return vector2(cos(angle_rad), sin(angle_rad));
+    }
+
+    utilities::vector2 vector2::rotate_point(float cx, float cy, float angle_rad, float px, float py)
+    {
+        float s = sin(angle_rad);
+        float c = cos(angle_rad);
+
+        // translate point back to origin:
+        px -= cx;
+        py -= cy;
+
+        // rotate point
+        float xnew = px * c - py * s;
+        float ynew = px * s + py * c;
+
+        // translate point back:
+        px = xnew + cx;
+        py = ynew + cy;
+
+        return {px, py};
     }
 
     vector2::vector2()

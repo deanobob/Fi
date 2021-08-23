@@ -143,11 +143,13 @@ namespace render
         /// @param x2 The second point X position
         /// @param y2 The second point Y position
         /// @param color The line colour
+        /// @param thickness The line thickness
         virtual void render_draw_line(float x1,
                                       float y1,
                                       float x2,
                                       float y2,
-                                      const utilities::color& color) = 0;
+                                      const utilities::color& color,
+                                      float thickness = 1) = 0;
 
         /// @brief Render text at given position
         /// @param font_id The ID of the font

@@ -13,13 +13,6 @@ namespace ui
         , mp_message_bus{p_message_bus}
     {
         auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
-
-        auto test_button = std::make_unique<button_open_window>(mp_message_bus);
-        test_button->set_width(200);
-        test_button->set_height(30);
-        test_button->set_horizontal_alignment(horizontal_alignment::centre);
-        test_button->set_vertical_alignment(vertical_alignment::bottom);
-        sim_view->add_child(std::move(test_button));
         mp_simulation_view = sim_view.get();
 
         add_child(std::move(sim_view), true);
