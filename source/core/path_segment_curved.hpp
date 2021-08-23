@@ -35,8 +35,8 @@ namespace core
             , m_start_angle_rad{utilities::math::to_radians(start_angle_deg)}
             , m_angle_rad{utilities::math::to_radians(angle_deg)}
             , m_centre{m_clockwise 
-                        ? m_start + utilities::vector2::forward((M_PI / 2.0) + m_start_angle_rad) * radius
-                        : m_start - utilities::vector2::forward((M_PI / 2.0) + m_start_angle_rad) * radius}
+                        ? m_start + utilities::vector2::forward(static_cast<float>(M_PI / 2.0) + m_start_angle_rad) * radius
+                        : m_start - utilities::vector2::forward(static_cast<float>(M_PI / 2.0) + m_start_angle_rad) * radius}
             , m_length{(angle_deg / 360.f) * M_PI * (m_radius * 2.0)}
             , m_end{get_position_at(m_length)}
         {

@@ -44,13 +44,14 @@ namespace core
                          (p_movement_component->get_acceleration() * 
                           static_cast<float>(gametime.get_elapsed_time_in_seconds())), 
                          p_movement_component->get_max_velocity()));
-            p_body_component->travel(p_movement_component->get_velocity() * gametime.get_elapsed_time_in_seconds());
+            p_body_component->travel(p_movement_component->get_velocity() * 
+                                     static_cast<float>(gametime.get_elapsed_time_in_seconds()));
 
             const auto& route = p_movement_component->get_path();
-            auto total_distance{0.0};
+            auto total_distance{0.0f};
             for (const auto& route_segment : route)
             {
-                total_distance += route_segment->length();
+                total_distance += static_cast<float>(route_segment->length());
             }
 
             auto distance_travelled = p_body_component->get_travelled();
@@ -63,7 +64,7 @@ namespace core
             core::path_segment* p_current_path{nullptr};
             for (const auto& route_segment : route)
             {
-                const auto segment_length = route_segment->length();
+                const auto segment_length = static_cast<float>(route_segment->length());
                 if (distance_travelled > segment_length)
                 {
                     distance_travelled -= segment_length;
