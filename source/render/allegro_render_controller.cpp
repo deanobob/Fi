@@ -473,7 +473,7 @@ namespace render
     }
 
     void allegro_render_controller::render_draw_line(const float x1, const float y1, const float x2,
-        const float y2, const utilities::color& color)
+        const float y2, const utilities::color& color, float thickness)
     {
 
     }
