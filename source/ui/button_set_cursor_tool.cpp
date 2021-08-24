@@ -2,6 +2,7 @@
 
 #include "plog/Log.h"
 #include "button_set_cursor_tool.hpp"
+#include "message_set_cursor_tool.hpp"
 
 namespace ui
 {
@@ -14,13 +15,29 @@ namespace ui
 
     void button_set_cursor_tool::on_press()
     {
-        if (m_cursor_tool == core::cursor_tool_type::ZERO_DEG_STRAIGHT_TRACK)
+        auto cursor_tool_type { core::cursor_tool_type::none };
+        switch (m_cursor_tool)
         {
-            LOG_DEBUG << "Zero deg straight track tool";
+            case core::cursor_tool_type::track_0_deg:
+                cursor_tool_type = core::cursor_tool_type::track_0_deg;
+                break;
+            case core::cursor_tool_type::track_90_deg:
+                cursor_tool_type = core::cursor_tool_type::track_90_deg;
+                break;
+            case core::cursor_tool_type::track_180_deg:
+                cursor_tool_type = core::cursor_tool_type::track_180_deg;
+                break;
+            case core::cursor_tool_type::track_270_deg:
+                cursor_tool_type = core::cursor_tool_type::track_270_deg;
+                break;
+            default:
+                break;
         }
-        else if (m_cursor_tool == core::cursor_tool_type::NINETY_DEG_STRAIGHT_TRACK)
+
+        if (cursor_tool_type != core::cursor_tool_type::none)
         {
-            LOG_DEBUG << "Ninety deg straight track tool";
+            auto message { messages::message_set_cursor_tool(cursor_tool_type) };
+            mp_message_bus->send(&message);
         }
     }
 

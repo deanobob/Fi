@@ -1,26 +1,26 @@
-/// @file message_sim_mouse_event.hpp
-/// @brief Message that contains a mouse event to be handled by game simulation
+/// @file message_sim_mouse_button.hpp
+/// @brief Message that contains a mouse button event to be handled by game simulation
 
-#ifndef MESSAGE_SIM_MOUSE_EVENT_HPP
-#define MESSAGE_SIM_MOUSE_EVENT_HPP
+#ifndef MESSAGE_SIM_MOUSE_BUTTON_HPP
+#define MESSAGE_SIM_MOUSE_BUTTON_HPP
 
 #include "message.hpp"
 
 /// @namespace messages namespace
 namespace messages
 {
-    /// @brief Message generated from a mouse event to be handled by the game simulation
-    class message_sim_mouse_event
+    /// @brief Message generated from a mouse buttonevent to be handled by the game simulation
+    class message_sim_mouse_button
         : public core::message
     {
         public:
         /// @brief The message type
-        static constexpr auto TYPE { "SIM_MOUSE_EVENT" };
+        static constexpr auto TYPE { "SIM_MOUSE_BUTTON" };
 
         /// @brief Construct a new message sim mouse event object
         /// @param x The mouse x position
         /// @param y The mouse y position
-        message_sim_mouse_event(const int x, const int y)
+        message_sim_mouse_button(const int x, const int y)
             : m_x{x}
             , m_y{y}
         {}
@@ -49,4 +49,4 @@ namespace messages
     };
 } /// namespace messages
 
-#endif /// MESSAGE_SIM_MOUSE_EVENT_HPP
+#endif /// MESSAGE_SIM_MOUSE_BUTTON_HPP

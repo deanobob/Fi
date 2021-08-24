@@ -11,8 +11,11 @@ namespace core
     /// @brief The tool types that can be selected for use with the cursor
     enum class cursor_tool_type : unsigned int
     {
-        ZERO_DEG_STRAIGHT_TRACK,
-        NINETY_DEG_STRAIGHT_TRACK,
+        none,
+        track_0_deg,
+        track_90_deg,
+        track_180_deg,
+        track_270_deg,
     };
 } /// namespace core
 

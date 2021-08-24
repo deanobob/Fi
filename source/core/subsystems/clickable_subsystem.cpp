@@ -6,7 +6,7 @@
 #include "clickable_subsystem.hpp"
 #include "follow_camera.hpp"
 #include "message_open_window.hpp"
-#include "message_sim_mouse_event.hpp"
+#include "message_sim_mouse_button.hpp"
 
 namespace core
 {
@@ -20,7 +20,7 @@ namespace core
         mp_message_bus->subscribe(
             this,
             {
-                messages::message_sim_mouse_event::TYPE
+                messages::message_sim_mouse_button::TYPE
             }
         );
     }
@@ -52,9 +52,9 @@ namespace core
 
     void clickable_subsystem::on_publish(message* p_message)
     {
-        if (p_message->get_type() == messages::message_sim_mouse_event::TYPE)
+        if (p_message->get_type() == messages::message_sim_mouse_button::TYPE)
         {
-            const auto p_sim_message = dynamic_cast<messages::message_sim_mouse_event*>(p_message);
+            const auto p_sim_message = dynamic_cast<messages::message_sim_mouse_button*>(p_message);
             const auto mouse_point = utilities::rectangle{
                 static_cast<float>(p_sim_message->get_x()),
                 static_cast<float>(p_sim_message->get_y()),
