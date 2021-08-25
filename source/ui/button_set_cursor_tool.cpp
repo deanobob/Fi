@@ -21,14 +21,14 @@ namespace ui
             case core::cursor_tool_type::track_0_deg:
                 cursor_tool_type = core::cursor_tool_type::track_0_deg;
                 break;
+            case core::cursor_tool_type::track_45_deg:
+                cursor_tool_type = core::cursor_tool_type::track_45_deg;
+                break;
             case core::cursor_tool_type::track_90_deg:
                 cursor_tool_type = core::cursor_tool_type::track_90_deg;
                 break;
-            case core::cursor_tool_type::track_180_deg:
-                cursor_tool_type = core::cursor_tool_type::track_180_deg;
-                break;
-            case core::cursor_tool_type::track_270_deg:
-                cursor_tool_type = core::cursor_tool_type::track_270_deg;
+            case core::cursor_tool_type::track_135_deg:
+                cursor_tool_type = core::cursor_tool_type::track_135_deg;
                 break;
             default:
                 break;

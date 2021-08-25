@@ -44,11 +44,30 @@ namespace core
     {
         if (m_active_cursor_tool != core::cursor_tool_type::none)
         {
-            const auto x = static_cast<float>(m_mouse_x);
-            const auto y = static_cast<float>(m_mouse_y);
-            const auto tile_offset_x = std::fmod(x, 50.f);
-            const auto tile_offset_y = std::fmod(y, 50.f);
-            p_camera->add_renderable({x - tile_offset_x, y - tile_offset_y, 50, 50, 0, 1});
+            auto x = static_cast<float>(m_mouse_x);
+            auto y = static_cast<float>(m_mouse_y);
+            // offset by tile margins
+            x -= std::fmod(x, 50.f);
+            y -= std::fmod(y, 50.f);
+            p_camera->add_renderable({x, y, 50, 50, 0, 1});
+
+            switch (m_active_cursor_tool)
+            {
+                case core::cursor_tool_type::track_0_deg:
+                    p_camera->add_renderable({x, y + 25, 50, 1, 0, 2});
+                    break;
+                case core::cursor_tool_type::track_45_deg:
+                    p_camera->add_renderable({x, y, 50, 50, 0, 2});
+                    break;
+                case core::cursor_tool_type::track_90_deg:
+                    p_camera->add_renderable({x + 25, y, 1, 50, 0, 2});
+                    break;
+                case core::cursor_tool_type::track_135_deg:
+                    p_camera->add_renderable({x + 50, y, 0, 50, 0, 2});
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

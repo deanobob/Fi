@@ -13,9 +13,9 @@ namespace core
     {
         none,
         track_0_deg,
+        track_45_deg,
         track_90_deg,
-        track_180_deg,
-        track_270_deg,
+        track_135_deg,
     };
 } /// namespace core
 
