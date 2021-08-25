@@ -3,7 +3,8 @@
 #include <math.h>
 #include "plog/Log.h"
 #include "simulation_view.hpp"
-#include "message_sim_mouse_event.hpp"
+#include "message_sim_mouse_button.hpp"
+#include "message_sim_mouse_move.hpp"
 
 namespace ui
 {
@@ -63,15 +64,19 @@ namespace ui
 
     void simulation_view::on_focus_lost()
     {
-        m_is_left_button_pressed = false;
+        m_is_right_button_pressed = false;
     }
 
     void simulation_view::mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y)
     {
         m_last_mouse_position = {position_x, position_y};
-        m_is_left_button_pressed = true;
 
-        auto message = messages::message_sim_mouse_event{
+        if (mouse_button == input::mouse_button::right)
+        {
+            m_is_right_button_pressed = true;
+        }
+
+        auto message = messages::message_sim_mouse_button{
             static_cast<int>(static_cast<float>(position_x) + mp_camera->get_viewport().x - get_world_x()),
             static_cast<int>(static_cast<float>(position_y) + mp_camera->get_viewport().y - get_world_y())};
         mp_message_bus->send(&message);
@@ -79,15 +84,20 @@ namespace ui
 
     void simulation_view::mouse_button_released(const input::mouse_button mouse_button, int position_x, int position_y)
     {
-        m_is_left_button_pressed = false;
+        m_is_right_button_pressed = false;
     }
 
     void simulation_view::mouse_axis_changed(int position_x, int position_y, int position_z)
     {
-        if (m_is_left_button_pressed)
+        if (m_is_right_button_pressed)
         {
             mp_camera->move(m_last_mouse_position - utilities::vector2{position_x, position_y});
             m_last_mouse_position = {position_x, position_y};
         }
+
+        auto message = messages::message_sim_mouse_move{
+            static_cast<int>(static_cast<float>(position_x) + mp_camera->get_viewport().x - get_world_x()),
+            static_cast<int>(static_cast<float>(position_y) + mp_camera->get_viewport().y - get_world_y())};
+        mp_message_bus->send(&message);
     }
 } /// namespace ui

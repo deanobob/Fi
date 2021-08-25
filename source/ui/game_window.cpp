@@ -5,6 +5,7 @@
 #include "game_window.hpp"
 #include "simulation_view.hpp"
 #include "spy_window.hpp"
+#include "track_edit_window.hpp"
 
 namespace ui
 {
@@ -14,6 +15,9 @@ namespace ui
     {
         auto sim_view = std::make_unique<simulation_view>(mp_message_bus, p_camera);
         mp_simulation_view = sim_view.get();
+
+        auto track_edit_panel = std::make_unique<track_edit_window>(mp_message_bus);
+        mp_simulation_view->add_child(std::move(track_edit_panel));
 
         add_child(std::move(sim_view), true);
 

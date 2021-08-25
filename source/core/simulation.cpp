@@ -5,6 +5,7 @@
 #include "body_component.hpp"
 #include "clickable_component.hpp"
 #include "clickable_subsystem.hpp"
+#include "cursor_subsystem.hpp"
 #include "movement_component.hpp"
 #include "movement_subsystem.hpp"
 #include "rectangle.hpp"
@@ -32,6 +33,11 @@ namespace core
             std::make_unique<render_subsystem>(
                 mp_message_bus,
                 mp_entity_manager.get()));
+        add_subsystem(
+            std::make_unique<cursor_subsystem>(
+                mp_message_bus,
+                mp_entity_manager.get(),
+                &m_camera_controller));
     }
 
     simulation::~simulation()
@@ -55,10 +61,10 @@ namespace core
         // Initialise map entity
         {
             auto entity{std::make_unique<core::entity>()};
-            auto body_component { std::make_unique<core::body_component>(
+            auto body_component{std::make_unique<core::body_component>(
                 utilities::vector2::ZERO,
                 utilities::vector2{10000, 10000},
-                0) };
+                0)};
             entity->add_component(std::move(body_component));
             entity->add_component(std::make_unique<core::render_component>("map"));
             mp_entity_manager->put(std::move(entity));
@@ -66,17 +72,17 @@ namespace core
 
         // Initialise test entities
         auto x_offset {250.0f};
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 8; i++)
         {
             auto entity{std::make_unique<core::entity>()};
-            auto body_component { std::make_unique<core::body_component>(
+            auto body_component{std::make_unique<core::body_component>(
                 utilities::vector2{5000, 5000},
                 utilities::vector2{40, 10},
-                0) };
+                0)};
             body_component->travel(x_offset);
             x_offset -= 50;
             entity->add_component(std::move(body_component));
-            auto movement_component { std::make_unique<core::movement_component>(50.f) };
+            auto movement_component{std::make_unique<core::movement_component>(50.f)};
             entity->add_component(std::move(movement_component));
             entity->add_component(std::make_unique<core::clickable_component>());
             entity->add_component(std::make_unique<core::render_component>());

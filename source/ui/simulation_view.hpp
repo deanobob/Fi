@@ -45,8 +45,8 @@ namespace ui
         /// @brief The simulation camera that this simulation view renders
         core::camera* mp_camera{nullptr};
 
-        /// @brief Flag indicating if the left mouse is pressed
-        bool m_is_left_button_pressed{false};
+        /// @brief Flag indicating if the right mouse is pressed
+        bool m_is_right_button_pressed{false};
 
         /// @brief Last mouse position
         utilities::vector2 m_last_mouse_position{};

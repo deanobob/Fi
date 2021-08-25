@@ -97,7 +97,7 @@ namespace core
         float m_velocity{};
 
         /// @brief The velocity in pixels per second
-        float m_max_velocity{500.f};
+        float m_max_velocity{400.f};
 
         std::list<std::unique_ptr<core::path_segment> > m_route{};
     };
