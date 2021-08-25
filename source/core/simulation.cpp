@@ -72,7 +72,7 @@ namespace core
 
         // Initialise test entities
         auto x_offset {250.0f};
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 8; i++)
         {
             auto entity{std::make_unique<core::entity>()};
             auto body_component{std::make_unique<core::body_component>(

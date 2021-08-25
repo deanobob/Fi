@@ -1,5 +1,6 @@
 /// @file cursor_subsystem.cpp
 
+#include <math.h>
 #include "plog/Log.h"
 #include "component_type.hpp"
 #include "cursor_subsystem.hpp"
@@ -43,7 +44,11 @@ namespace core
     {
         if (m_active_cursor_tool != core::cursor_tool_type::none)
         {
-            p_camera->add_renderable({m_mouse_x, m_mouse_y, 5, 5, 0, 1});
+            const auto x = static_cast<float>(m_mouse_x);
+            const auto y = static_cast<float>(m_mouse_y);
+            const auto tile_offset_x = std::fmod(x, 50.f);
+            const auto tile_offset_y = std::fmod(y, 50.f);
+            p_camera->add_renderable({x - tile_offset_x, y - tile_offset_y, 50, 50, 0, 1});
         }
     }
 
