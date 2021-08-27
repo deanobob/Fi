@@ -41,6 +41,11 @@ namespace ui
         return true;
     }
 
+    void ui_service::load(core::resource_manager* p_resource_manager) 
+    {
+        mp_root_node->load(p_resource_manager);
+    }
+
     void ui_service::update(const utilities::gametime& gametime)
     {
         if (mp_root_node)

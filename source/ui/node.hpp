@@ -12,6 +12,7 @@
 #include "layout_mode.hpp"
 #include "measure_mode.hpp"
 #include "mouse.hpp"
+#include "resource_manager.hpp"
 
 /// @brief ui namespace
 namespace ui
@@ -33,6 +34,10 @@ namespace ui
 
         /// @brief Initialises the node
         void initialise();
+
+        /// @brief Loads resources for the node
+        /// @param p_resource_manager The resource manager
+        void load(core::resource_manager* p_resource_manager);
 
         /// @brief Calculates the layout of the node and children
         void layout();
@@ -189,6 +194,10 @@ namespace ui
 
         /// @brief Called when the node is initialised
         virtual void on_initialise() = 0;
+
+        /// @brief Called when the node resources are loaded
+        /// @param p_resource_manager The resource manager
+        virtual void on_load(core::resource_manager* p_resource_manager) = 0;
 
         /// @brief Called when the node layout is calculated
         virtual void on_layout() = 0;

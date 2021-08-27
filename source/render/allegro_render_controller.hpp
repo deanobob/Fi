@@ -37,14 +37,14 @@ namespace render
         bool load_bitmap(const std::string& filename,
                          const utilities::vector2& position,
                          const utilities::vector2& size,
-                         uint32_t& bitmapId) override;
+                         resource_id& bitmapId) override;
 
         bool load_font(const std::string& filename,
                        uint32_t font_size,
                        uint32_t flags,
-                       uint32_t& fontId) override;
+                       resource_id& fontId) override;
 
-        void render_bitmap(uint32_t bitmapId,
+        void render_bitmap(resource_id bitmapId,
                            const utilities::vector2& position,
                            uint32_t flags) override;
 
@@ -58,7 +58,7 @@ namespace render
                               const utilities::color& color,
                               float thickness = 1) override;
 
-        void render_text(const uint32_t font_id,
+        void render_text(const resource_id font_id,
                          const std::string& text,
                          float x,
                          float y,

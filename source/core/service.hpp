@@ -6,6 +6,7 @@
 
 #include "draw_manager.hpp"
 #include "gametime.hpp"
+#include "resource_manager.hpp"
 #include "subscriber.hpp"
 
 /// @namespace core namespace
@@ -28,6 +29,10 @@ namespace core
         /// @brief Initialises the service
         /// @return True if successfully initialised, else false
         virtual bool initialise() = 0;
+
+        /// @brief Load resources into the game
+        /// @param p_resource_manager The resource manager
+        virtual void load(core::resource_manager* p_resource_manager) = 0;
 
         /// @brief Called on every tick allowing the service to update
         /// @param gametime The gametime maintaining instance

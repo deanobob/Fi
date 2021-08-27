@@ -30,15 +30,17 @@ namespace core
         mp_draw_manager = std::make_unique<draw_manager>(
             mp_message_bus.get(),
             get_system_interface()->get_render_controller());
+        mp_resource_manager = std::make_unique<resource_manager>(
+            get_system_interface()->get_render_controller());
 
         add_service(std::make_unique<input::input_service>(
             mp_message_bus.get(),
             get_system_interface()->get_input_controller()));
         add_service(std::make_unique<console::console_service>(mp_message_bus.get()));
-        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
         add_service(std::make_unique<ui::ui_service>(
             mp_message_bus.get(),
             get_system_interface()->get_input_controller()));
+        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
     }
 
     game::~game()
@@ -56,6 +58,8 @@ namespace core
 
         if (initialise())
         {
+            load();
+
             double current_time = utilities::time::get_current_time_in_seconds();
             double accumulator = 0.0;
 
@@ -147,6 +151,16 @@ namespace core
         }
 
         return success;
+    }
+
+    void game::load()
+    {
+        mp_resource_manager->load();
+
+        for (auto& service_iter : m_services)
+        {
+            service_iter.get()->load(mp_resource_manager.get());
+        }
     }
 
     void game::update()

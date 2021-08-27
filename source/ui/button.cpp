@@ -5,9 +5,24 @@
 
 namespace ui
 {
+    void button::set_icon(const std::string& icon_tag)
+    {
+        m_icon_tag = icon_tag;
+    }
+
     void button::on_initialise()
     {
 
+    }
+
+    void button::on_load(core::resource_manager* p_resource_manager) 
+    {
+        LOG_DEBUG << "MAGIC";
+        if (!m_icon_tag.empty())
+        {
+            LOG_DEBUG << "Loading " << m_icon_tag;
+            m_resource_id = p_resource_manager->get_resource_id(m_icon_tag);
+        }
     }
 
     void button::on_layout()
@@ -17,12 +32,16 @@ namespace ui
 
     void button::on_draw(core::draw_manager* p_draw_manager)
     {
-        if (!is_focused())
+        float x = get_world_x();
+        float y = get_world_y();
+        p_draw_manager->draw_bitmap(m_resource_id, {x, y});
+        
+        if (is_focused())
         {
-            float x = get_world_x();
-            float y = get_world_y();
-            float w = get_width();
-            float h = get_height();
+            x -= 1;
+            y -= 1;
+            float w = get_width() + 2;
+            float h = get_height() + 2;
             p_draw_manager->draw_line({x, y}, {x + w, y});         // top left to top right
             p_draw_manager->draw_line({x + w, y}, {x + w, y + h}); // top right to bottom right
             p_draw_manager->draw_line({x, y + h}, {x + w, y + h}); // bottom left to bottom right

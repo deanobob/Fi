@@ -24,6 +24,11 @@ namespace input
         return mp_input_controller->initialise();
     }
 
+    void input_service::load(core::resource_manager* p_resource_manager) 
+    {
+        
+    }
+
     void input_service::update(const utilities::gametime& gametime)
     {
         mp_input_controller->process_events();

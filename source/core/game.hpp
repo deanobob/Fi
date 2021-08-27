@@ -10,6 +10,7 @@
 #include "draw_manager.hpp"
 #include "gametime.hpp"
 #include "message_bus.hpp"
+#include "resource_manager.hpp"
 #include "service.hpp"
 #include "subscriber.hpp"
 #include "system_interface.hpp"
@@ -57,9 +58,14 @@ namespace core
         std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
         /// @brief The draw manager
         std::unique_ptr<core::draw_manager> mp_draw_manager{nullptr};
+        /// @brief The resource manager
+        std::unique_ptr<core::resource_manager> mp_resource_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();
+
+        /// @brief Load non-system specific game resources
+        void load();
 
         /// @brief Called on every tick to update services
         void update();

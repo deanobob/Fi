@@ -18,8 +18,14 @@ namespace ui
         /// @brief Destroy the button object
         virtual ~button() = default;
 
+        /// @brief Set the icon resource tag
+        /// @param icon_tag The icon resource tag
+        void set_icon(const std::string& icon_tag);
+
         protected:
         void on_initialise() override;
+
+        void on_load(core::resource_manager* p_resource_manager) override;
 
         void on_layout() override;
 
@@ -34,6 +40,12 @@ namespace ui
 
         /// @brief Called when button is released
         virtual void on_release() = 0;
+
+        private:
+        /// @brief The icon resource tag
+        std::string m_icon_tag{""};
+        /// @brief The icon resource id
+        render::resource_id m_resource_id{render::resource_id_unknown};
     };
 } /// namespace ui
 

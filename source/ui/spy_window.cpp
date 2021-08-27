@@ -26,6 +26,11 @@ namespace ui
 
     }
 
+    void spy_window::on_load(core::resource_manager* p_resource_manager) 
+    {
+        
+    }
+
     void spy_window::on_layout()
     {
 
