@@ -20,6 +20,11 @@ namespace ui
 
     }
 
+    void simulation_view::on_load(core::resource_manager* p_resource_manager) 
+    {
+        
+    }
+
     void simulation_view::on_layout()
     {
         mp_camera->set_dimensions({get_width(), get_height()});

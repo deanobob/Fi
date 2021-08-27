@@ -30,6 +30,11 @@ namespace console
         return start_listen_thread();
     }
 
+    void console_service::load(core::resource_manager* p_resource_manager) 
+    {
+        
+    }
+
     void console_service::update(const utilities::gametime& p_gametime)
     {
         std::lock_guard<std::mutex> lock(m_command_buffer_mutex);

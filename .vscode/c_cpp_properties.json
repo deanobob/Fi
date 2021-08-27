@@ -4,13 +4,14 @@
             "name": "Mac",
             "includePath": [
                 "${default}",
-                "${workspaceRoot}/**"
+                "${workspaceRoot}/source/**",
+                "${workspaceRoot}/third_party/**"
             ],
             "defines": [],
             "macFrameworkPath": [],
             "compilerPath": "/opt/homebrew/bin/g++-10",
             "cStandard": "gnu17",
-            "cppStandard": "gnu++14",
+            "cppStandard": "gnu++17",
             "intelliSenseMode": "macos-gcc-arm64"
         }
     ],

@@ -39,6 +39,11 @@ namespace ui
 
     }
 
+    void game_window::on_load(core::resource_manager* p_resource_manager)
+    {
+        
+    }
+
     void game_window::on_layout()
     {
 

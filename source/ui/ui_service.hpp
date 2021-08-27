@@ -7,6 +7,7 @@
 #include <memory>
 #include "gametime.hpp"
 #include "input_controller.hpp"
+#include "resource_manager.hpp"
 #include "root.hpp"
 #include "service.hpp"
 
@@ -26,6 +27,8 @@ namespace ui
         virtual ~ui_service();
 
         bool initialise() override;
+
+        void load(core::resource_manager* p_resource_manager) override;
 
         void update(const utilities::gametime& gametime) override;
 

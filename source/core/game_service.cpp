@@ -28,6 +28,14 @@ namespace core
         return true;
     }
 
+    void game_service::load(core::resource_manager* p_resource_manager)
+    {
+        if (mp_simulation)
+        {
+            // mp_simulation->load(p_resource_manager);
+        }
+    }
+
     void game_service::update(const utilities::gametime& gametime)
     {
         if (mp_simulation)

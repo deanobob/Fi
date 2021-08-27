@@ -96,6 +96,14 @@ namespace core
         // TODO
     }
 
+    void draw_manager::draw_bitmap(const render::resource_id& res_id, const utilities::vector2& position)
+    {
+        if (res_id != render::resource_id_unknown)
+        {
+            mp_render_controller->render_bitmap(res_id, position, 0);
+        }
+    }
+
     void draw_manager::end()
     {
         m_transforms.pop_back();

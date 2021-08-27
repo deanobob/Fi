@@ -18,6 +18,16 @@ namespace ui
         }
     }
 
+    void node::load(core::resource_manager* p_resource_manager)
+    {
+        on_load(p_resource_manager);
+
+        for (auto& p_child : m_children)
+        {
+            p_child->load(p_resource_manager);
+        }
+    }
+
     void node::layout()
     {
         if (m_invalid)

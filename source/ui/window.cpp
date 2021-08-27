@@ -10,6 +10,11 @@ namespace ui
 
     }
 
+    void window::on_load(core::resource_manager* p_resource_manager) 
+    {
+        
+    }
+
     void window::on_layout()
     {
 

@@ -26,6 +26,8 @@ namespace ui
         protected:
         void on_initialise() override;
 
+        void on_load(core::resource_manager* p_resource_manager) override;
+
         void on_layout() override;
 
         void on_draw(core::draw_manager* p_draw_manager) override;

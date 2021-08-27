@@ -69,6 +69,11 @@ namespace core
         /// @param position The position of the text
         void draw_text(const std::string text, const utilities::vector2& position);
 
+        /// @brief Draws a sprite to the display at the given position
+        /// @param res_id The bitmap resource id
+        /// @param position The position of the text
+        void draw_bitmap(const render::resource_id& res_id, const utilities::vector2& position);
+
         /// @brief Pops the last transform
         void end();
 

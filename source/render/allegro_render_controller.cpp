@@ -180,7 +180,7 @@ namespace render
         const std::string& filename,
         const utilities::vector2& position,
         const utilities::vector2& size,
-        uint32_t& bitmap_id)
+        resource_id& bitmap_id)
     {
         ALLEGRO_BITMAP* p_parent_bitmap{nullptr};
 
@@ -215,21 +215,19 @@ namespace render
             // assign m_next_sprite_id to bitmap_id and save sub bitmap in sprite cache
             bitmap_id = m_next_sprite_id++;
             m_sprite_cache[bitmap_id] = p_sub_bitmap;
+            return true;
         }
-        else
-        {
-            PLOG_ERROR << "Failed to load sub bitmap for file " << filename.c_str();
-            return false;
-        }
-
-        return true;
+        
+        PLOG_ERROR << "Failed to load sub bitmap for file " << filename.c_str();
+        bitmap_id = resource_id_unknown;
+        return false;
     }
 
     bool allegro_render_controller::load_font(
         const std::string& filename,
         uint32_t font_size,
         uint32_t flags,
-        uint32_t& font_id)
+        resource_id& font_id)
     {
         // Generate font unique name (combination of font name and font size)
         const std::string font_unique_name = filename + std::to_string(font_size);
@@ -252,18 +250,16 @@ namespace render
             m_font_cache[font_id] = p_font;
             // Store font ID against font unique name allowing for reuse
             m_font_ids[font_unique_name] = font_id;
+            return true;
         }
-        else
-        {
-            PLOG_ERROR << "Failed to load font from file " << full_path.c_str();
-            return false;
-        }
-
-        return true;
+        
+        PLOG_ERROR << "Failed to load font from file " << full_path.c_str();
+        font_id = resource_id_unknown;
+        return false;
     }
 
     void allegro_render_controller::render_bitmap(
-        uint32_t bitmap_id,
+        resource_id bitmap_id,
         const utilities::vector2& position,
         uint32_t flags)
     {
@@ -300,7 +296,7 @@ namespace render
     }
 
     void allegro_render_controller::render_text(
-        const uint32_t m_font_id,
+        const resource_id m_font_id,
         const std::string& text,
         const float x,
         const float y,

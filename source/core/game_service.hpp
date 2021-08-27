@@ -24,6 +24,8 @@ namespace core
 
         bool initialise() override;
 
+        void load(core::resource_manager* p_resource_manager) override;
+
         void update(const utilities::gametime& gametime) override;
 
         void draw(core::draw_manager* p_draw_manager, double delta) override;

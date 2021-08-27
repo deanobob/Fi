@@ -13,6 +13,12 @@
 /// @namespace render namespace
 namespace render
 {
+    /// @brief The resource identifier type
+    using resource_id = uint32_t;
+
+    /// @brief The resource id that is returned if a resource is unknown
+    static const resource_id resource_id_unknown = 0;
+
     /// @brief The window properties struct
     /// @details Defines the properties that are used when generating a window
     struct window_properties
@@ -110,7 +116,7 @@ namespace render
         virtual bool load_bitmap(const std::string& filename,
                                  const utilities::vector2& position,
                                  const utilities::vector2& size,
-                                 uint32_t& bitmap_id) = 0;
+                                 resource_id& bitmap_id) = 0;
 
         /// @brief Load a TTF font into the cache and return a unique font ID
         /// @param filename The font filename
@@ -121,13 +127,13 @@ namespace render
         virtual bool load_font(const std::string& filename,
                                uint32_t font_size,
                                uint32_t flags,
-                               uint32_t& font_id) = 0;
+                               resource_id& font_id) = 0;
 
         /// @brief Render a bitmap
         /// @param bitmap_id The bitmap ID
         /// @param position The position to render the bitmap
         /// @param flags Flags specific to the renderer
-        virtual void render_bitmap(uint32_t bitmap_id,
+        virtual void render_bitmap(resource_id bitmap_id,
                                    const utilities::vector2& position,
                                    uint32_t flags) = 0;
 
@@ -158,7 +164,7 @@ namespace render
         /// @param y The y position of the text
         /// @param color The colour of the text
         /// @param flags Flags specific to the renderer
-        virtual void render_text(uint32_t font_id,
+        virtual void render_text(resource_id font_id,
                                  const std::string& text,
                                  float x,
                                  float y,

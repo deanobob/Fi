@@ -12,13 +12,15 @@ namespace ui
     {
         auto track_0_deg_button = std::make_unique<button_set_cursor_tool>(
             mp_message_bus, core::cursor_tool_type::track_0_deg);
+        track_0_deg_button->set_icon("track1");
         track_0_deg_button->set_width(70);
         track_0_deg_button->set_height(70);
         track_0_deg_button->set_vertical_alignment(ui::vertical_alignment::bottom);
         add_child(std::move(track_0_deg_button));
 
         auto track_45_deg_button = std::make_unique<button_set_cursor_tool>(
-            mp_message_bus, core::cursor_tool_type::track_45_deg);
+            mp_message_bus, core::cursor_tool_type::track_90_deg);
+        track_45_deg_button->set_icon("track2");
         track_45_deg_button->set_x(80);
         track_45_deg_button->set_width(70);
         track_45_deg_button->set_height(70);
@@ -26,7 +28,8 @@ namespace ui
         add_child(std::move(track_45_deg_button));
 
         auto track_90_deg_button = std::make_unique<button_set_cursor_tool>(
-            mp_message_bus, core::cursor_tool_type::track_90_deg);
+            mp_message_bus, core::cursor_tool_type::track_45_deg);
+        track_90_deg_button->set_icon("track3");
         track_90_deg_button->set_x(155);
         track_90_deg_button->set_width(70);
         track_90_deg_button->set_height(70);
@@ -35,6 +38,7 @@ namespace ui
 
         auto track_135_deg_button = std::make_unique<button_set_cursor_tool>(
             mp_message_bus, core::cursor_tool_type::track_135_deg);
+        track_135_deg_button->set_icon("track4");
         track_135_deg_button->set_x(230);
         track_135_deg_button->set_width(70);
         track_135_deg_button->set_height(70);
@@ -54,6 +58,11 @@ namespace ui
     void track_edit_window::on_initialise()
     {
 
+    }
+
+    void track_edit_window::on_load(core::resource_manager* p_resource_manager) 
+    {
+        
     }
 
     void track_edit_window::on_layout()
