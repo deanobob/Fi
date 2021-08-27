@@ -19,7 +19,7 @@ namespace ui
         add_child(std::move(track_0_deg_button));
 
         auto track_45_deg_button = std::make_unique<button_set_cursor_tool>(
-            mp_message_bus, core::cursor_tool_type::track_45_deg);
+            mp_message_bus, core::cursor_tool_type::track_90_deg);
         track_45_deg_button->set_icon("track2");
         track_45_deg_button->set_x(80);
         track_45_deg_button->set_width(70);
@@ -28,7 +28,7 @@ namespace ui
         add_child(std::move(track_45_deg_button));
 
         auto track_90_deg_button = std::make_unique<button_set_cursor_tool>(
-            mp_message_bus, core::cursor_tool_type::track_90_deg);
+            mp_message_bus, core::cursor_tool_type::track_45_deg);
         track_90_deg_button->set_icon("track3");
         track_90_deg_button->set_x(155);
         track_90_deg_button->set_width(70);
