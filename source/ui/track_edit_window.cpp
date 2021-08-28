@@ -15,7 +15,7 @@ namespace ui
         title_label->set_text("Track Editor");
         title_label->set_justification(text_alignment::centre);
         title_label->set_color({255, 255, 255});
-        set_height(40.f);
+        title_label->set_height(40.f);
         add_child(std::move(title_label));
 
         auto track_0_deg_button = std::make_unique<button_set_cursor_tool>(
