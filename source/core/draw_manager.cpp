@@ -67,7 +67,7 @@ namespace core
 
     void draw_manager::draw_line(
         const utilities::vector2& p1,
-        const utilities::vector2& p2, 
+        const utilities::vector2& p2,
         const utilities::color& color,
         float thickness)
     {
@@ -91,9 +91,23 @@ namespace core
         mp_render_controller->render_fill_rect(rect, color);
     }
 
-    void draw_manager::draw_text(const std::string text, const utilities::vector2& position)
+    void draw_manager::draw_text(
+        const render::resource_id& res_id,
+        const std::string& text,
+        const utilities::vector2& position,
+        const utilities::color& color,
+        const ui::text_alignment text_alignment)
     {
-        // TODO
+        if (res_id != render::resource_id_unknown)
+        {
+            mp_render_controller->render_text(
+                res_id,
+                text,
+                position.x,
+                position.y,
+                color,
+                static_cast<uint32_t>(text_alignment));
+        }
     }
 
     void draw_manager::draw_bitmap(const render::resource_id& res_id, const utilities::vector2& position)

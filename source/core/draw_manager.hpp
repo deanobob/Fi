@@ -8,6 +8,7 @@
 #include "message_bus.hpp"
 #include "render_controller.hpp"
 #include "render_event_listener.hpp"
+#include "text_alignment.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -49,8 +50,8 @@ namespace core
         /// @param color The colour of the line. Defaults to white.
         /// @param thickness The line thickness
         void draw_line(
-            const utilities::vector2& p1, 
-            const utilities::vector2& p2, 
+            const utilities::vector2& p1,
+            const utilities::vector2& p2,
             const utilities::color& color = utilities::color{255, 255, 255},
             float thickness = 1);
 
@@ -65,9 +66,17 @@ namespace core
         void draw_filled_rectangle(const utilities::rectangle& rect, const utilities::color& color);
 
         /// @brief Draws text to the display at the given position
+        /// @param res_id The text resource id
         /// @param text The text to draw
         /// @param position The position of the text
-        void draw_text(const std::string text, const utilities::vector2& position);
+        /// @param color The colour of the text
+        /// @param text_alignment The text justification
+        void draw_text(
+            const render::resource_id& res_id,
+            const std::string& text,
+            const utilities::vector2& position,
+            const utilities::color& color,
+            const ui::text_alignment text_alignment);
 
         /// @brief Draws a sprite to the display at the given position
         /// @param res_id The bitmap resource id

@@ -1,4 +1,4 @@
-/// @file cursor_tool_tyle.hpp
+/// @file cursor_tool_type.hpp
 /// @brief Defines the cursor tool types enum
 
 #ifndef CURSOR_TOOL_TYPE_HPP
@@ -7,7 +7,7 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @enum component_type The component type enum
+    /// @enum cursor_tool_type The cursor tool type enum
     /// @brief The tool types that can be selected for use with the cursor
     enum class cursor_tool_type : unsigned int
     {
