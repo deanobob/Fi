@@ -25,27 +25,45 @@ namespace core
         /// @return Success if all resources loaded, else failure
         bool load();
 
-        /// @brief Get the resource_id for a given resource tag
+        /// @brief Get the resource_id for a given image resource tag
         /// @param resource_tag The resource tag to search for
         /// @return The resource id of a resource, or -1 on failure
-        render::resource_id get_resource_id(const std::string& resource_tag) const;
+        render::resource_id get_image_resource_id(const std::string& resource_tag) const;
+
+        /// @brief Get the resource_id for a given font resource tag
+        /// @param resource_tag The resource tag to search for
+        /// @return The resource id of a resource, or -1 on failure
+        render::resource_id get_font_resource_id(const std::string& resource_tag) const;
 
         private:
         /// @brief The render controller instance
         render::render_controller* mp_render_controller{nullptr};
+
         /// @brief Loaded image resources identifiers mapped to string identifiers
         std::map<const std::string, render::resource_id> m_image_tag_resource_id_map;
+
+        /// @brief Loaded image resources identifiers mapped to string identifiers
+        std::map<const std::string, render::resource_id> m_font_tag_resource_id_map;
 
         /// @brief Loads as sub-bitmap from an image resource into the resource manager
         /// @param resource_tag Unique string that allows access to the sub-bitmap resource
         /// @param filename The image filename
-        /// @param position The start position of the sub-bitmap 
+        /// @param position The start position of the sub-bitmap
         /// @param size The size of the sub-bitmap
         /// @return True on success, false if failed to load
         bool load_bitmap(const std::string& resource_tag,
-                         const std::string& filename, 
+                         const std::string& filename,
                          const utilities::vector2& position,
                          const utilities::vector2& size);
+
+        /// @brief Loads as sub-bitmap from a font resource into the resource manager
+        /// @param resource_tag Unique string that allows access to the sub-bitmap resource
+        /// @param filename The image filename
+        /// @param font_size The font_size
+        /// @return True on success, false if failed to load
+        bool load_font(const std::string& resource_tag,
+                       const std::string& filename,
+                       const uint32_t& font_size);
 
     };
 } /// namespace core

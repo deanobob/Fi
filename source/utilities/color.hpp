@@ -13,13 +13,13 @@ namespace utilities
     {
         public:
         /// @param r The red colour value (0 - 255)
-        const uint8_t r;
+        uint8_t r {255};
         /// @param r The green colour value (0 - 255)
-        const uint8_t g;
+        uint8_t g {255};
         /// @param r The blue colour value (0 - 255)
-        const uint8_t b;
+        uint8_t b {255};
         /// @param r The alpha value (0 - 255)
-        const uint8_t a;
+        uint8_t a {255};
 
         /// @brief Constructor
         /// @param r The red colour value

@@ -3,6 +3,7 @@
 #include "plog/Log.h"
 #include "button_set_cursor_tool.hpp"
 #include "cursor_tool_type.hpp"
+#include "label.hpp"
 #include "track_edit_window.hpp"
 
 namespace ui
@@ -10,6 +11,13 @@ namespace ui
     track_edit_window::track_edit_window(core::message_bus* p_message_bus)
         : mp_message_bus{p_message_bus}
     {
+        auto title_label = std::make_unique<label>("default_24");
+        title_label->set_text("Track Editor");
+        title_label->set_justification(text_alignment::centre);
+        title_label->set_color({255, 255, 255});
+        set_height(40.f);
+        add_child(std::move(title_label));
+
         auto track_0_deg_button = std::make_unique<button_set_cursor_tool>(
             mp_message_bus, core::cursor_tool_type::track_0_deg);
         track_0_deg_button->set_icon("track1");
@@ -60,9 +68,9 @@ namespace ui
 
     }
 
-    void track_edit_window::on_load(core::resource_manager* p_resource_manager) 
+    void track_edit_window::on_load(core::resource_manager* p_resource_manager)
     {
-        
+
     }
 
     void track_edit_window::on_layout()

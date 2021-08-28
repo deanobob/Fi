@@ -15,13 +15,11 @@ namespace ui
 
     }
 
-    void button::on_load(core::resource_manager* p_resource_manager) 
+    void button::on_load(core::resource_manager* p_resource_manager)
     {
-        LOG_DEBUG << "MAGIC";
         if (!m_icon_tag.empty())
         {
-            LOG_DEBUG << "Loading " << m_icon_tag;
-            m_resource_id = p_resource_manager->get_resource_id(m_icon_tag);
+            m_resource_id = p_resource_manager->get_image_resource_id(m_icon_tag);
         }
     }
 
@@ -35,7 +33,7 @@ namespace ui
         float x = get_world_x();
         float y = get_world_y();
         p_draw_manager->draw_bitmap(m_resource_id, {x, y});
-        
+
         if (is_focused())
         {
             x -= 1;
