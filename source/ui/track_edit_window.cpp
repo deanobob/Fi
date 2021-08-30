@@ -14,7 +14,7 @@ namespace ui
         auto title_label = std::make_unique<label>("default_24");
         title_label->set_text("Track Editor");
         title_label->set_justification(text_alignment::centre);
-        title_label->set_color({255, 255, 255});
+        title_label->set_color(utilities::colors::white);
         title_label->set_height(40.f);
         add_child(std::move(title_label));
 
@@ -84,8 +84,8 @@ namespace ui
         float y = get_world_y();
         float w = get_width();
         float h = get_height();
-        p_draw_manager->draw_filled_rectangle({x, y, w, h}, {0, 0, 0});
-        p_draw_manager->draw_rectangle({x, y, w, h}, {255, 255, 255});
-        p_draw_manager->draw_line({x, y + 40.f}, {x + w, y + 40.f}, {255, 255, 255});
+        p_draw_manager->draw_filled_rectangle({x, y, w, h}, utilities::colors::black);
+        p_draw_manager->draw_rectangle({x, y, w, h}, utilities::colors::white);
+        p_draw_manager->draw_line({x, y + 40.f}, {x + w, y + 40.f}, utilities::colors::white);
     }
 } /// namespace ui

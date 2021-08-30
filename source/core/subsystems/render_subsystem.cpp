@@ -69,6 +69,7 @@ namespace core
                             viewport.y,
                             position.x + x,
                             viewport.y + viewport.height,
+                            utilities::colors::white,
                             0.5));
                 }
 
@@ -80,6 +81,7 @@ namespace core
                             position.y + y,
                             viewport.x + viewport.width,
                             position.y + y,
+                            utilities::colors::white,
                             0.5));
                 }
             }
@@ -94,7 +96,8 @@ namespace core
                         size.x,
                         size.y,
                         rotation,
-                        1));
+                        utilities::colors::green,
+                        2));
             }
         }
     }

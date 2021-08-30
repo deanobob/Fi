@@ -45,12 +45,13 @@ namespace ui
                     case core::renderable_type::rectangle:
                         {
                             const auto p_rectangle = dynamic_cast<core::renderable_rectangle*>(p_renderable.get());
-                            const float x = p_rectangle->m_x - viewport.x;
-                            const float y = p_rectangle->m_y - viewport.y;
-                            const float w = p_rectangle->m_width;
-                            const float h = p_rectangle->m_height;
-                            const float r = p_rectangle->m_rotation;
-                            const int t = p_rectangle->m_thickness;
+                            const auto x = p_rectangle->m_x - viewport.x;
+                            const auto y = p_rectangle->m_y - viewport.y;
+                            const auto w = p_rectangle->m_width;
+                            const auto h = p_rectangle->m_height;
+                            const auto r = p_rectangle->m_rotation;
+                            const auto& color = p_rectangle->m_color;
+                            const auto t = p_rectangle->m_thickness;
 
                             const auto cx = x + w / 2.0f;
                             const auto cy = y + h / 2.0f;
@@ -59,28 +60,24 @@ namespace ui
                             const auto tr = utilities::vector2::rotate_point(cx, cy, r, x + w, y);
                             const auto bl = utilities::vector2::rotate_point(cx, cy, r, x, y + h);
                             const auto br = utilities::vector2::rotate_point(cx, cy, r, x + w, y + h);
-                            const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
-                            const auto thickness = t == 1 ? 2.f : .5f;
 
-                            p_draw_manager->draw_line(tl, tr, color, thickness); // top left to top right
-                            p_draw_manager->draw_line(tr, br, color, thickness); // top right to bottom right
-                            p_draw_manager->draw_line(bl, br, color, thickness); // bottom left to bottom right
-                            p_draw_manager->draw_line(tl, bl, color, thickness); // top left to bottom left
+                            p_draw_manager->draw_line(tl, tr, color, t); // top left to top right
+                            p_draw_manager->draw_line(tr, br, color, t); // top right to bottom right
+                            p_draw_manager->draw_line(bl, br, color, t); // bottom left to bottom right
+                            p_draw_manager->draw_line(tl, bl, color, t); // top left to bottom left
                         }
                         break;
                     case core::renderable_type::line:
                         {
                             const auto p_line = dynamic_cast<core::renderable_line*>(p_renderable.get());
-                            const float x1 = p_line->m_x1 - viewport.x;
-                            const float y1 = p_line->m_y1 - viewport.y;
-                            const float x2 = p_line->m_x2 - viewport.x;
-                            const float y2 = p_line->m_y2 - viewport.y;
-                            const int t = p_line->m_thickness;
+                            const auto x1 = p_line->m_x1 - viewport.x;
+                            const auto y1 = p_line->m_y1 - viewport.y;
+                            const auto x2 = p_line->m_x2 - viewport.x;
+                            const auto y2 = p_line->m_y2 - viewport.y;
+                            const auto& color = p_line->m_color;
+                            const auto t = p_line->m_thickness;
 
-                            const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
-                            const auto thickness = t == 1 ? 2.f : .5f;
-
-                            p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, thickness);
+                            p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, t);
                         }
                         break;
                     case core::renderable_type::sprite:

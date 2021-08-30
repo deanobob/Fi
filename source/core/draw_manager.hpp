@@ -52,13 +52,13 @@ namespace core
         void draw_line(
             const utilities::vector2& p1,
             const utilities::vector2& p2,
-            const utilities::color& color = utilities::color{255, 255, 255},
+            const utilities::color& color = utilities::colors::white,
             float thickness = 1);
 
         /// @brief Draw rectangle
         /// @param rect The rectangle to draw
         /// @param color The line colour
-        void draw_rectangle(const utilities::rectangle& rect, const utilities::color& color = {255, 255, 0});
+        void draw_rectangle(const utilities::rectangle& rect, const utilities::color& color);
 
         /// @brief Draw filled rectangle
         /// @param rect The rectangle to draw

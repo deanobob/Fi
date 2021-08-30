@@ -47,13 +47,15 @@ namespace core
         const float m_y1;
         const float m_x2;
         const float m_y2;
-        const int m_thickness;
+        const utilities::color m_color;
+        const float m_thickness;
 
-        renderable_line(float x1, float y1, float x2, float y2, int thickness)
+        renderable_line(float x1, float y1, float x2, float y2, const utilities::color& color, float thickness)
             : m_x1{x1}
             , m_y1{y1}
             , m_x2{x2}
             , m_y2{y2}
+            , m_color{color}
             , m_thickness{thickness}
         {}
 
@@ -77,14 +79,23 @@ namespace core
         const float m_width;
         const float m_height;
         const float m_rotation;
-        const int m_thickness;
+        const utilities::color m_color;
+        const float m_thickness;
 
-        renderable_rectangle(float x, float y, float width, float height, float rotation, int thickness)
+        renderable_rectangle(
+            float x,
+            float y,
+            float width,
+            float height,
+            float rotation,
+            const utilities::color& color,
+            float thickness)
             : m_x{x}
             , m_y{y}
             , m_width{width}
             , m_height{height}
             , m_rotation{rotation}
+            , m_color{color}
             , m_thickness{thickness}
         {}
 
@@ -145,7 +156,7 @@ namespace core
             float y,
             const render::resource_id font_res_id,
             const std::string& text,
-            const utilities::color& color = {255, 255, 255},
+            const utilities::color& color = utilities::colors::white,
             const ui::text_alignment alignment = ui::text_alignment::left)
             : m_x{x}
             , m_y{y}
