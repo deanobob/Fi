@@ -20,9 +20,9 @@ namespace ui
 
     }
 
-    void simulation_view::on_load(core::resource_manager* p_resource_manager) 
+    void simulation_view::on_load(core::resource_manager* p_resource_manager)
     {
-        
+
     }
 
     void simulation_view::on_layout()
@@ -37,30 +37,57 @@ namespace ui
             p_draw_manager->begin({get_world_x(), get_world_y(), get_width(), get_height()});
             p_draw_manager->clear();
 
-            for (const auto& renderable : mp_camera->get_renderables())
+            for (const auto& p_renderable : mp_camera->get_renderables())
             {
                 const auto viewport = mp_camera->get_viewport();
-                const float x = std::get<0>(renderable) - viewport.x;
-                const float y = std::get<1>(renderable) - viewport.y;
-                const float w = std::get<2>(renderable);
-                const float h = std::get<3>(renderable);
-                const float r = std::get<4>(renderable);
-                const int t = std::get<5>(renderable);
+                switch (p_renderable->get_type())
+                {
+                    case core::renderable_type::rectangle:
+                        {
+                            auto p_rectangle = dynamic_cast<core::renderable_rectangle*>(p_renderable.get());
+                            const float x = p_rectangle->m_x - viewport.x;
+                            const float y = p_rectangle->m_y - viewport.y;
+                            const float w = p_rectangle->m_width;
+                            const float h = p_rectangle->m_height;
+                            const float r = p_rectangle->m_rotation;
+                            const int t = p_rectangle->m_thickness;
 
-                const auto cx = x + w / 2.0f;
-                const auto cy = y + h / 2.0f;
+                            const auto cx = x + w / 2.0f;
+                            const auto cy = y + h / 2.0f;
 
-                const auto tl = utilities::vector2::rotate_point(cx, cy, r, x, y);
-                const auto tr = utilities::vector2::rotate_point(cx, cy, r, x + w, y);
-                const auto bl = utilities::vector2::rotate_point(cx, cy, r, x, y + h);
-                const auto br = utilities::vector2::rotate_point(cx, cy, r, x + w, y + h);
-                const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
-                const auto thickness = t == 1 ? 2.f : .5f;
+                            const auto tl = utilities::vector2::rotate_point(cx, cy, r, x, y);
+                            const auto tr = utilities::vector2::rotate_point(cx, cy, r, x + w, y);
+                            const auto bl = utilities::vector2::rotate_point(cx, cy, r, x, y + h);
+                            const auto br = utilities::vector2::rotate_point(cx, cy, r, x + w, y + h);
+                            const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
+                            const auto thickness = t == 1 ? 2.f : .5f;
 
-                p_draw_manager->draw_line(tl, tr, color, thickness); // top left to top right
-                p_draw_manager->draw_line(tr, br, color, thickness); // top right to bottom right
-                p_draw_manager->draw_line(bl, br, color, thickness); // bottom left to bottom right
-                p_draw_manager->draw_line(tl, bl, color, thickness); // top left to bottom left
+                            p_draw_manager->draw_line(tl, tr, color, thickness); // top left to top right
+                            p_draw_manager->draw_line(tr, br, color, thickness); // top right to bottom right
+                            p_draw_manager->draw_line(bl, br, color, thickness); // bottom left to bottom right
+                            p_draw_manager->draw_line(tl, bl, color, thickness); // top left to bottom left
+                        }
+                        break;
+                    case core::renderable_type::line:
+                        {
+                            auto p_line = dynamic_cast<core::renderable_line*>(p_renderable.get());
+                            const float x1 = p_line->m_x1 - viewport.x;
+                            const float y1 = p_line->m_y1 - viewport.y;
+                            const float x2 = p_line->m_x2 - viewport.x;
+                            const float y2 = p_line->m_y2 - viewport.y;
+                            const int t = p_line->m_thickness;
+
+                            const auto color = t == 1 ? utilities::color{255, 255, 0} : utilities::color{255, 255, 255};
+                            const auto thickness = t == 1 ? 2.f : .5f;
+
+                            p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, thickness);
+                        }
+                        break;
+                    default:
+                        PLOG_DEBUG << "Unhandled render type: " << static_cast<uint32_t>(p_renderable->get_type());
+                        break;
+                }
+
             }
 
             p_draw_manager->end();

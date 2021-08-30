@@ -37,7 +37,7 @@ namespace ui
 
         auto track_90_deg_button = std::make_unique<button_set_cursor_tool>(
             mp_message_bus, core::cursor_tool_type::track_45_deg);
-        track_90_deg_button->set_icon("track3");
+        track_90_deg_button->set_icon("track4");
         track_90_deg_button->set_x(155);
         track_90_deg_button->set_width(70);
         track_90_deg_button->set_height(70);
@@ -46,7 +46,7 @@ namespace ui
 
         auto track_135_deg_button = std::make_unique<button_set_cursor_tool>(
             mp_message_bus, core::cursor_tool_type::track_135_deg);
-        track_135_deg_button->set_icon("track4");
+        track_135_deg_button->set_icon("track3");
         track_135_deg_button->set_x(230);
         track_135_deg_button->set_width(70);
         track_135_deg_button->set_height(70);
