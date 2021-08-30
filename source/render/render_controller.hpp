@@ -130,10 +130,10 @@ namespace render
                                resource_id& font_id) = 0;
 
         /// @brief Render a bitmap
-        /// @param bitmap_id The bitmap ID
+        /// @param bitmap_res_id The bitmap ID
         /// @param position The position to render the bitmap
         /// @param flags Flags specific to the renderer
-        virtual void render_bitmap(resource_id bitmap_id,
+        virtual void render_bitmap(resource_id bitmap_res_id,
                                    const utilities::vector2& position,
                                    uint32_t flags) = 0;
 
@@ -158,13 +158,13 @@ namespace render
                                       float thickness = 1) = 0;
 
         /// @brief Render text at given position
-        /// @param font_id The ID of the font
+        /// @param font_res_id The ID of the font
         /// @param text The text
         /// @param x The x position of the text
         /// @param y The y position of the text
         /// @param color The colour of the text
         /// @param flags Flags specific to the renderer
-        virtual void render_text(resource_id font_id,
+        virtual void render_text(resource_id font_res_id,
                                  const std::string& text,
                                  float x,
                                  float y,

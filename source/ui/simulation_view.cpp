@@ -44,7 +44,7 @@ namespace ui
                 {
                     case core::renderable_type::rectangle:
                         {
-                            auto p_rectangle = dynamic_cast<core::renderable_rectangle*>(p_renderable.get());
+                            const auto p_rectangle = dynamic_cast<core::renderable_rectangle*>(p_renderable.get());
                             const float x = p_rectangle->m_x - viewport.x;
                             const float y = p_rectangle->m_y - viewport.y;
                             const float w = p_rectangle->m_width;
@@ -70,7 +70,7 @@ namespace ui
                         break;
                     case core::renderable_type::line:
                         {
-                            auto p_line = dynamic_cast<core::renderable_line*>(p_renderable.get());
+                            const auto p_line = dynamic_cast<core::renderable_line*>(p_renderable.get());
                             const float x1 = p_line->m_x1 - viewport.x;
                             const float y1 = p_line->m_y1 - viewport.y;
                             const float x2 = p_line->m_x2 - viewport.x;
@@ -83,6 +83,20 @@ namespace ui
                             p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, thickness);
                         }
                         break;
+                    case core::renderable_type::text:
+                        {
+                            const auto p_text = dynamic_cast<core::renderable_text*>(p_renderable.get());
+                            const auto x = p_text->m_x - viewport.x;
+                            const auto y = p_text->m_y - viewport.y;
+                            const auto res_id = p_text->m_font_res_id;
+                            const auto text = p_text->m_text;
+                            const auto color = p_text->m_color;
+                            const auto alignment = p_text->m_alignment;
+
+                            p_draw_manager->draw_text(res_id, text, {x, y}, color, alignment);
+                        }
+                        break;
+
                     default:
                         PLOG_DEBUG << "Unhandled render type: " << static_cast<uint32_t>(p_renderable->get_type());
                         break;

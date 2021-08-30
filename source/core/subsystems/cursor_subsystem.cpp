@@ -69,6 +69,7 @@ namespace core
                     break;
             }
         }
+        p_camera->add_renderable(std::make_unique<renderable_text>(m_mouse_x, m_mouse_y - 35, 1, std::string("Tooltip!"), utilities::color{255, 255, 255}, ui::text_alignment::centre));
     }
 
     void cursor_subsystem::shutdown()

@@ -9,8 +9,11 @@
 #include <memory>
 #include <stdlib.h>
 #include <tuple>
+#include "color.hpp"
 #include "gametime.hpp"
 #include "rectangle.hpp"
+#include "render_controller.hpp"
+#include "text_alignment.hpp"
 
 /// @namespace core namespace
 namespace core
@@ -24,7 +27,8 @@ namespace core
         rectangle,
         circle,
         arc,
-        sprite
+        sprite,
+        text
     };
 
     class renderable
@@ -98,25 +102,44 @@ namespace core
         }
     };
 
-    // class renderable_line
-    // {
-    //     public:
-    //     const float m_x1;
-    //     const float m_y1;
-    //     const float m_x2;
-    //     const float m_y2;
-    //     const int m_thickness;
+    class renderable_text
+        : public renderable
+    {
+        public:
+        const float m_x;
+        const float m_y;
+        const render::resource_id m_font_res_id;
+        const std::string m_text;
+        const utilities::color m_color;
+        const ui::text_alignment m_alignment;
 
-    //     renderable_line(float x1, float y1, float x2, float y2, int thickness)
-    //     {
+        renderable_text(
+            float x,
+            float y,
+            const render::resource_id font_res_id,
+            const std::string& text,
+            const utilities::color& color = {255, 255, 255},
+            const ui::text_alignment alignment = ui::text_alignment::left)
+            : m_x{x}
+            , m_y{y}
+            , m_font_res_id{font_res_id}
+            , m_text{text}
+            , m_color{color}
+            , m_alignment{alignment}
+        {
 
-    //     }
+        }
 
-    //     virtual ~renderable_line()
-    //     {
+        virtual ~renderable_text()
+        {
 
-    //     }
-    // }
+        }
+
+        renderable_type get_type() const override
+        {
+            return renderable_type::text;
+        }
+    };
 
     /// @brief The camera class
     class camera
