@@ -52,35 +52,41 @@ namespace core
             }
 
             const auto& position { p_body_component->get_interpolated_position(delta) };
-            const auto& rotation { p_body_component->get_rotation() };
-            const auto& size { p_body_component->get_size() };
             if (p_render_component->get_render_type() == "map")
             {
                 const auto viewport = p_camera->get_viewport();
                 const auto tile_size = 50.f;
-                const auto start_x { viewport.x - std::fmod(viewport.x, tile_size)};
-                const auto start_y { viewport.y - std::fmod(viewport.y, tile_size)};
-                const auto end_x {
-                    start_x + viewport.width + (tile_size - std::fmod(viewport.x + viewport.width, tile_size))};
-                const auto end_y {
-                    start_y + viewport.height + (tile_size - std::fmod(viewport.y + viewport.height, tile_size))};
+                const auto start_x { viewport.x + (tile_size - std::fmod(viewport.x, tile_size)) };
+                const auto start_y { viewport.y + (tile_size - std::fmod(viewport.y, tile_size)) };
+                const auto end_x { start_x + viewport.width - std::fmod(start_x + viewport.width, tile_size) };
+                const auto end_y { start_y + viewport.height - std::fmod(start_y + viewport.height, tile_size) };
+
                 for (auto x = start_x; x <= end_x; x += tile_size)
                 {
-                    for (auto y = start_y; y <= end_y; y += tile_size)
-                    {
-                        p_camera->add_renderable(
-                            std::make_unique<renderable_rectangle>(
-                                position.x + x,
-                                position.y + y,
-                                tile_size,
-                                tile_size,
-                                0.,
-                                2));
-                    }
+                    p_camera->add_renderable(
+                        std::make_unique<renderable_line>(
+                            position.x + x,
+                            viewport.y,
+                            position.x + x,
+                            viewport.y + viewport.height,
+                            0.5));
+                }
+
+                for (auto y = start_y; y <= end_y; y += tile_size)
+                {
+                    p_camera->add_renderable(
+                        std::make_unique<renderable_line>(
+                            viewport.x,
+                            position.y + y,
+                            viewport.x + viewport.width,
+                            position.y + y,
+                            0.5));
                 }
             }
             else
             {
+                const auto& size { p_body_component->get_size() };
+                const auto& rotation { p_body_component->get_rotation() };
                 p_camera->add_renderable(
                     std::make_unique<renderable_rectangle>(
                         position.x,
