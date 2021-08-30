@@ -74,6 +74,16 @@ namespace core
         mp_render_controller->render_draw_line(p1.x, p1.y, p2.x, p2.y, color, thickness);
     }
 
+    void draw_manager::draw_circle(
+        const float cx,
+        const float cy,
+        const float radius,
+        const utilities::color& color,
+        float thickness)
+    {
+        mp_render_controller->render_circle(cx, cy, radius, color, thickness);
+    }
+
     void draw_manager::draw_rectangle(const utilities::rectangle& rect, const utilities::color& color)
     {
         const auto left{rect.get_left()};

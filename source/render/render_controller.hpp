@@ -157,6 +157,18 @@ namespace render
                                       const utilities::color& color,
                                       float thickness = 1) = 0;
 
+        /// @brief Render a circle
+        /// @param cx The centre X coordinate
+        /// @param cy The centre Y coordinate
+        /// @param radius The radius of the circle
+        /// @param color The circle fill colour
+        /// @param thickness The line thickness
+        virtual void render_circle(float cx,
+                                   float cy,
+                                   float radius,
+                                   const utilities::color& color,
+                                   float thickness = 1) = 0;
+
         /// @brief Render text at given position
         /// @param font_res_id The ID of the font
         /// @param text The text

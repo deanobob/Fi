@@ -80,6 +80,18 @@ namespace ui
                             p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, t);
                         }
                         break;
+                    case core::renderable_type::circle:
+                        {
+                            const auto p_line = dynamic_cast<core::renderable_circle*>(p_renderable.get());
+                            const auto cx = p_line->m_cx - viewport.x;
+                            const auto cy = p_line->m_cy - viewport.y;
+                            const auto radius = p_line->m_radius;
+                            const auto& color = p_line->m_color;
+                            const auto t = p_line->m_thickness;
+
+                            p_draw_manager->draw_circle(cx, cy, radius, color, t);
+                        }
+                        break;
                     case core::renderable_type::sprite:
                         {
                             const auto p_sprite = dynamic_cast<core::renderable_sprite*>(p_renderable.get());

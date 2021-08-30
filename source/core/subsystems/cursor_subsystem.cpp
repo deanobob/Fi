@@ -82,6 +82,13 @@ namespace core
                 std::string("Tooltip!"),
                 utilities::colors::white,
                 ui::text_alignment::centre));
+        p_camera->add_renderable(
+            std::make_unique<renderable_circle>(
+                m_mouse_x,
+                m_mouse_y,
+                40.f,
+                utilities::colors::blue,
+                2));
     }
 
     void cursor_subsystem::shutdown()

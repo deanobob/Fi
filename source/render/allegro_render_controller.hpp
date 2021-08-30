@@ -58,6 +58,12 @@ namespace render
                               const utilities::color& color,
                               float thickness = 1) override;
 
+        void render_circle(float cx,
+                           float cy,
+                           float radius,
+                           const utilities::color& color,
+                           float thickness = 1) override;
+
         void render_text(const resource_id font_res_id,
                          const std::string& text,
                          float x,
@@ -153,6 +159,12 @@ namespace render
                               float y2,
                               const utilities::color& color,
                               float thickness) override;
+
+        void render_circle(float cx,
+                           float cy,
+                           float radius,
+                           const utilities::color& color,
+                           float thickness = 1) override;
 
         void render_text(const uint32_t font_res_id,
                          const std::string& text,

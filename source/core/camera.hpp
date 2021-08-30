@@ -70,6 +70,35 @@ namespace core
         }
     };
 
+    class renderable_circle
+        : public renderable
+    {
+        public:
+        const float m_cx;
+        const float m_cy;
+        const float m_radius;
+        const utilities::color m_color;
+        const float m_thickness;
+
+        renderable_circle(float cx, float cy, float radius, const utilities::color& color, float thickness)
+            : m_cx{cx}
+            , m_cy{cy}
+            , m_radius{radius}
+            , m_color{color}
+            , m_thickness{thickness}
+        {}
+
+        virtual ~renderable_circle()
+        {
+
+        }
+
+        renderable_type get_type() const override
+        {
+            return renderable_type::circle;
+        }
+    };
+
     class renderable_rectangle
         : public renderable
     {

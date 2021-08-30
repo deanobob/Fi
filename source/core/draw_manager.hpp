@@ -55,6 +55,20 @@ namespace core
             const utilities::color& color = utilities::colors::white,
             float thickness = 1);
 
+        /// @brief Draw circle to the display
+        /// @param cx The centre X coordinate
+        /// @param cy The centre Y coordinate
+        /// @param radius The radius of the circle
+        /// @param color The colour of the circle. Defaults to white.
+        /// @param thickness The circle line thickness
+        void draw_circle(
+            const float cx,
+            const float cy,
+            const float radius,
+            const utilities::color& color = utilities::colors::white,
+            float thickness = 1);
+
+
         /// @brief Draw rectangle
         /// @param rect The rectangle to draw
         /// @param color The line colour
