@@ -18,9 +18,6 @@
 /// @namespace core namespace
 namespace core
 {
-    /// @brief Renderable type - temporary until a real renderable is defined
-    // using renderable = std::tuple<float, float, float, float, float, int>;
-
     enum class renderable_type : uint32_t
     {
         line,
@@ -99,6 +96,36 @@ namespace core
         renderable_type get_type() const override
         {
             return renderable_type::rectangle;
+        }
+    };
+
+    class renderable_sprite
+        : public renderable
+    {
+        public:
+        const float m_x;
+        const float m_y;
+        const render::resource_id m_sprite_res_id;
+
+        renderable_sprite(
+            float x,
+            float y,
+            const render::resource_id sprite_res_id)
+            : m_x{x}
+            , m_y{y}
+            , m_sprite_res_id{sprite_res_id}
+        {
+
+        }
+
+        virtual ~renderable_sprite()
+        {
+
+        }
+
+        renderable_type get_type() const override
+        {
+            return renderable_type::sprite;
         }
     };
 

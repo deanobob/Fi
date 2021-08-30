@@ -102,13 +102,11 @@ namespace core
 
         private:
         /// @brief Pointer to the message bus
-        core::message_bus* mp_message_bus{nullptr};
-
+        core::message_bus* mp_message_bus {nullptr};
         /// @brief Pointer to render controller
-        render::render_controller* mp_render_controller{nullptr};
-
+        render::render_controller* mp_render_controller {nullptr};
         /// @brief Queue of all transforms applied to the draw manager
-        std::list<render::transform> m_transforms{};
+        std::list<render::transform> m_transforms {};
     };
 } /// namespace core
 

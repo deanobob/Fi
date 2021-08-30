@@ -24,45 +24,45 @@ namespace render
     struct window_properties
     {
         /// @brief Undefined window position
-        static constexpr auto WINDOW_POSITION_UNDEFINED{0};
+        static constexpr auto WINDOW_POSITION_UNDEFINED {0};
         /// @brief The default window width
-        static constexpr auto DEFAULT_WINDOW_WIDTH{1024};
+        static constexpr auto DEFAULT_WINDOW_WIDTH {1024};
         /// @brief The default window height
-        static constexpr auto DEFAULT_WINDOW_HEIGHT{720};
+        static constexpr auto DEFAULT_WINDOW_HEIGHT {720};
         /// @brief The default number of msaa samples
-        static constexpr auto DEFAULT_MSAA_SAMPLES{8};
+        static constexpr auto DEFAULT_MSAA_SAMPLES {8};
 
         /// @brief The window title
-        std::string title{""};
+        std::string title {""};
         /// @brief The x position of the window
-        int x{WINDOW_POSITION_UNDEFINED};
+        int x {WINDOW_POSITION_UNDEFINED};
         /// @brief The y position of the window
-        int y{WINDOW_POSITION_UNDEFINED};
+        int y {WINDOW_POSITION_UNDEFINED};
         /// @brief The width of the window
-        uint32_t width{DEFAULT_WINDOW_WIDTH};
+        uint32_t width {DEFAULT_WINDOW_WIDTH};
         /// @brief The height of the window
-        uint32_t height{DEFAULT_WINDOW_HEIGHT};
+        uint32_t height {DEFAULT_WINDOW_HEIGHT};
         /// @brief Flag defining whether the window should display in fullscreen mode
-        bool fullscreen{false};
+        bool fullscreen {false};
         /// @brief Flag defining whether the window is resizeable
-        bool resizeable{true};
+        bool resizeable {true};
         /// @brief Flag defining if vsync is enabled
-        bool vsync{true};
+        bool vsync {true};
         /// @brief Flag defining if msaa is enabled
-        bool msaa_enabled{true};
+        bool msaa_enabled {true};
         /// @brief The number of msaa samples
-        uint8_t msaa_samples{DEFAULT_MSAA_SAMPLES};
+        uint8_t msaa_samples {DEFAULT_MSAA_SAMPLES};
     };
 
     /// @brief Defines the window location scale and rotation.
     struct transform
     {
         /// @brief The viewport boundaries
-        utilities::rectangle viewport{};
+        utilities::rectangle viewport {};
         /// @brief The transform scale
-        utilities::vector2 scale{utilities::vector2::ONE};
+        utilities::vector2 scale {utilities::vector2::ONE};
         /// @brief The transform rotation in radians
-        float rotation{0.0f};
+        float rotation {0.0f};
     };
 
     /// @brief The render controller class

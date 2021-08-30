@@ -34,7 +34,6 @@ namespace ui
     void label::on_load(core::resource_manager* p_resource_manager)
     {
         m_resource_id = p_resource_manager->get_font_resource_id(m_font_resource_tag);
-        LOG_DEBUG << "DBH" << m_resource_id;
     }
 
     void label::on_layout()

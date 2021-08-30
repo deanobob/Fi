@@ -83,6 +83,16 @@ namespace ui
                             p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, thickness);
                         }
                         break;
+                    case core::renderable_type::sprite:
+                        {
+                            const auto p_sprite = dynamic_cast<core::renderable_sprite*>(p_renderable.get());
+                            const auto res_id = p_sprite->m_sprite_res_id;
+                            const auto x = p_sprite->m_x - viewport.x;
+                            const auto y = p_sprite->m_y - viewport.y;
+
+                            p_draw_manager->draw_bitmap(res_id, {x, y});
+                        }
+                        break;
                     case core::renderable_type::text:
                         {
                             const auto p_text = dynamic_cast<core::renderable_text*>(p_renderable.get());
@@ -96,7 +106,6 @@ namespace ui
                             p_draw_manager->draw_text(res_id, text, {x, y}, color, alignment);
                         }
                         break;
-
                     default:
                         PLOG_DEBUG << "Unhandled render type: " << static_cast<uint32_t>(p_renderable->get_type());
                         break;
