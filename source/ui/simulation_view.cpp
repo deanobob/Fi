@@ -42,9 +42,9 @@ namespace ui
                 const auto viewport = mp_camera->get_viewport();
                 switch (p_renderable->get_type())
                 {
-                    case core::renderable_type::rectangle:
+                    case render::renderable_type::rectangle:
                         {
-                            const auto p_rectangle = dynamic_cast<core::renderable_rectangle*>(p_renderable.get());
+                            const auto p_rectangle = dynamic_cast<render::renderable_rectangle*>(p_renderable.get());
                             const auto x = p_rectangle->m_x - viewport.x;
                             const auto y = p_rectangle->m_y - viewport.y;
                             const auto w = p_rectangle->m_width;
@@ -67,9 +67,9 @@ namespace ui
                             p_draw_manager->draw_line(tl, bl, color, t); // top left to bottom left
                         }
                         break;
-                    case core::renderable_type::line:
+                    case render::renderable_type::line:
                         {
-                            const auto p_line = dynamic_cast<core::renderable_line*>(p_renderable.get());
+                            const auto p_line = dynamic_cast<render::renderable_line*>(p_renderable.get());
                             const auto x1 = p_line->m_x1 - viewport.x;
                             const auto y1 = p_line->m_y1 - viewport.y;
                             const auto x2 = p_line->m_x2 - viewport.x;
@@ -80,9 +80,9 @@ namespace ui
                             p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, t);
                         }
                         break;
-                    case core::renderable_type::circle:
+                    case render::renderable_type::circle:
                         {
-                            const auto p_line = dynamic_cast<core::renderable_circle*>(p_renderable.get());
+                            const auto p_line = dynamic_cast<render::renderable_circle*>(p_renderable.get());
                             const auto cx = p_line->m_cx - viewport.x;
                             const auto cy = p_line->m_cy - viewport.y;
                             const auto radius = p_line->m_radius;
@@ -92,9 +92,9 @@ namespace ui
                             p_draw_manager->draw_circle(cx, cy, radius, color, t);
                         }
                         break;
-                    case core::renderable_type::sprite:
+                    case render::renderable_type::sprite:
                         {
-                            const auto p_sprite = dynamic_cast<core::renderable_sprite*>(p_renderable.get());
+                            const auto p_sprite = dynamic_cast<render::renderable_sprite*>(p_renderable.get());
                             const auto res_id = p_sprite->m_sprite_res_id;
                             const auto x = p_sprite->m_x - viewport.x;
                             const auto y = p_sprite->m_y - viewport.y;
@@ -102,9 +102,9 @@ namespace ui
                             p_draw_manager->draw_bitmap(res_id, {x, y});
                         }
                         break;
-                    case core::renderable_type::text:
+                    case render::renderable_type::text:
                         {
-                            const auto p_text = dynamic_cast<core::renderable_text*>(p_renderable.get());
+                            const auto p_text = dynamic_cast<render::renderable_text*>(p_renderable.get());
                             const auto x = p_text->m_x - viewport.x;
                             const auto y = p_text->m_y - viewport.y;
                             const auto res_id = p_text->m_font_res_id;

@@ -50,32 +50,63 @@ namespace core
             x -= std::fmod(x, 50.f);
             y -= std::fmod(y, 50.f);
             p_camera->add_renderable(
-                std::make_unique<renderable_rectangle>(x, y, 50, 50, 0, utilities::colors::white, 1));
+                std::make_unique<render::renderable_rectangle>(
+                    x,
+                    y,
+                    50,
+                    50,
+                    0,
+                    utilities::colors::white,
+                    1));
 
             switch (m_active_cursor_tool)
             {
                 case core::cursor_tool_type::track_0_deg:
                     p_camera->add_renderable(
-                        std::make_unique<renderable_rectangle>(x, y + 25, 50, 1, 0, utilities::colors::white, 2));
+                        std::make_unique<render::renderable_rectangle>(
+                            x,
+                            y + 25,
+                            50,
+                            1,
+                            0,
+                            utilities::colors::white, 2));
                     break;
                 case core::cursor_tool_type::track_45_deg:
                     p_camera->add_renderable(
-                        std::make_unique<renderable_line>(x, y, x + 50, y + 50, utilities::colors::white, 2));
+                        std::make_unique<render::renderable_line>(
+                            x,
+                            y,
+                            x + 50,
+                            y + 50,
+                            utilities::colors::white,
+                            2));
                     break;
                 case core::cursor_tool_type::track_90_deg:
                     p_camera->add_renderable(
-                        std::make_unique<renderable_rectangle>(x + 25, y, 1, 50, 0, utilities::colors::white, 2));
+                        std::make_unique<render::renderable_rectangle>(
+                            x + 25,
+                            y,
+                            1,
+                            50,
+                            0,
+                            utilities::colors::white, 2));
                     break;
                 case core::cursor_tool_type::track_135_deg:
                     p_camera->add_renderable(
-                        std::make_unique<renderable_line>(x + 50, y, x, y + 50, utilities::colors::white, 2));
+                        std::make_unique<render::renderable_line>(
+                            x + 50,
+                            y,
+                            x,
+                            y + 50,
+                            utilities::colors::white,
+                            2));
                     break;
                 default:
                     break;
             }
         }
         p_camera->add_renderable(
-            std::make_unique<renderable_text>(
+            std::make_unique<render::renderable_text>(
                 m_mouse_x,
                 m_mouse_y - 35,
                 1,
@@ -83,7 +114,7 @@ namespace core
                 utilities::colors::white,
                 ui::text_alignment::centre));
         p_camera->add_renderable(
-            std::make_unique<renderable_circle>(
+            std::make_unique<render::renderable_circle>(
                 m_mouse_x,
                 m_mouse_y,
                 40.f,

@@ -64,7 +64,7 @@ namespace core
                 for (auto x = start_x; x <= end_x; x += tile_size)
                 {
                     p_camera->add_renderable(
-                        std::make_unique<renderable_line>(
+                        std::make_unique<render::renderable_line>(
                             position.x + x,
                             viewport.y,
                             position.x + x,
@@ -76,7 +76,7 @@ namespace core
                 for (auto y = start_y; y <= end_y; y += tile_size)
                 {
                     p_camera->add_renderable(
-                        std::make_unique<renderable_line>(
+                        std::make_unique<render::renderable_line>(
                             viewport.x,
                             position.y + y,
                             viewport.x + viewport.width,
@@ -90,7 +90,7 @@ namespace core
                 const auto& size { p_body_component->get_size() };
                 const auto& rotation { p_body_component->get_rotation() };
                 p_camera->add_renderable(
-                    std::make_unique<renderable_rectangle>(
+                    std::make_unique<render::renderable_rectangle>(
                         position.x,
                         position.y,
                         size.x,
