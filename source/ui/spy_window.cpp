@@ -26,9 +26,9 @@ namespace ui
 
     }
 
-    void spy_window::on_load(core::resource_manager* p_resource_manager) 
+    void spy_window::on_load(core::resource_manager* p_resource_manager)
     {
-        
+
     }
 
     void spy_window::on_layout()
@@ -42,13 +42,14 @@ namespace ui
         float y = get_world_y();
         float w = get_width();
         float h = get_height();
-        p_draw_manager->draw_rectangle({x, y, w, h});
+        p_draw_manager->draw_filled_rectangle({x, y, w, h}, utilities::colors::black);
+        p_draw_manager->draw_rectangle({x, y, w, h}, utilities::colors::green);
 
         x = mp_simulation_view->get_world_x();
         y = mp_simulation_view->get_world_y();
         w = mp_simulation_view->get_width();
         h = mp_simulation_view->get_height();
-        p_draw_manager->draw_rectangle({x, y, w, h});
+        p_draw_manager->draw_rectangle({x, y, w, h}, utilities::colors::green);
     }
 
     void spy_window::on_publish(core::message* p_message)

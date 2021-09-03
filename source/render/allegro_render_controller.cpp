@@ -128,7 +128,7 @@ namespace render
         }
         else
         {
-            al_set_window_title(mp_display , properties.title.c_str());
+            al_set_window_title(mp_display, properties.title.c_str());
 
             mp_target = al_create_bitmap(properties.width, properties.height);
 
@@ -217,7 +217,7 @@ namespace render
             m_sprite_cache[bitmap_id] = p_sub_bitmap;
             return true;
         }
-        
+
         PLOG_ERROR << "Failed to load sub bitmap for file " << filename.c_str();
         bitmap_id = resource_id_unknown;
         return false;
@@ -252,7 +252,7 @@ namespace render
             m_font_ids[font_unique_name] = font_id;
             return true;
         }
-        
+
         PLOG_ERROR << "Failed to load font from file " << full_path.c_str();
         font_id = resource_id_unknown;
         return false;
@@ -279,10 +279,10 @@ namespace render
     }
 
     void allegro_render_controller::render_draw_line(
-        const float x1, 
-        const float y1, 
+        const float x1,
+        const float y1,
         const float x2,
-        const float y2, 
+        const float y2,
         const utilities::color& color,
         float thickness)
     {
@@ -293,6 +293,21 @@ namespace render
         al_color.a = color.a;
 
         al_draw_line(x1, y1, x2, y2, al_color, thickness);
+    }
+
+    void allegro_render_controller::render_circle(float cx,
+                                                  float cy,
+                                                  float radius,
+                                                  const utilities::color& color,
+                                                  float thickness)
+    {
+        ALLEGRO_COLOR al_color{};
+        al_color.r = color.r;
+        al_color.g = color.g;
+        al_color.b = color.b;
+        al_color.a = color.a;
+
+        al_draw_circle(cx, cy, radius, al_color, thickness);
     }
 
     void allegro_render_controller::render_text(
@@ -341,7 +356,7 @@ namespace render
             mp_event_queue = nullptr;
         }
 
-        if (mp_display  != nullptr)
+        if (mp_display != nullptr)
         {
             al_destroy_display(mp_display);
             mp_display  = nullptr;
@@ -470,6 +485,15 @@ namespace render
 
     void allegro_render_controller::render_draw_line(const float x1, const float y1, const float x2,
         const float y2, const utilities::color& color, float thickness)
+    {
+
+    }
+
+    void allegro_render_controller::render_circle(float cx,
+                                                  float cy,
+                                                  float radius,
+                                                  const utilities::color& color,
+                                                  float thickness)
     {
 
     }

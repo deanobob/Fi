@@ -37,16 +37,16 @@ namespace core
             mp_message_bus.get(),
             get_system_interface()->get_input_controller()));
         add_service(std::make_unique<console::console_service>(mp_message_bus.get()));
+        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
         add_service(std::make_unique<ui::ui_service>(
             mp_message_bus.get(),
             get_system_interface()->get_input_controller()));
-        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
     }
 
     game::~game()
     {
         m_services.clear();
-        
+
         mp_message_bus->unsubscribe(this);
         mp_message_bus.reset(nullptr);
     }

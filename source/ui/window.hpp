@@ -43,7 +43,7 @@ namespace ui
         utilities::vector2 m_last_mouse_position{};
 
         /// @brief The window fill colour
-        const utilities::color m_fill_color{0, 0, 0};
+        const utilities::color m_fill_color{utilities::colors::black};
     };
 } /// namespace ui
 

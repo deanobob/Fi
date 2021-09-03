@@ -24,45 +24,45 @@ namespace render
     struct window_properties
     {
         /// @brief Undefined window position
-        static constexpr auto WINDOW_POSITION_UNDEFINED{0};
+        static constexpr auto WINDOW_POSITION_UNDEFINED {0};
         /// @brief The default window width
-        static constexpr auto DEFAULT_WINDOW_WIDTH{1024};
+        static constexpr auto DEFAULT_WINDOW_WIDTH {1024};
         /// @brief The default window height
-        static constexpr auto DEFAULT_WINDOW_HEIGHT{720};
+        static constexpr auto DEFAULT_WINDOW_HEIGHT {720};
         /// @brief The default number of msaa samples
-        static constexpr auto DEFAULT_MSAA_SAMPLES{8};
+        static constexpr auto DEFAULT_MSAA_SAMPLES {8};
 
         /// @brief The window title
-        std::string title{""};
+        std::string title {""};
         /// @brief The x position of the window
-        int x{WINDOW_POSITION_UNDEFINED};
+        int x {WINDOW_POSITION_UNDEFINED};
         /// @brief The y position of the window
-        int y{WINDOW_POSITION_UNDEFINED};
+        int y {WINDOW_POSITION_UNDEFINED};
         /// @brief The width of the window
-        uint32_t width{DEFAULT_WINDOW_WIDTH};
+        uint32_t width {DEFAULT_WINDOW_WIDTH};
         /// @brief The height of the window
-        uint32_t height{DEFAULT_WINDOW_HEIGHT};
+        uint32_t height {DEFAULT_WINDOW_HEIGHT};
         /// @brief Flag defining whether the window should display in fullscreen mode
-        bool fullscreen{false};
+        bool fullscreen {false};
         /// @brief Flag defining whether the window is resizeable
-        bool resizeable{true};
+        bool resizeable {true};
         /// @brief Flag defining if vsync is enabled
-        bool vsync{true};
+        bool vsync {true};
         /// @brief Flag defining if msaa is enabled
-        bool msaa_enabled{true};
+        bool msaa_enabled {true};
         /// @brief The number of msaa samples
-        uint8_t msaa_samples{DEFAULT_MSAA_SAMPLES};
+        uint8_t msaa_samples {DEFAULT_MSAA_SAMPLES};
     };
 
     /// @brief Defines the window location scale and rotation.
     struct transform
     {
         /// @brief The viewport boundaries
-        utilities::rectangle viewport{};
+        utilities::rectangle viewport {};
         /// @brief The transform scale
-        utilities::vector2 scale{utilities::vector2::ONE};
+        utilities::vector2 scale {utilities::vector2::ONE};
         /// @brief The transform rotation in radians
-        float rotation{0.0f};
+        float rotation {0.0f};
     };
 
     /// @brief The render controller class
@@ -130,10 +130,10 @@ namespace render
                                resource_id& font_id) = 0;
 
         /// @brief Render a bitmap
-        /// @param bitmap_id The bitmap ID
+        /// @param bitmap_res_id The bitmap ID
         /// @param position The position to render the bitmap
         /// @param flags Flags specific to the renderer
-        virtual void render_bitmap(resource_id bitmap_id,
+        virtual void render_bitmap(resource_id bitmap_res_id,
                                    const utilities::vector2& position,
                                    uint32_t flags) = 0;
 
@@ -157,14 +157,26 @@ namespace render
                                       const utilities::color& color,
                                       float thickness = 1) = 0;
 
+        /// @brief Render a circle
+        /// @param cx The centre X coordinate
+        /// @param cy The centre Y coordinate
+        /// @param radius The radius of the circle
+        /// @param color The circle fill colour
+        /// @param thickness The line thickness
+        virtual void render_circle(float cx,
+                                   float cy,
+                                   float radius,
+                                   const utilities::color& color,
+                                   float thickness = 1) = 0;
+
         /// @brief Render text at given position
-        /// @param font_id The ID of the font
+        /// @param font_res_id The ID of the font
         /// @param text The text
         /// @param x The x position of the text
         /// @param y The y position of the text
         /// @param color The colour of the text
         /// @param flags Flags specific to the renderer
-        virtual void render_text(resource_id font_id,
+        virtual void render_text(resource_id font_res_id,
                                  const std::string& text,
                                  float x,
                                  float y,

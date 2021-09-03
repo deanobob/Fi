@@ -10,8 +10,8 @@ namespace ui
     /// @details Determines how a UI element layout is calculated
     enum class layout_mode
     {
-      fixed,
-      align
+        fixed,
+        align
     };
 } /// namespace ui
 

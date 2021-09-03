@@ -52,13 +52,27 @@ namespace core
         void draw_line(
             const utilities::vector2& p1,
             const utilities::vector2& p2,
-            const utilities::color& color = utilities::color{255, 255, 255},
+            const utilities::color& color = utilities::colors::white,
             float thickness = 1);
+
+        /// @brief Draw circle to the display
+        /// @param cx The centre X coordinate
+        /// @param cy The centre Y coordinate
+        /// @param radius The radius of the circle
+        /// @param color The colour of the circle. Defaults to white.
+        /// @param thickness The circle line thickness
+        void draw_circle(
+            const float cx,
+            const float cy,
+            const float radius,
+            const utilities::color& color = utilities::colors::white,
+            float thickness = 1);
+
 
         /// @brief Draw rectangle
         /// @param rect The rectangle to draw
         /// @param color The line colour
-        void draw_rectangle(const utilities::rectangle& rect, const utilities::color& color = {255, 255, 0});
+        void draw_rectangle(const utilities::rectangle& rect, const utilities::color& color);
 
         /// @brief Draw filled rectangle
         /// @param rect The rectangle to draw
@@ -102,13 +116,11 @@ namespace core
 
         private:
         /// @brief Pointer to the message bus
-        core::message_bus* mp_message_bus{nullptr};
-
+        core::message_bus* mp_message_bus {nullptr};
         /// @brief Pointer to render controller
-        render::render_controller* mp_render_controller{nullptr};
-
+        render::render_controller* mp_render_controller {nullptr};
         /// @brief Queue of all transforms applied to the draw manager
-        std::list<render::transform> m_transforms{};
+        std::list<render::transform> m_transforms {};
     };
 } /// namespace core
 

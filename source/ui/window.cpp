@@ -10,9 +10,9 @@ namespace ui
 
     }
 
-    void window::on_load(core::resource_manager* p_resource_manager) 
+    void window::on_load(core::resource_manager* p_resource_manager)
     {
-        
+
     }
 
     void window::on_layout()
@@ -27,7 +27,7 @@ namespace ui
         float w = get_width();
         float h = get_height();
         p_draw_manager->draw_filled_rectangle({x, y, w, h}, m_fill_color);
-        p_draw_manager->draw_rectangle({x, y, w, h});
+        p_draw_manager->draw_rectangle({x, y, w, h}, utilities::colors::green);
     }
 
     void window::mouse_button_pressed(const input::mouse_button mouse_button, int position_x, int position_y)

@@ -28,6 +28,23 @@ namespace utilities
         /// @param a The alpha value (defaults to 255)
         color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
     };
+    /// @brief Convenience namespace of pre-defined colours
+    namespace colors
+    {
+        /// @brief The colour white
+        static const utilities::color white {255, 255, 255};
+        /// @brief The colour black
+        static const utilities::color black {0, 0, 0};
+        /// @brief The colour red
+        static const utilities::color red {255, 0, 0};
+        /// @brief The colour green
+        static const utilities::color green {0, 255, 0};
+        /// @brief The colour blue
+        static const utilities::color blue {0, 0, 255};
+        /// @brief The colour white
+        static const utilities::color yellow {255, 255, 0};
+    }
+
 } /// namespace utilities
 
 #endif /// COLOR_HPP

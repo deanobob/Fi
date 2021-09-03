@@ -49,7 +49,7 @@ namespace ui
         std::string m_text {""};
 
         /// @brief The color of the text
-        utilities::color m_color {0, 0, 0};
+        utilities::color m_color {utilities::colors::white};
 
         /// @brief The justification of the text
         text_alignment m_justification{text_alignment::left};

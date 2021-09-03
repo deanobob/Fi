@@ -49,12 +49,12 @@ namespace core
         return m_viewport;
     }
 
-    void camera::add_renderable(const renderable& renderable)
+    void camera::add_renderable(std::unique_ptr<render::renderable> renderable)
     {
-        m_renderables.push_back(renderable);
+        m_renderables.push_back(std::move(renderable));
     }
 
-    const std::list<renderable>& camera::get_renderables() const
+    const std::list<std::unique_ptr<render::renderable> >& camera::get_renderables() const
     {
         return m_renderables;
     }

@@ -37,14 +37,14 @@ namespace render
         bool load_bitmap(const std::string& filename,
                          const utilities::vector2& position,
                          const utilities::vector2& size,
-                         resource_id& bitmapId) override;
+                         resource_id& bitmap_id) override;
 
         bool load_font(const std::string& filename,
                        uint32_t font_size,
                        uint32_t flags,
-                       resource_id& fontId) override;
+                       resource_id& font_id) override;
 
-        void render_bitmap(resource_id bitmapId,
+        void render_bitmap(resource_id bitmap_id,
                            const utilities::vector2& position,
                            uint32_t flags) override;
 
@@ -58,7 +58,13 @@ namespace render
                               const utilities::color& color,
                               float thickness = 1) override;
 
-        void render_text(const resource_id font_id,
+        void render_circle(float cx,
+                           float cy,
+                           float radius,
+                           const utilities::color& color,
+                           float thickness = 1) override;
+
+        void render_text(const resource_id font_res_id,
                          const std::string& text,
                          float x,
                          float y,
@@ -73,25 +79,25 @@ namespace render
 
         private:
         /// @brief The allegro event queue
-        ALLEGRO_EVENT_QUEUE* mp_event_queue{nullptr};
+        ALLEGRO_EVENT_QUEUE* mp_event_queue {nullptr};
         /// @brief The allegro display instance
-        ALLEGRO_DISPLAY* mp_display{nullptr};
+        ALLEGRO_DISPLAY* mp_display {nullptr};
         /// @brief The bitmap instance that the window draws
-        ALLEGRO_BITMAP* mp_target{nullptr};
+        ALLEGRO_BITMAP* mp_target {nullptr};
         /// @brief The backbuffer clear colour
-        ALLEGRO_COLOR m_clear_color{};
+        ALLEGRO_COLOR m_clear_color {};
         /// @brief Stores the next unique ID for a font UID
-        uint32_t m_next_font_id{1};
+        uint32_t m_next_font_id {1};
         /// @brief Stores the next unique ID for a sprite UID
-        uint32_t m_next_sprite_id{1};
+        uint32_t m_next_sprite_id {1};
         /// @brief Font name and size mapped to font filename
-        std::map<std::string, uint32_t> m_font_ids;
+        std::map<std::string, uint32_t> m_font_ids {};
         /// @brief Cache of allegro fonts
-        std::map<uint32_t, ALLEGRO_FONT*> m_font_cache;
+        std::map<uint32_t, ALLEGRO_FONT*> m_font_cache {};
         /// @brief Parent bitmaps mapped to the source filename
-        std::map<std::string, ALLEGRO_BITMAP*> m_bitmap_cache;
+        std::map<std::string, ALLEGRO_BITMAP*> m_bitmap_cache {};
         /// @brief Contains sub-bitmap sprites sharing memory of parent bitmaps stored in bitmap_cache
-        std::map<uint32_t, ALLEGRO_BITMAP*> m_sprite_cache;
+        std::map<uint32_t, ALLEGRO_BITMAP*> m_sprite_cache {};
 
         /// @brief Get the bitmap by UID
         /// @param bitmap_id The bitmap unique ID
@@ -154,7 +160,13 @@ namespace render
                               const utilities::color& color,
                               float thickness) override;
 
-        void render_text(const uint32_t font_id,
+        void render_circle(float cx,
+                           float cy,
+                           float radius,
+                           const utilities::color& color,
+                           float thickness = 1) override;
+
+        void render_text(const uint32_t font_res_id,
                          const std::string& text,
                          float x,
                          float y,
