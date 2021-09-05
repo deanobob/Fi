@@ -1,5 +1,6 @@
 /// @file camera.cpp
 
+#include <algorithm>
 #include "plog/Log.h"
 #include "camera.hpp"
 
@@ -54,8 +55,13 @@ namespace core
         m_renderables.push_back(std::move(renderable));
     }
 
-    const std::list<std::unique_ptr<render::renderable> >& camera::get_renderables() const
+    const std::vector<std::unique_ptr<render::renderable> >& camera::get_renderables()
     {
+        std::sort(m_renderables.begin(), m_renderables.end(), [](
+            const std::unique_ptr<render::renderable>& lhs, const std::unique_ptr<render::renderable>& rhs) {
+                return lhs->get_y() < rhs->get_y();
+            });
+
         return m_renderables;
     }
 

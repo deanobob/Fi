@@ -4,6 +4,9 @@
 #ifndef MATH_HPP
 #define MATH_HPP
 
+#include <tuple>
+#include "vector2.hpp"
+
 /// @namespace utilities namespace
 namespace utilities
 {
@@ -53,6 +56,12 @@ namespace utilities
         /// @param t Value between 0 and 1 that defines the value to return
         /// @return The value between a and b
         static float lerp(float a, float b, float t);
+
+        static std::tuple<float, float> cartToIso(float cart_x, float cart_y);
+
+        static utilities::vector2 cartToIso(const utilities::vector2& cart);
+
+        static std::tuple<float, float> isoToCart(float iso_x, float iso_y);
 
         private:
         /// @brief Default constructor

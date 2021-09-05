@@ -6,6 +6,7 @@
 #include "clickable_component.hpp"
 #include "clickable_subsystem.hpp"
 #include "cursor_subsystem.hpp"
+#include "map_subsystem.hpp"
 #include "movement_component.hpp"
 #include "movement_subsystem.hpp"
 #include "rectangle.hpp"
@@ -27,6 +28,10 @@ namespace core
                 &m_camera_controller));
         add_subsystem(
             std::make_unique<movement_subsystem>(
+                mp_message_bus,
+                mp_entity_manager.get()));
+        add_subsystem(
+            std::make_unique<map_subsystem>(
                 mp_message_bus,
                 mp_entity_manager.get()));
         add_subsystem(
@@ -57,18 +62,6 @@ namespace core
 
         // Initialise main camera
         m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{5000, 5000}), "main");
-
-        // Initialise map entity
-        {
-            auto entity{std::make_unique<core::entity>()};
-            auto body_component{std::make_unique<core::body_component>(
-                utilities::vector2::ZERO,
-                utilities::vector2{10000, 10000},
-                0)};
-            entity->add_component(std::move(body_component));
-            entity->add_component(std::make_unique<core::render_component>("map"));
-            mp_entity_manager->put(std::move(entity));
-        }
 
         // Initialise test entities
         auto x_offset {250.0f};
@@ -112,6 +105,9 @@ namespace core
     {
         for (const auto& p_camera : m_camera_controller.get_cameras())
         {
+            // Clear last frame renderables as they will have been rendered.
+            p_camera->clear();
+
             for (auto& subsystem : m_subsystems)
             {
                 subsystem->draw(p_camera, delta);

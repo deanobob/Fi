@@ -23,6 +23,7 @@ namespace core
             && load_bitmap("track2", "toolbar_icons.png", {70, 0}, {70, 70})
             && load_bitmap("track3", "toolbar_icons.png", {140, 0}, {70, 70})
             && load_bitmap("track4", "toolbar_icons.png", {210, 0}, {70, 70})
+            && load_bitmap("ground_1", "basic_ground_tiles.png", {128, 0}, {128, 128})
             && load_font("default_24", "roboto_regular.ttf", 24);
     }
 

@@ -4,7 +4,7 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include <list>
+#include <vector>
 #include <memory>
 #include <stdlib.h>
 #include <tuple>
@@ -52,7 +52,7 @@ namespace core
 
         /// @brief Get renderables
         /// @return The renderable list
-        const std::list<std::unique_ptr<render::renderable> >& get_renderables() const;
+        const std::vector<std::unique_ptr<render::renderable> >& get_renderables();
 
         /// @brief Called on every update tick allowing the camera to update
         /// @param gametime The gametime maintaining instance
@@ -74,7 +74,7 @@ namespace core
         /// @brief List of renderables within the camera viewport
         /// @details On draw the game simulation will fill this structure with the renderable items within the camera
         /// viewport, which is then retrieved by the gameview that is attached to the camera.
-        std::list<std::unique_ptr<render::renderable> > m_renderables{};
+        std::vector<std::unique_ptr<render::renderable> > m_renderables{};
     };
 } /// namespace core
 
