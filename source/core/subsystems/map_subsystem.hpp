@@ -36,9 +36,41 @@ namespace core
 
         bool pauseable() const override { return true; }
 
-
         private:
-        uint8_t m_map[25] = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+        /// @brief The tile width
+        static constexpr auto m_tile_width {55};
+        /// @brief The tile height
+        static constexpr auto m_tile_height {55};
+        /// @brief The number of tiles on the X axis
+        static constexpr auto m_num_tiles_x {50};
+        /// @brief The number of tiles on the Y axis
+        static constexpr auto m_num_tiles_y {50};
+        /// @brief The map width
+        static constexpr auto m_map_width {m_tile_width * m_num_tiles_x};
+        /// @brief The map height
+        static constexpr auto m_map_height {m_tile_width * m_num_tiles_x};
+
+        /// @brief The world width
+        const int m_world_width;
+        /// @brief The world height
+        const int m_world_height;
+
+        /// @brief Contains the tile type for each tile in the map
+        uint8_t m_map[m_num_tiles_x * m_num_tiles_y] {};
+
+        /// @brief Get the tilemap X and Y coordinates given a world coordinate
+        /// @param x The x world coordinate
+        /// @param y The y world coordinate
+        /// @return Tuple containing the tilemap X and Y coordinates
+        std::tuple<int, int> get_tile_at(float x, float y) const;
+
+        /// @brief Get the position of the left edge of the map
+        /// @return The left position of the map
+        float get_map_left() const;
+
+        /// @brief Get the position of the top edge of the map
+        /// @return The top position of the map
+        float get_map_top() const;
     };
 } /// namespace core
 

@@ -52,7 +52,7 @@ namespace core
 
         /// @brief Get renderables
         /// @return The renderable list
-        const std::vector<std::unique_ptr<render::renderable> >& get_renderables();
+        const std::vector<std::unique_ptr<render::renderable> >& get_renderables() const;
 
         /// @brief Called on every update tick allowing the camera to update
         /// @param gametime The gametime maintaining instance

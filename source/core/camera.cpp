@@ -55,13 +55,8 @@ namespace core
         m_renderables.push_back(std::move(renderable));
     }
 
-    const std::vector<std::unique_ptr<render::renderable> >& camera::get_renderables()
+    const std::vector<std::unique_ptr<render::renderable> >& camera::get_renderables() const
     {
-        std::sort(m_renderables.begin(), m_renderables.end(), [](
-            const std::unique_ptr<render::renderable>& lhs, const std::unique_ptr<render::renderable>& rhs) {
-                return lhs->get_y() < rhs->get_y();
-            });
-
         return m_renderables;
     }
 

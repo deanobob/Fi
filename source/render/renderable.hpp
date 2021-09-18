@@ -41,8 +41,6 @@ namespace render
         /// @brief Get the renderable type
         /// @return renderable_type The renderable type
         virtual renderable_type get_type() const = 0;
-
-        virtual float get_y() const = 0;
     };
 
     /// @brief A renderable line defined by two points
@@ -92,11 +90,6 @@ namespace render
         {
             return renderable_type::line;
         }
-
-        float get_y() const override
-        {
-            return std::min(m_y1, m_y2);
-        }
     };
 
     /// @brief A renderable circle defined by a centre point and a radius
@@ -140,11 +133,6 @@ namespace render
         renderable_type get_type() const override
         {
             return renderable_type::circle;
-        }
-
-        float get_y() const override
-        {
-            return m_cy - m_radius;
         }
     };
 
@@ -205,11 +193,6 @@ namespace render
         {
             return renderable_type::rectangle;
         }
-
-        float get_y() const override
-        {
-            return m_y;
-        }
     };
 
     /// @brief A renderable sprite at a given position
@@ -248,11 +231,6 @@ namespace render
         renderable_type get_type() const override
         {
             return renderable_type::sprite;
-        }
-
-        float get_y() const override
-        {
-            return m_y;
         }
     };
 
@@ -307,11 +285,6 @@ namespace render
         renderable_type get_type() const override
         {
             return renderable_type::text;
-        }
-
-        float get_y() const override
-        {
-            return m_y;
         }
     };
 }
