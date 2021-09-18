@@ -287,6 +287,6 @@ namespace render
             return renderable_type::text;
         }
     };
-};
+}
 
 #endif /// RENDERABLE_HPP

@@ -3,6 +3,7 @@
 #include <math.h>
 #include "plog/Log.h"
 #include "simulation_view.hpp"
+#include "math.hpp"
 #include "message_sim_mouse_button.hpp"
 #include "message_sim_mouse_move.hpp"
 
@@ -53,8 +54,8 @@ namespace ui
                             const auto& color = p_rectangle->m_color;
                             const auto t = p_rectangle->m_thickness;
 
-                            const auto cx = x + w / 2.0f;
-                            const auto cy = y + h / 2.0f;
+                            const auto cx = x + w / 2.f;
+                            const auto cy = y + h / 2.f;
 
                             const auto tl = utilities::vector2::rotate_point(cx, cy, r, x, y);
                             const auto tr = utilities::vector2::rotate_point(cx, cy, r, x + w, y);
@@ -69,25 +70,25 @@ namespace ui
                         break;
                     case render::renderable_type::line:
                         {
-                            const auto p_line = dynamic_cast<render::renderable_line*>(p_renderable.get());
-                            const auto x1 = p_line->m_x1 - viewport.x;
-                            const auto y1 = p_line->m_y1 - viewport.y;
-                            const auto x2 = p_line->m_x2 - viewport.x;
-                            const auto y2 = p_line->m_y2 - viewport.y;
-                            const auto& color = p_line->m_color;
-                            const auto t = p_line->m_thickness;
+                            const auto p_line { dynamic_cast<render::renderable_line*>(p_renderable.get()) };
+                            const auto x1 { p_line->m_x1 - viewport.x };
+                            const auto y1 { p_line->m_y1 - viewport.y };
+                            const auto x2 { p_line->m_x2 - viewport.x };
+                            const auto y2 { p_line->m_y2 - viewport.y };
+                            const auto& color { p_line->m_color };
+                            const auto t { p_line->m_thickness };
 
                             p_draw_manager->draw_line({x1, y1}, {x2, y2}, color, t);
                         }
                         break;
                     case render::renderable_type::circle:
                         {
-                            const auto p_line = dynamic_cast<render::renderable_circle*>(p_renderable.get());
-                            const auto cx = p_line->m_cx - viewport.x;
-                            const auto cy = p_line->m_cy - viewport.y;
-                            const auto radius = p_line->m_radius;
-                            const auto& color = p_line->m_color;
-                            const auto t = p_line->m_thickness;
+                            const auto p_line { dynamic_cast<render::renderable_circle*>(p_renderable.get()) };
+                            const auto cx { p_line->m_cx - viewport.x };
+                            const auto cy { p_line->m_cy - viewport.y };
+                            const auto radius { p_line->m_radius };
+                            const auto& color { p_line->m_color };
+                            const auto t { p_line->m_thickness };
 
                             p_draw_manager->draw_circle(cx, cy, radius, color, t);
                         }
