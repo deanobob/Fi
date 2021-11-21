@@ -13,7 +13,7 @@ namespace core
         core::entity_manager* p_entity_manager,
         component_type component_mask)
         : component_subsystem{p_message_bus, p_entity_manager, component_mask}
-        , m_quadtree{utilities::rectangle{0, 0, 10000, 10000}} //TODO: determine world size
+        , m_quadtree{utilities::rectangle{-5000, -5000, 10000, 10000}} //TODO: determine world size
     {
 
     }
@@ -38,7 +38,10 @@ namespace core
         {
             const auto& position = p_body->get_position();
             const auto& size = p_body->get_size();
-            m_quadtree.insert(p_entity, {position.x, position.y, size.x, size.y});
+            if (!m_quadtree.insert(p_entity, {position.x, position.y, size.x, size.y}))
+            {
+                PLOG_ERROR << "Failed to insert entity " << p_entity->get_id() << " " << position.x << ":" << position.y << " " << size.x << ":" << size.y;
+            }
         }
     }
 
@@ -47,12 +50,15 @@ namespace core
         // Remove registration for position events
         p_entity->position_changed_event.unregister_handler(this);
 
-        m_quadtree.remove(p_entity);
+        if (!m_quadtree.remove(p_entity))
+        {
+            PLOG_ERROR << "Failed to remove entity " << p_entity->get_id();
+        }
     }
 
     void quadtree_subsystem::on_event_raised(const event_type& event_type, event_args* p_event_args)
     {
-        if (event_type == "ENTITY_POSITION_CHANGED")
+        if (event_type == core::entity::position_changed_event_type)
         {
             const auto entity_args = dynamic_cast<entity_event_args*>(p_event_args);
             auto p_entity = entity_args->get_entity();
@@ -62,7 +68,10 @@ namespace core
             {
                 const auto& position = p_body->get_position();
                 const auto& size = p_body->get_size();
-                m_quadtree.remove(p_entity);
+                if (!m_quadtree.remove(p_entity))
+                {
+                    PLOG_ERROR << "Failed to remove entity " << p_entity->get_id();
+                }
                 m_quadtree.insert(p_entity, {position.x, position.y, size.x, size.y});
             }
         }

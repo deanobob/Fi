@@ -36,8 +36,8 @@ namespace core
         // Debug centre point
         p_camera->add_renderable(
             std::make_unique<render::renderable_circle>(
-                5000,
-                5000,
+                0,
+                0,
                 5,
                 utilities::colors::red,
                 6));

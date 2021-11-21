@@ -47,14 +47,15 @@ namespace core
             auto x = static_cast<float>(m_mouse_x);
             auto y = static_cast<float>(m_mouse_y);
             // offset by tile margins
-            x -= std::fmod(x, 50.f);
-            y -= std::fmod(y, 50.f);
+            x -= ((x >= 0) ? 0 : 55) + std::fmod(x, 55.f);
+            y -= ((y >= 0) ? 0 : 55) + std::fmod(y, 55.f);
+
             p_camera->add_renderable(
                 std::make_unique<render::renderable_rectangle>(
                     x,
                     y,
-                    50,
-                    50,
+                    55,
+                    55,
                     0,
                     utilities::colors::white,
                     1));
@@ -66,7 +67,7 @@ namespace core
                         std::make_unique<render::renderable_rectangle>(
                             x,
                             y + 25,
-                            50,
+                            55,
                             1,
                             0,
                             utilities::colors::white, 2));
@@ -76,8 +77,8 @@ namespace core
                         std::make_unique<render::renderable_line>(
                             x,
                             y,
-                            x + 50,
-                            y + 50,
+                            x + 55,
+                            y + 55,
                             utilities::colors::white,
                             2));
                     break;
@@ -87,7 +88,7 @@ namespace core
                             x + 25,
                             y,
                             1,
-                            50,
+                            55,
                             0,
                             utilities::colors::white, 2));
                     break;
@@ -97,7 +98,7 @@ namespace core
                             x + 50,
                             y,
                             x,
-                            y + 50,
+                            y + 55,
                             utilities::colors::white,
                             2));
                     break;

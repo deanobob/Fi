@@ -24,8 +24,11 @@ namespace core
     class entity
     {
         public:
+        /// @brief The type string of the position changed event
+        static constexpr auto position_changed_event_type {"ENTITY_POSITION_CHANGED"};
+
         /// @brief Event dispatcher that notifies registered event handlers the entity position has changed
-        event_dispatcher position_changed_event{"ENTITY_POSITION_CHANGED"};
+        event_dispatcher position_changed_event{position_changed_event_type};
 
         /// @brief Constructor
         /// @param tag The entity tag

@@ -61,7 +61,7 @@ namespace core
         }
 
         // Initialise main camera
-        m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{5000, 5000}), "main");
+        m_camera_controller.add_camera(std::make_unique<core::camera>(utilities::vector2{0, 0}), "main");
 
         // Initialise test entities
         auto x_offset {250.0f};
@@ -69,7 +69,7 @@ namespace core
         {
             auto entity{std::make_unique<core::entity>()};
             auto body_component{std::make_unique<core::body_component>(
-                utilities::vector2{5000, 5000},
+                utilities::vector2{0, 0},
                 utilities::vector2{40, 10},
                 0)};
             body_component->travel(x_offset);

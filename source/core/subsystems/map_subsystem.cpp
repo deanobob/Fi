@@ -86,11 +86,11 @@ namespace core
 
     float map_subsystem::get_map_left() const
     {
-        return (m_world_width - m_map_width) / 2.f;
+        return -m_map_width / 2.f;
     }
 
     float map_subsystem::get_map_top() const
     {
-        return (m_world_width - m_map_height) / 2.f;
+        return -m_map_height / 2.f;
     }
 }

@@ -27,7 +27,7 @@ namespace core
             : m_acceleration{acceleration}
             , m_velocity{velocity}
         {
-            auto seg1 = std::make_unique<path_segment_straight>(utilities::vector2{4500, 5020}, 0.f, 1000);
+            auto seg1 = std::make_unique<path_segment_straight>(utilities::vector2{-500, 20}, 0.f, 1000);
             auto seg2 = std::make_unique<path_segment_curved>(seg1->get_end_position(), 50, 180, seg1->get_end_rotation(), true);
             auto seg3 = std::make_unique<path_segment_straight>(seg2->get_end_position(), seg2->get_end_rotation(), 1000);
             auto seg4 = std::make_unique<path_segment_curved>(seg3->get_end_position(), 50, 180, seg3->get_end_rotation(), true);
@@ -82,7 +82,7 @@ namespace core
             return m_max_velocity;
         }
 
-        /// @brief Get the list of path segments defining a path 
+        /// @brief Get the list of path segments defining a path
         /// @return The path
         const std::list<std::unique_ptr<core::path_segment> >& get_path() const
         {

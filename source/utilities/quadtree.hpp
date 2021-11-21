@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include "entity.hpp"
 #include "rectangle.hpp"
 
 /// @namespace utilities namespace
@@ -42,7 +43,7 @@ namespace utilities
             : mp_parent(p_parent)
             , m_boundary(boundary)
         {
-        
+
         }
 
         /// @brief Insert data into the quadtree
@@ -52,7 +53,6 @@ namespace utilities
         bool insert(T data, const rectangle& rectangle)
         {
             auto rc{false};
-
             if (m_boundary.contains(rectangle))
             {
                 if (m_leaf_list.size() >= CAPACITY && mp_north_west == nullptr)
@@ -156,7 +156,7 @@ namespace utilities
         private:
         /// @brief The maximum capacity of a quadtree node before it is subdivided
         static constexpr int CAPACITY = 4;
-        
+
         /// @brief Map that links data to the quadtree object it is assigned to
         std::map<T, quadtree<T>*> m_leaf_location_map{};
         /// @brief Container of all child leaf objects
@@ -259,7 +259,7 @@ namespace utilities
                 ++it)
             {
                 const auto leaf = (*it);
-                
+
                 if (leaf.m_data == data)
                 {
                     m_leaf_list.erase(it);

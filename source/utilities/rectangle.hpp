@@ -3,6 +3,7 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
 
+#include <ostream>
 #include "point.hpp"
 #include "vector2.hpp"
 
@@ -101,6 +102,19 @@ namespace utilities
         /// @param rhs The right-hand side of the operation
         /// @return True if the rectangle properties do not match the local rectangle
         bool operator!= (const rectangle& rhs) const;
+
+        /// @brief The overloaded stringstream operator
+        /// @param ostr The stringstream object
+        /// @param rhs The rectangle to print
+        /// @return The stringstream object
+        friend std::ostream& operator<< (std::ostream& ostr, rectangle const& rhs)
+        {
+            return ostr << "rectangle("
+                        << "x: " << rhs.x << ", "
+                        << "y: " << rhs.y << ", "
+                        << "w: " << rhs.width << ", "
+                        << "h: " << rhs.height << ")\n";
+        }
     };
 } /// namespace utilities
 
