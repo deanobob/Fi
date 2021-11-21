@@ -38,9 +38,9 @@ namespace core
 
         private:
         /// @brief The tile width
-        static constexpr auto m_tile_width {55};
+        static constexpr auto m_tile_width {54};
         /// @brief The tile height
-        static constexpr auto m_tile_height {55};
+        static constexpr auto m_tile_height {54};
         /// @brief The number of tiles on the X axis
         static constexpr auto m_num_tiles_x {50};
         /// @brief The number of tiles on the Y axis

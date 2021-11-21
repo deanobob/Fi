@@ -47,15 +47,15 @@ namespace core
             auto x = static_cast<float>(m_mouse_x);
             auto y = static_cast<float>(m_mouse_y);
             // offset by tile margins
-            x -= ((x >= 0) ? 0 : 55) + std::fmod(x, 55.f);
-            y -= ((y >= 0) ? 0 : 55) + std::fmod(y, 55.f);
+            x -= ((x >= 0) ? 0 : 54) + std::fmod(x, 54.f);
+            y -= ((y >= 0) ? 0 : 54) + std::fmod(y, 54.f);
 
             p_camera->add_renderable(
                 std::make_unique<render::renderable_rectangle>(
                     x,
                     y,
-                    55,
-                    55,
+                    54,
+                    54,
                     0,
                     utilities::colors::white,
                     1));
@@ -67,7 +67,7 @@ namespace core
                         std::make_unique<render::renderable_rectangle>(
                             x,
                             y + 25,
-                            55,
+                            54,
                             1,
                             0,
                             utilities::colors::white, 2));
@@ -77,8 +77,8 @@ namespace core
                         std::make_unique<render::renderable_line>(
                             x,
                             y,
-                            x + 55,
-                            y + 55,
+                            x + 54,
+                            y + 54,
                             utilities::colors::white,
                             2));
                     break;
@@ -88,7 +88,7 @@ namespace core
                             x + 25,
                             y,
                             1,
-                            55,
+                            54,
                             0,
                             utilities::colors::white, 2));
                     break;
@@ -98,7 +98,7 @@ namespace core
                             x + 50,
                             y,
                             x,
-                            y + 55,
+                            y + 54,
                             utilities::colors::white,
                             2));
                     break;
