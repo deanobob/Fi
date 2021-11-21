@@ -97,8 +97,9 @@ namespace ui
                         {
                             const auto p_sprite = dynamic_cast<render::renderable_sprite*>(p_renderable.get());
                             const auto res_id = p_sprite->m_sprite_res_id;
-                            const auto x = p_sprite->m_x - viewport.x;
-                            const auto y = p_sprite->m_y - viewport.y;
+                            // Round x and y values to prevent artifacts between sprites
+                            const auto x = round(p_sprite->m_x - viewport.x);
+                            const auto y = round(p_sprite->m_y - viewport.y);
 
                             p_draw_manager->draw_bitmap(res_id, {x, y});
                         }
