@@ -53,6 +53,15 @@ namespace ui
         track_135_deg_button->set_vertical_alignment(ui::vertical_alignment::bottom);
         add_child(std::move(track_135_deg_button));
 
+        auto grass_tile = std::make_unique<button_set_cursor_tool>(
+            mp_message_bus, core::cursor_tool_type::grass);
+        grass_tile->set_icon("ground_1");
+        grass_tile->set_x(305);
+        grass_tile->set_width(70);
+        grass_tile->set_height(70);
+        grass_tile->set_vertical_alignment(ui::vertical_alignment::bottom);
+        add_child(std::move(grass_tile));
+
         set_width(800);
         set_height(120);
         set_padding_x(5);

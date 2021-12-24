@@ -3,17 +3,26 @@
 #include <math.h>
 #include "plog/Log.h"
 #include "component_type.hpp"
+#include "constants.hpp"
 #include "map_subsystem.hpp"
 #include "math.hpp"
+#include "message_set_tile.hpp"
 #include "renderable.hpp"
 
 namespace core
 {
     map_subsystem::map_subsystem(core::message_bus* p_message_bus, core::entity_manager* p_entity_manager)
         : component_subsystem{p_message_bus, p_entity_manager, {}}
-        , m_world_width{10000}
-        , m_world_height{10000}
+        , m_world_width{constants::WORLD_WIDTH}
+        , m_world_height{constants::WORLD_HEIGHT}
     {
+        mp_message_bus->subscribe(
+            this,
+            {
+                messages::message_set_tile::TYPE,
+            }
+        );
+
         for (int i = 0; i < (m_num_tiles_x * m_num_tiles_y); i++)
         {
             /// Initialise tiles to grass
@@ -75,6 +84,20 @@ namespace core
     void map_subsystem::shutdown()
     {
 
+    }
+
+    void map_subsystem::on_publish(message* p_message)
+    {
+        if (p_message->get_type() == messages::message_set_tile::TYPE)
+        {
+            const auto p_msg_set_tile = dynamic_cast<messages::message_set_tile*>(p_message);
+            const auto [t_x, t_y] = get_tile_at(p_msg_set_tile->get_position_x(), p_msg_set_tile->get_position_y());
+            m_map[m_num_tiles_x * t_y + t_x] = p_msg_set_tile->get_tile_type();
+        }
+        else
+        {
+            component_subsystem::on_publish(p_message);
+        }
     }
 
     std::tuple<int, int> map_subsystem::get_tile_at(float x, float y) const

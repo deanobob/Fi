@@ -5,8 +5,9 @@
 #include "component_type.hpp"
 #include "constants.hpp"
 #include "cursor_subsystem.hpp"
-#include "message_sim_mouse_move.hpp"
 #include "message_set_cursor_tool.hpp"
+#include "message_set_tile.hpp"
+#include "message_sim_mouse_move.hpp"
 
 namespace core
 {
@@ -38,7 +39,8 @@ namespace core
 
     void cursor_subsystem::update(const utilities::gametime& gametime)
     {
-
+        messages::message_set_tile msg_set_tile(m_mouse_x, m_mouse_y, 5);
+        mp_message_bus->send(&msg_set_tile);
     }
 
     void cursor_subsystem::draw(camera* p_camera, double delta)
@@ -71,7 +73,8 @@ namespace core
                             constants::TILE_WIDTH,
                             1,
                             0,
-                            utilities::colors::white, 2));
+                            utilities::colors::white,
+                            2));
                     break;
                 case core::cursor_tool_type::track_45_deg:
                     p_camera->add_renderable(
@@ -91,7 +94,8 @@ namespace core
                             1,
                             constants::TILE_WIDTH,
                             0,
-                            utilities::colors::white, 2));
+                            utilities::colors::white,
+                            2));
                     break;
                 case core::cursor_tool_type::track_135_deg:
                     p_camera->add_renderable(

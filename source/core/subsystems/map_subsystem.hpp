@@ -35,6 +35,8 @@ namespace core
 
         void shutdown() override;
 
+        void on_publish(message* p_message) override;
+
         bool pauseable() const override { return true; }
 
         private:

@@ -30,6 +30,8 @@ namespace ui
             case core::cursor_tool_type::track_135_deg:
                 cursor_tool_type = core::cursor_tool_type::track_135_deg;
                 break;
+            case core::cursor_tool_type::grass:
+                cursor_tool_type = core::cursor_tool_type::grass;
             default:
                 break;
         }

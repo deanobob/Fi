@@ -16,6 +16,7 @@ namespace core
         track_45_deg,
         track_90_deg,
         track_135_deg,
+        grass,
     };
 } /// namespace core
 

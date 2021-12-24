@@ -3,6 +3,7 @@
 #include "plog/Log.h"
 #include "body_component.hpp"
 #include "component_type.hpp"
+#include "constants.hpp"
 #include "entity_event_args.hpp"
 #include "quadtree_subsystem.hpp"
 
@@ -13,7 +14,11 @@ namespace core
         core::entity_manager* p_entity_manager,
         component_type component_mask)
         : component_subsystem{p_message_bus, p_entity_manager, component_mask}
-        , m_quadtree{utilities::rectangle{-5000, -5000, 10000, 10000}} //TODO: determine world size
+        , m_quadtree{utilities::rectangle{
+            -constants::WORLD_WIDTH / 2,
+            -constants::WORLD_HEIGHT / 2,
+            constants::WORLD_WIDTH,
+            constants::WORLD_HEIGHT}}
     {
 
     }

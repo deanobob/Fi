@@ -11,8 +11,12 @@ namespace core
     class constants
     {
         public:
-        /// @brief Tile width
+        /// @brief The tile width
         static constexpr auto TILE_WIDTH {54.0f};
+        /// @brief The world width
+        static constexpr auto WORLD_WIDTH {10000};
+        /// @brief The world height
+        static constexpr auto WORLD_HEIGHT {10000};
 
         private:
         /// @brief Default destructor
