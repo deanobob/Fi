@@ -3,6 +3,7 @@
 #include <math.h>
 #include "plog/Log.h"
 #include "component_type.hpp"
+#include "constants.hpp"
 #include "cursor_subsystem.hpp"
 #include "message_sim_mouse_move.hpp"
 #include "message_set_cursor_tool.hpp"
@@ -47,15 +48,15 @@ namespace core
             auto x = static_cast<float>(m_mouse_x);
             auto y = static_cast<float>(m_mouse_y);
             // offset by tile margins
-            x -= ((x >= 0) ? 0 : 54) + std::fmod(x, 54.f);
-            y -= ((y >= 0) ? 0 : 54) + std::fmod(y, 54.f);
+            x -= ((x >= 0) ? 0 : constants::TILE_WIDTH) + std::fmod(x, constants::TILE_WIDTH);
+            y -= ((y >= 0) ? 0 : constants::TILE_WIDTH) + std::fmod(y, constants::TILE_WIDTH);
 
             p_camera->add_renderable(
                 std::make_unique<render::renderable_rectangle>(
                     x,
                     y,
-                    54,
-                    54,
+                    constants::TILE_WIDTH,
+                    constants::TILE_WIDTH,
                     0,
                     utilities::colors::white,
                     1));
@@ -67,7 +68,7 @@ namespace core
                         std::make_unique<render::renderable_rectangle>(
                             x,
                             y + 25,
-                            54,
+                            constants::TILE_WIDTH,
                             1,
                             0,
                             utilities::colors::white, 2));
@@ -77,8 +78,8 @@ namespace core
                         std::make_unique<render::renderable_line>(
                             x,
                             y,
-                            x + 54,
-                            y + 54,
+                            x + constants::TILE_WIDTH,
+                            y + constants::TILE_WIDTH,
                             utilities::colors::white,
                             2));
                     break;
@@ -88,7 +89,7 @@ namespace core
                             x + 25,
                             y,
                             1,
-                            54,
+                            constants::TILE_WIDTH,
                             0,
                             utilities::colors::white, 2));
                     break;
@@ -98,7 +99,7 @@ namespace core
                             x + 50,
                             y,
                             x,
-                            y + 54,
+                            y + constants::TILE_WIDTH,
                             utilities::colors::white,
                             2));
                     break;

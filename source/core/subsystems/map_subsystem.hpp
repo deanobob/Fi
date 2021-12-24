@@ -6,6 +6,7 @@
 
 #include "component_subsystem.hpp"
 #include "component_type.hpp"
+#include "constants.hpp"
 #include "entity_manager.hpp"
 #include "message_bus.hpp"
 
@@ -38,9 +39,9 @@ namespace core
 
         private:
         /// @brief The tile width
-        static constexpr auto m_tile_width {54};
+        static constexpr auto m_tile_width {constants::TILE_WIDTH};
         /// @brief The tile height
-        static constexpr auto m_tile_height {54};
+        static constexpr auto m_tile_height {constants::TILE_WIDTH};
         /// @brief The number of tiles on the X axis
         static constexpr auto m_num_tiles_x {50};
         /// @brief The number of tiles on the Y axis

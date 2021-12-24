@@ -59,8 +59,8 @@ namespace core
                 }
 
                 // Calculate the position of the tile within the map
-                const auto pos_x = get_map_left() + (t_x * m_tile_width);
-                const auto pos_y = get_map_top() + (t_y * m_tile_height);
+                const auto pos_x = get_map_left() + (static_cast<float>(t_x) * m_tile_width);
+                const auto pos_y = get_map_top() + (static_cast<float>(t_y) * m_tile_height);
 
                 // Render the tile on the map
                 p_camera->add_renderable(
