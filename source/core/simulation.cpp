@@ -4,7 +4,7 @@
 #include "entity.hpp"
 #include "body_component.hpp"
 #include "clickable_component.hpp"
-#include "clickable_subsystem.hpp"
+#include "click_subsystem.hpp"
 #include "cursor_subsystem.hpp"
 #include "map_subsystem.hpp"
 #include "movement_component.hpp"
@@ -22,7 +22,7 @@ namespace core
         , mp_entity_manager{std::make_unique<entity_manager>(mp_message_bus)}
     {
         add_subsystem(
-            std::make_unique<clickable_subsystem>(
+            std::make_unique<click_subsystem>(
                 mp_message_bus,
                 mp_entity_manager.get(),
                 &m_camera_controller));

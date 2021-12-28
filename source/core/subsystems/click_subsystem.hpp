@@ -1,11 +1,12 @@
-/// @file clickable_subsystem.hpp
-/// @brief Subsystem that manages user interaction with clickable entities within the simulation 
+/// @file click_subsystem.hpp
+/// @brief Subsystem that manages user interaction with clickable entities within the simulation
 
-#ifndef CLICKABLE_SUBSYSTEM_HPP
-#define CLICKABLE_SUBSYSTEM_HPP
+#ifndef click_subsystem_HPP
+#define click_subsystem_HPP
 
 #include "camera_controller.hpp"
 #include "component_type.hpp"
+#include "cursor_tool_type.hpp"
 #include "entity_manager.hpp"
 #include "message_bus.hpp"
 #include "quadtree.hpp"
@@ -15,7 +16,7 @@
 namespace core
 {
     /// @brief Base class for component subsystems
-    class clickable_subsystem
+    class click_subsystem
         : public core::quadtree_subsystem
     {
         public:
@@ -23,12 +24,12 @@ namespace core
         /// @param p_message_bus The game message bus
         /// @param p_entity_manager The game entity manager
         /// @param p_camera_controller The camera controller
-        clickable_subsystem(
+        click_subsystem(
             core::message_bus* p_message_bus,
             core::entity_manager* p_entity_manager,
             core::camera_controller* p_camera_controller);
         /// @brief Default destructor
-        virtual ~clickable_subsystem();
+        virtual ~click_subsystem();
 
         bool initialise() override;
 
@@ -45,7 +46,9 @@ namespace core
         private:
         /// @brief Pointer to the camera controller instance
         core::camera_controller* mp_camera_controller{nullptr};
+        /// @brief The active cursor tool
+        core::cursor_tool_type m_active_cursor_tool{core::cursor_tool_type::none};
     };
 } /// namespace core
 
-#endif /// CLICKABLE_SUBSYSTEM_HPP
+#endif /// click_subsystem_HPP
