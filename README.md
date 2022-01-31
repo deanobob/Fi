@@ -1,8 +1,8 @@
-# Malon
+# Fi
 
 ## Installing on Ubuntu / MacOS
 
-Peach requires SDL2 and Allegro5 libraries to be installed in /usr/local/lib.
+Fi requires SDL2 and Allegro5 libraries to be installed in /usr/local/lib.
 
 The easiest way to do this is to compile both from source:
 
