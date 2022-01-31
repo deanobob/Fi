@@ -15,13 +15,14 @@ namespace utilities
     {
         public:
         /// @brief Constructor
+        /// @param port The TCP port to listen on
         server(const short port);
 
         /// @brief Destructor
         virtual ~server();
 
         /// @brief Create TCP socket and start listener thread
-        /// @brief Listener thread will accept a single active connection and process received messages until stop is
+        /// @details Listener thread will accept a single active connection and process received messages until stop is
         /// called. If the connection terminates but the listener fd is still open it will accept a new connection.
         /// @return True on success, else false
         bool start_listen_thread();
@@ -31,6 +32,7 @@ namespace utilities
 
         protected:
         /// @brief Pure virtual function that is called when a message is received
+        /// @param message The string received from the TCP socket
         virtual void on_receive(const std::string& message) = 0;
 
         private:

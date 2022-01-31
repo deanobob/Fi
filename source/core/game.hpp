@@ -5,22 +5,24 @@
 #define GAME_HPP
 
 #include <atomic>
-#include <vector>
+#include <map>
+#include <memory>
+#include "draw_manager.hpp"
 #include "gametime.hpp"
-#include "publisher.hpp"
+#include "message_bus.hpp"
+#include "resource_manager.hpp"
 #include "service.hpp"
 #include "subscriber.hpp"
+#include "system_interface.hpp"
 
 /// @namespace core namespace
 namespace core
 {
     /// @brief The base game class
-    class game : public messaging::subscriber
+    class game
+        : public core::subscriber
     {
         public:
-        /// @brief Publisher that notifies subscribers the game is exiting
-        messaging::publisher m_game_status_messager{};
-
         /// @brief Constructor
         game();
         /// @brief Default destructor
@@ -29,12 +31,17 @@ namespace core
         /// @brief The root of the game
         /// @details Initialises the game and loops until an exit message is received
         void run();
+
         /// @brief Request the game to exit
         void exit();
 
         /// @brief Handles events from publishers the game has subscribed to
         /// @param p_message The message
-        void on_publish(const messaging::message* p_message) override;
+        void on_publish(core::message* p_message) override;
+
+        /// @brief Get the framework system interface
+        /// @return A pointer to the framework system interface
+        framework::system_interface* get_system_interface();
 
         private:
         /// @brief Flag indicating whether to exit the game
@@ -44,14 +51,34 @@ namespace core
         /// @brief Records the elapsed and total time the game has been running
         utilities::gametime m_gametime{};
         /// @brief Container for services
-        std::vector<service*> m_services;
+        std::list<std::unique_ptr<service> > m_services{};
+        /// @brief Framework system interface
+        framework::system_interface m_system_interface{};
+        /// @brief The game message bus
+        std::unique_ptr<core::message_bus> mp_message_bus{nullptr};
+        /// @brief The draw manager
+        std::unique_ptr<core::draw_manager> mp_draw_manager{nullptr};
+        /// @brief The resource manager
+        std::unique_ptr<core::resource_manager> mp_resource_manager{nullptr};
 
         /// @brief Initialise the game
         bool initialise();
+
+        /// @brief Load non-system specific game resources
+        void load();
+
         /// @brief Called on every tick to update services
         void update();
+
+        /// @brief Draw called on every frame to update drawables
+        void draw(double delta);
+
         /// @brief Shutdown the game
         void shutdown();
+
+        /// @brief Add service to game
+        /// @param service The service to add
+        void add_service(std::unique_ptr<service> service);
     };
 } /// namespace core
 

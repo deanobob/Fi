@@ -1,42 +1,96 @@
 /// @file game.cpp
 
-#include <iostream>
-#include <stdio.h>
-#include "console.hpp"
+#include "plog/Log.h"
+#include "configuration_loader.hpp"
+#include "console_service.hpp"
+#include "entity_manager.hpp"
 #include "game.hpp"
+#include "game_service.hpp"
+#include "input_service.hpp"
 #include "message_exit.hpp"
 #include "message_pause.hpp"
+#include "message_resume.hpp"
 #include "time.hpp"
+#include "ui_service.hpp"
 
 namespace core
 {
     game::game()
+        : mp_message_bus{std::make_unique<message_bus>()}
     {
-        m_game_status_messager.subscribe(this, {messaging::message_exit::TYPE});
-        m_game_status_messager.subscribe(this, {messaging::message_pause::TYPE});
+        mp_message_bus->subscribe(
+            this,
+            {
+                messages::message_exit::TYPE,
+                messages::message_pause::TYPE,
+                messages::message_resume::TYPE
+            }
+        );
 
-        m_services.push_back(new services::console(this));
+        mp_draw_manager = std::make_unique<draw_manager>(
+            mp_message_bus.get(),
+            get_system_interface()->get_render_controller());
+        mp_resource_manager = std::make_unique<resource_manager>(
+            get_system_interface()->get_render_controller());
+
+        add_service(std::make_unique<input::input_service>(
+            mp_message_bus.get(),
+            get_system_interface()->get_input_controller()));
+        add_service(std::make_unique<console::console_service>(mp_message_bus.get()));
+        add_service(std::make_unique<core::game_service>(mp_message_bus.get()));
+        add_service(std::make_unique<ui::ui_service>(
+            mp_message_bus.get(),
+            get_system_interface()->get_input_controller()));
     }
 
     game::~game()
     {
-        m_game_status_messager.unsubscribe(this, {messaging::message_exit::TYPE});
-        m_game_status_messager.unsubscribe(this, {messaging::message_pause::TYPE});
+        m_services.clear();
 
-        for (auto& service : m_services)
-        {
-            delete service;
-        }
+        mp_message_bus->unsubscribe(this);
+        mp_message_bus.reset(nullptr);
     }
 
     void game::run()
     {
+        // Fixed physics step
+        const double dt = 0.01;
+
         if (initialise())
         {
+            load();
+
+            double current_time = utilities::time::get_current_time_in_seconds();
+            double accumulator = 0.0;
+
             while (!m_exit_game)
             {
-                update();
-                utilities::time::sleep_msec(10);
+                double new_time = utilities::time::get_current_time_in_seconds();
+                double frame_time = new_time - current_time;
+                // Avoid issues with clock corrections
+                if (frame_time > 0.25)
+                {
+                    frame_time = 0.25;
+                }
+
+                current_time = new_time;
+
+                accumulator += frame_time;
+
+                while (accumulator >= dt)
+                {
+                    m_gametime.add_elapsed_time_in_seconds(dt);
+
+                    update();
+
+                    accumulator -= dt;
+                }
+
+                // Pass remainder of frame time to draw manager to allow interpolation of
+                // entity positions between previous and current state
+                mp_draw_manager->clear();
+                draw(accumulator / dt);
+                mp_draw_manager->flip(); //accumulator / dt);
             }
 
             shutdown();
@@ -46,55 +100,105 @@ namespace core
     void game::exit()
     {
         // Publish exit event so all subscribers can terminate cleanly
-        auto exit_message = messaging::message_exit();
-        m_game_status_messager.publish(&exit_message);
+        auto exit_message = messages::message_exit();
+        mp_message_bus->send(&exit_message);
     }
 
-    void game::on_publish(const messaging::message* p_message)
+    void game::on_publish(core::message* p_message)
     {
-        if (p_message->get_type() == messaging::message_pause::TYPE)
+        if (p_message->get_type() == messages::message_pause::TYPE)
         {
             // Pause the game
             m_paused = true;
-            std::cout << "Game paused" << std::endl;
+            PLOGD << "Game paused";
         }
-        else if (p_message->get_type() == messaging::message_exit::TYPE)
+        else if (p_message->get_type() == messages::message_resume::TYPE)
+        {
+            // Resume the game
+            m_paused = false;
+            PLOGD << "Game resumed";
+        }
+        else if (p_message->get_type() == messages::message_exit::TYPE)
         {
             // Exit the game loop
             m_exit_game = true;
+            PLOGD << "Game exiting";
         }
+    }
+
+    framework::system_interface* game::get_system_interface()
+    {
+        return &m_system_interface;
     }
 
     bool game::initialise()
     {
         bool success = true;
 
-        for (auto& service : m_services)
+        const auto config = configuration_loader::load();
+
+        render::window_properties window_properties{};
+        window_properties.width = config.get_int("display_width", render::window_properties::DEFAULT_WINDOW_WIDTH);
+        window_properties.height = config.get_int("display_height", render::window_properties::DEFAULT_WINDOW_HEIGHT);
+        window_properties.vsync = config.get_bool("vsync", true);
+        window_properties.fullscreen = config.get_bool("fullscreen", false);
+        mp_draw_manager->initialise(window_properties);
+
+        for (auto& service_iter : m_services)
         {
-            success &= service->initialise();
+            const auto& p_service = service_iter.get();
+            success &= p_service->initialise();
         }
 
         return success;
     }
 
+    void game::load()
+    {
+        mp_resource_manager->load();
+
+        for (auto& service_iter : m_services)
+        {
+            service_iter.get()->load(mp_resource_manager.get());
+        }
+    }
+
     void game::update()
     {
-        m_gametime.update();
+        mp_draw_manager->process_events();
 
-        for (auto& service : m_services)
+        for (auto& service_iter : m_services)
         {
-            if (!m_paused || !service->pauseable())
+            const auto& p_service = service_iter.get();
+            if (!m_paused || !p_service->pauseable())
             {
-                service->update(m_gametime);
+                p_service->update(m_gametime);
             }
+        }
+    }
+
+    void game::draw(double delta)
+    {
+        for (auto& service_iter : m_services)
+        {
+            const auto& p_service = service_iter.get();
+            p_service->draw(mp_draw_manager.get(), delta);
         }
     }
 
     void game::shutdown()
     {
-        for (auto& service : m_services)
+        mp_draw_manager->shutdown();
+
+        for (auto& service_iter : m_services)
         {
-            service->shutdown();
+            const auto& p_service = service_iter.get();
+            p_service->shutdown();
         }
+    }
+
+    void game::add_service(std::unique_ptr<service> service)
+    {
+        m_services.push_back(std::move(service));
     }
 }

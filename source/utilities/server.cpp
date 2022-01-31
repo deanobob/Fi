@@ -4,13 +4,12 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <errno.h>
-#include <iostream>
 #include <memory>
 #include <poll.h>
-#include <stdio.h>
 #include <string>
 #include <string.h>
 #include <unistd.h>
+#include "plog/Log.h"
 #include "server.hpp"
 #include "strings.hpp"
 
@@ -46,13 +45,15 @@ namespace utilities
             std::lock_guard<std::mutex> lock(m_fd_mutex);
             if (m_listen_fd > 0)
             {
-                close(m_listen_fd);
+                shutdown(m_listen_fd, SHUT_RDWR); // Required for Linux
+                close(m_listen_fd); // Required for Mac OS
                 m_listen_fd = 0;
             }
 
             if (m_conn_fd > 0)
             {
-                close(m_conn_fd);
+                shutdown(m_conn_fd, SHUT_RDWR); // Required for Linux
+                close(m_conn_fd); // Required for Mac OS
                 m_conn_fd = 0;
             }
         }
@@ -77,7 +78,7 @@ namespace utilities
 
         if (listen(m_listen_fd, port) != 0)
         {
-            std::cout << "Failed to start listener" << std::endl;
+            PLOGD << "Failed to start listener";
             return;
         }
 
@@ -89,9 +90,9 @@ namespace utilities
                 break;
             }
 
-            int n = 0;
+            ssize_t n = 0;
             char recv_buf[READ_BUFLEN]{'\0'};
-            while ((n = read(m_conn_fd, recv_buf, sizeof(recv_buf) - 1)) > 0)
+            while ((n = read(m_conn_fd, recv_buf, sizeof(recv_buf) - 1)) >= 0)
             {
                 if (n <= 0)
                 {

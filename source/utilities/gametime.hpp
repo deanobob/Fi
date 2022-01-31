@@ -13,10 +13,11 @@ namespace utilities
     {
         public:
         /// @brief Constructor
-        gametime();
+        gametime() = default;
 
-        /// @brief Updates the elapsed time and total run time
-        void update();
+        /// @brief Adds time to the elapsed time counter
+        /// @param elapsed_time The elapsed time in seconds
+        void add_elapsed_time_in_seconds(double elapsed_time);
 
         /// @brief Gets the elapsed time since the last tick
         /// @return The elapased time in seconds
@@ -32,8 +33,6 @@ namespace utilities
         double get_total_time_in_milliseconds() const;
 
         private:
-        /// @brief The last frame time in seconds
-        double m_last_time{0.0};
         /// @brief The elapsed time of the last tick
         double m_elapsed_time{0.0};
         /// @brief The total time since the game launched
